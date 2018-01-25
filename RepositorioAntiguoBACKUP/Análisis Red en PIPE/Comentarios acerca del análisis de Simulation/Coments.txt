@@ -1,0 +1,10 @@
+Hay que leer bien el manual del pipe, lo voy a dejar adjunto. 
+
+El análisis simulation es como un análisis temporal, donde firing es la cantidad de disparos
+de la red, y replication es la cantidad de veces que haces exactamente los mismos disparos.
+
+Cambiando los parámetros hay veces que me tira null error, lo corrí en 1500 disparos, y 3 replicaciones.
+
+Después me pongo a ver bien en el manual porque puede ayudarnos en el análisis temporal
+
+Saluda atte. f4ri4n0
