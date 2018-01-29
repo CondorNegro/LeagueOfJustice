@@ -3,7 +3,7 @@ package clasesPrincipales;
 import java.io.PrintStream;
 import Monitor.Monitor;
 
-public class GeneradorPersonas {
+public class GeneradorPersonas implements Runnable{
 
 	private Monitor monitor;
 	private PrintStream printLog;

@@ -3,7 +3,7 @@ package clasesPrincipales;
 import java.io.PrintStream;
 import Monitor.Monitor;
 
-public class SubeBajaVagon {
+public class SubeBajaVagon implements Runnable{
 
 	private Monitor monitor;
 	private PrintStream printLog;

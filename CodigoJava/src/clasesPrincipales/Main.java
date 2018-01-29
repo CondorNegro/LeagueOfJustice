@@ -15,7 +15,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Monitor monitor=new Monitor();
+		Monitor monitor=Monitor.getInstance();
 		
 		PrintStream salidaLog;
         try {

@@ -3,7 +3,7 @@ package clasesPrincipales;
 import java.io.PrintStream;
 import Monitor.Monitor;
 
-public class AutosDriver {
+public class AutosDriver implements Runnable{
 	private Monitor monitor;
 	private PrintStream printLog;
 	
