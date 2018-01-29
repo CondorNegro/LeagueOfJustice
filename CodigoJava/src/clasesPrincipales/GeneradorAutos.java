@@ -1,6 +1,7 @@
 package clasesPrincipales;
 
 import java.io.PrintStream;
+import Monitor.Monitor;
 
 public class GeneradorAutos {
 

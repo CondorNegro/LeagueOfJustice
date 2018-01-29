@@ -1,6 +1,7 @@
 package clasesPrincipales;
 
 import java.io.PrintStream;
+import Monitor.Monitor;
 
 public class GeneradorPersonas {
 
@@ -17,4 +18,4 @@ public class GeneradorPersonas {
 
 }
 
-}
+
