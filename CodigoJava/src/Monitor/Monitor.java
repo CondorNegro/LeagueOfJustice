@@ -1,6 +1,7 @@
 package Monitor;
 
 import java.util.concurrent.Semaphore;
+import java.util.List;
 //Se aplicó SINGLETON. 
 
 public class Monitor { 
@@ -23,5 +24,45 @@ public class Monitor {
 	
 
 	public static Monitor getInstance(){return instance;}
-
+	
+	
+	//Metodos basados en diagrama de secuencia.
+	public void dispararTransicion(int transicion) throws InterruptedException{
+		
+		try{
+			mutex.acquire(); //Adquiero acceso al monitor.
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+			return;
+		}
+		boolean k=true;
+		
+		while(k){
+			k=rdp.disparar(transicion); //Disparo red de petri.
+			if(k){ //K=true verifica el estado de la red.
+				List<Integer> Vs=rdp.getSensibilizadas(); //get transiciones sensibilizadas
+				List<Integer> Vc=quienesEstanEnColas(); //get transiciones sensibilizadas
+				List<Integer> m= andVector(Vs, Vc);
+				if(m!=0){
+					int transicionADisparar=politica.cualDisparar(m);
+					mutex.release();
+	                return;
+				}
+				else{
+					k=false;
+				}
+			}
+			else{
+				mutex.release();
+				acquireColaDeCondicion();
+                return;
+			}
+		}
+		
+		mutex.release(); //Libero al monitor.
+		return;
+	}
+	
+	
 }
