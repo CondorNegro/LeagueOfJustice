@@ -1,6 +1,7 @@
 package Monitor;
 
 import java.util.concurrent.Semaphore;
+import java.util.ArrayList;
 import java.util.List;
 //Se aplicó SINGLETON. 
 
@@ -64,11 +65,28 @@ public class Monitor {
 	}
 	
 	
+	public List<Integer> quienesEstanEnColas() {
+		ArrayList<Integer> Vc = new ArrayList<>();
+		return Vc;
+	}
+	
+
+	public List<Integer> andVector(List<Integer> vs, List<Integer> vc) throws IndexOutOfBoundsException{
+		ArrayList<Integer> m = new ArrayList<>();
+		return m;
+	}
+	
+	
+	public boolean isNotAllZeros(List<Integer> lista){
+		return true;
+	}
+	
+	
 	
 	
 	//Metodos basados en diagrama de secuencia.
 	public void dispararTransicion(int transicion) throws InterruptedException{
-		
+		List<Integer> m;
 		try{
 			mutex.acquire(); //Adquiero acceso al monitor.
 		}
@@ -84,13 +102,13 @@ public class Monitor {
 				List<Integer> Vs=rdp.getSensibilizadas(); //get transiciones sensibilizadas
 				List<Integer> Vc=quienesEstanEnColas(); //get transiciones sensibilizadas
 				try{
-					List<Integer> m= andVector(Vs, Vc);
+					m= andVector(Vs, Vc);
 				}
 				catch(IndexOutOfBoundsException e){
-					m=null;
 					e.printStackTrace();
+					return;
 				}	
-				if(m!=0){
+				if(isNotAllZeros(m)){
 					
 					int transicionADisparar=politica.cualDisparar(m);
 					try{
