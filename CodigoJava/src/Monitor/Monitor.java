@@ -7,7 +7,8 @@ import java.util.List;
 public class Monitor { 
 	//Elementos del monitor.
 	private Politica politica;
-    private Transiciones transiciones[];
+	private int cantTransiciones; //Igual a cantidad de colas.
+    private Cola colas[];
     private RedDePetri rdp;
     private Semaphore mutex;
     
@@ -17,13 +18,52 @@ public class Monitor {
 		//Semáforo binario a la entrada del monitor.
 		 //Fairness true: FIFO en cola de hilos bloqueados.
 	       mutex=new Semaphore(1,true);
-	       politica=new Politica(0); //Inicialmente, la politica es al azar.
+	       cantTransiciones=0;
 	       //La red de petri y las transiciones se configuran posteriormente.
 	  }
 
 	
-
 	public static Monitor getInstance(){return instance;}
+	
+	
+	public void setNumeroTransiciones(int n){
+		this.cantTransiciones=n;
+	}
+
+	public int getNumeroTransiciones(){
+		return this.cantTransiciones;
+	}
+	
+	
+	public void configRdp(String path){
+		try {
+	            mutex.acquire();
+	    }
+		catch(InterruptedException e){
+			e.printStackTrace();
+		}
+		this.rdp=new RedDePetri(path);
+		this.setNumeroTransiciones(rdp.getNumeroTransiciones());
+		colas= new Cola[this.getNumeroTransiciones()];
+        for(int i=0;i<this.getNumeroTransiciones();i++){ 
+            colas[i]=new Cola(); //Inicialización de colas.
+        }
+		mutex.release();
+	}
+	
+	public void setPolitica(int Modo){
+		try{
+			mutex.acquire(); //Adquiero acceso al monitor.
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+			return;
+		}
+		this.politica=new Politica(Modo);
+		mutex.release();
+	}
+	
+	
 	
 	
 	//Metodos basados en diagrama de secuencia.
@@ -43,9 +83,21 @@ public class Monitor {
 			if(k){ //K=true verifica el estado de la red.
 				List<Integer> Vs=rdp.getSensibilizadas(); //get transiciones sensibilizadas
 				List<Integer> Vc=quienesEstanEnColas(); //get transiciones sensibilizadas
-				List<Integer> m= andVector(Vs, Vc);
+				try{
+					List<Integer> m= andVector(Vs, Vc);
+				}
+				catch(IndexOutOfBoundsException e){
+					m=null;
+					e.printStackTrace();
+				}	
 				if(m!=0){
+					
 					int transicionADisparar=politica.cualDisparar(m);
+					try{
+						colas[transicionADisparar].resume(); //Sale de una cola de condición.
+					}
+					catch(IndexOutOfBoundsException e){e.printStackTrace();}
+					
 					mutex.release();
 	                return;
 				}
@@ -55,7 +107,13 @@ public class Monitor {
 			}
 			else{
 				mutex.release();
-				acquireColaDeCondicion();
+				try{
+					colas[transicion].delay(); //Se encola en una cola de condicion.
+				}
+				catch(Exception e){ //Puede haber más de un tipo de Excepción.
+					e.printStackTrace();
+				}
+			
                 return;
 			}
 		}
@@ -63,6 +121,7 @@ public class Monitor {
 		mutex.release(); //Libero al monitor.
 		return;
 	}
+	
 	
 	
 }

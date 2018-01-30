@@ -16,6 +16,14 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Monitor monitor=Monitor.getInstance();
+		monitor.configRdp("");
+		
+		//Política 0: aleatoria.
+		//Política 1: primero los que suben.
+		//Política 2: primero los que bajan.
+		monitor.setPolitica(0);
+		
+		
 		
 		PrintStream salidaLog;
         try {
