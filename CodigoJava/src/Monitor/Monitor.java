@@ -3,6 +3,7 @@ package Monitor;
 import java.util.concurrent.Semaphore;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 //Se aplicó SINGLETON. 
 
 public class Monitor { 
@@ -71,10 +72,29 @@ public class Monitor {
 	}
 	
 
-	public List<Integer> andVector(List<Integer> vs, List<Integer> vc) throws IndexOutOfBoundsException{
-		ArrayList<Integer> m = new ArrayList<>();
-		return m;
+
+public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throws IndexOutOfBoundsException{
+	if (lista1.size()==lista2.size()) {
+		ArrayList<Integer> resultado = new ArrayList<>();
+		Iterator<Integer> iterador1=lista1.iterator();
+		Iterator<Integer> iterador2=lista2.iterator();
+
+		while(iterador1.hasNext()&iterador2.hasNext()) {
+    		resultado.add(new Integer(iterador1.next().intValue()&iterador2.next().intValue()));
+		}   
+
+		return resultado;
 	}
+
+	else{
+		throw new IndexOutOfBoundsException("Listas de diferentes tamaños");
+	}
+
+}
+
+
+
+
 	
 	
 	public boolean isNotAllZeros(List<Integer> lista){
