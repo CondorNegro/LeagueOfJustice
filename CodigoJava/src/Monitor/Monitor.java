@@ -28,11 +28,11 @@ public class Monitor {
 	public static Monitor getInstance(){return instance;}
 	
 	
-	public void setNumeroTransiciones(int n){
+	private void setNumeroTransiciones(int n){
 		this.cantTransiciones=n;
 	}
 
-	public int getNumeroTransiciones(){
+	private int getNumeroTransiciones(){
 		return this.cantTransiciones;
 	}
 	
@@ -105,7 +105,7 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 	
 	
 	//Metodos basados en diagrama de secuencia.
-	public void dispararTransicion(int transicion) throws InterruptedException{
+	public void dispararTransicion(int transicion) {
 		List<Integer> m;
 		try{
 			mutex.acquire(); //Adquiero acceso al monitor.

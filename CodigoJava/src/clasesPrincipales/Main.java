@@ -35,7 +35,7 @@ public class Main {
         }
 
 		
-		//Creo el monitor y seteo matriz. (falta).
+		
 		
 		//Creación de hilos. (Falta ponerle objetos Runnables).
 	 	Thread manejoTren = new Thread(new TrenDriver(monitor,salidaLog));
