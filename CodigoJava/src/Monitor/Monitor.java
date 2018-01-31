@@ -87,7 +87,7 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 	}
 
 	else{
-		throw new IndexOutOfBoundsException("Listas de diferentes tamaños");
+		throw new IndexOutOfBoundsException("Listas de diferentes tamanios");
 	}
 
 }
@@ -134,10 +134,9 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 					return;
 				}	
 				if(isNotAllZeros(m)){
-					
-					int transicionADisparar=politica.cualDisparar(m);
 					try{
-						colas[transicionADisparar].resume(); //Sale de una cola de condición.
+						int transicionADisparar=politica.cualDisparar(m);
+						colas[transicionADisparar].resume(); //Sale de una cola de condicion.
 					}
 					catch(IndexOutOfBoundsException e){e.printStackTrace();}
 					

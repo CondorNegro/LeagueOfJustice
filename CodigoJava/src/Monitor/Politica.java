@@ -3,17 +3,18 @@ package Monitor;
 import java.util.List;
 
 public class Politica { 
+	private static final int[] transicionesPrioritariasSubida={1,2,3,4}; //Corregir
+	private static final int[] transicionesPrioritariasBajada={1,2,3,4}; //Corregir
 	private int modoPolitica;
 	
 	public Politica(int modo){
 		modoPolitica=modo;
-		
 	}
 	
 	
 	
 	private int politicaAleatoria(List<Integer> listaM){
-		if(listaM.size()>0){
+	
 			int indice=0;
 			boolean flag=true;
 			while(flag){
@@ -24,37 +25,58 @@ public class Politica {
 				}
 			}
 			return indice;
-		}
-		else{
-			return 0;
-		}
+		
 	}
 	
 	
 	private int politicaPrimeroSuben(List<Integer> listaM){
-		return 0;
+		
+			
+			for(int i=0;i<transicionesPrioritariasSubida.length;i++){
+		         if(listaM.get(transicionesPrioritariasSubida[i])==1){
+		             return transicionesPrioritariasSubida[i];
+		         }
+		     }
+		     return this.politicaAleatoria(listaM);
+			
+	
 	}
 	
 	private int politicaPrimeroBajan(List<Integer> listaM){
-		return 0;
+		
+			
+			for(int i=0;i<transicionesPrioritariasBajada.length;i++){
+		         if(listaM.get(transicionesPrioritariasBajada[i])==1){
+		             return transicionesPrioritariasBajada[i];
+		         }
+		     }
+		     return this.politicaAleatoria(listaM);
+			
+	
 	}
 	
 	
 	
 	
-	public int cualDisparar(List<Integer> listaM){
-		if(this.modoPolitica==0){ //Politica aleatoria.
-			return politicaAleatoria(listaM);
-		}
-		else if(this.modoPolitica==1){ //Política primero suben.
-			return politicaPrimeroSuben(listaM);
-		}
-		else if(this.modoPolitica==2){ //Política primero bajan.
-			return politicaPrimeroBajan(listaM);
+	public int cualDisparar(List<Integer> listaM) throws IndexOutOfBoundsException{
+		if(listaM.size()>0){
+			if(this.modoPolitica==0){ //Politica aleatoria.
+				return politicaAleatoria(listaM);
+			}
+			else if(this.modoPolitica==1){ //Política primero suben.
+				return politicaPrimeroSuben(listaM);
+			}
+			else if(this.modoPolitica==2){ //Política primero bajan.
+				return politicaPrimeroBajan(listaM);
+			}
+			else{
+				return 0;
+			}
 		}
 		else{
-			return 0;
+			throw new IndexOutOfBoundsException("Lista M vacía.");
 		}
+		
 		
 		
 	}
