@@ -20,7 +20,7 @@ public class Cola {
 	}
 	
 	public boolean isEmpty(){
-		if(cantHilosEnCola!=0){
+		if(cantHilosEnCola==0){
 			return true;
 		}
 		else{

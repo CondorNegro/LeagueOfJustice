@@ -4,7 +4,7 @@ import java.util.concurrent.Semaphore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
-//Se aplicó SINGLETON. 
+//Se aplica SINGLETON. 
 
 public class Monitor { 
 	//Elementos del monitor.
@@ -17,10 +17,10 @@ public class Monitor {
     //Aplicación de Singleton.
     private static final Monitor instance = new Monitor();
 	 private Monitor(){
-		//Semáforo binario a la entrada del monitor.
+		//Semaforo binario a la entrada del monitor.
 		 //Fairness true: FIFO en cola de hilos bloqueados.
 	       mutex=new Semaphore(1,true);
-	       cantTransiciones=0;
+	       setNumeroTransiciones(0);
 	       //La red de petri y las transiciones se configuran posteriormente.
 	  }
 

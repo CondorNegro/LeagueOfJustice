@@ -10,10 +10,10 @@ public class RedDePetri{
 	
 	public RedDePetri(String path){
 		this.path=path;
-		cantTransiciones=0;
+		cantTransiciones=0; //Corregir
 	}
 	
-	public int getNumeroTransiciones(){
+	public int getNumeroTransiciones(){ //Esto es lo unico que esta OK.
 		return cantTransiciones;
 	}
 	
