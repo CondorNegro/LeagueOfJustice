@@ -94,7 +94,7 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 
 
 	
-	//devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
+	//Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
 	public boolean isNotAllZeros(List<Integer> lista){
 		Iterator<Integer> iterador=lista.iterator();
 		boolean var=false;
