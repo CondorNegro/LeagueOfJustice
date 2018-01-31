@@ -4,7 +4,7 @@ import java.util.concurrent.Semaphore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
-//Se aplicÛ SINGLETON. 
+//Se aplic√≥ SINGLETON. 
 
 public class Monitor { 
 	//Elementos del monitor.
@@ -14,10 +14,10 @@ public class Monitor {
     private RedDePetri rdp;
     private Semaphore mutex;
     
-    //AplicaciÛn de Singleton.
+    //Aplicaci√≥n de Singleton.
     private static final Monitor instance = new Monitor();
 	 private Monitor(){
-		//Sem·foro binario a la entrada del monitor.
+		//Sem√°foro binario a la entrada del monitor.
 		 //Fairness true: FIFO en cola de hilos bloqueados.
 	       mutex=new Semaphore(1,true);
 	       cantTransiciones=0;
@@ -48,7 +48,7 @@ public class Monitor {
 		this.setNumeroTransiciones(rdp.getNumeroTransiciones());
 		colas= new Cola[this.getNumeroTransiciones()];
         for(int i=0;i<this.getNumeroTransiciones();i++){ 
-            colas[i]=new Cola(); //InicializaciÛn de colas.
+            colas[i]=new Cola(); //Inicializaci√≥n de colas.
         }
 		mutex.release();
 	}
@@ -87,18 +87,26 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 	}
 
 	else{
-		throw new IndexOutOfBoundsException("Listas de diferentes tamaÒos");
+		throw new IndexOutOfBoundsException("Listas de diferentes tama√±os");
 	}
 
 }
 
 
-
-
 	
-	
+	//devuekve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
 	public boolean isNotAllZeros(List<Integer> lista){
-		return true;
+		Iterator<Integer> iterador=lista.iterator();
+		boolean var=false;
+		while(iterador.hasNext()) {
+			if(iterador.next().intValue()==0) {
+				var=false;
+			}
+			else {
+				var=true;
+			}
+		} 
+		return var;
 	}
 	
 	
@@ -132,7 +140,7 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 					
 					int transicionADisparar=politica.cualDisparar(m);
 					try{
-						colas[transicionADisparar].resume(); //Sale de una cola de condiciÛn.
+						colas[transicionADisparar].resume(); //Sale de una cola de condici√≥n.
 					}
 					catch(IndexOutOfBoundsException e){e.printStackTrace();}
 					
@@ -148,7 +156,7 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 				try{
 					colas[transicion].delay(); //Se encola en una cola de condicion.
 				}
-				catch(Exception e){ //Puede haber m·s de un tipo de ExcepciÛn.
+				catch(Exception e){ //Puede haber m√°s de un tipo de Excepci√≥n.
 					e.printStackTrace();
 				}
 			
