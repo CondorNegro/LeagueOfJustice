@@ -94,15 +94,12 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 
 
 	
-	//devuekve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
+	//devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
 	public boolean isNotAllZeros(List<Integer> lista){
 		Iterator<Integer> iterador=lista.iterator();
 		boolean var=false;
 		while(iterador.hasNext()) {
-			if(iterador.next().intValue()==0) {
-				var=false;
-			}
-			else {
+			if(iterador.next().intValue()!=0) {
 				var=true;
 			}
 		} 
@@ -156,7 +153,7 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 				try{
 					colas[transicion].delay(); //Se encola en una cola de condicion.
 				}
-				catch(Exception e){ //Puede haber mÃ¡s de un tipo de ExcepciÃ³n.
+				catch(Exception e){ //Puede haber mas de un tipo de excepcion. (Por interrupción o por exceder los límites).
 					e.printStackTrace();
 				}
 			
