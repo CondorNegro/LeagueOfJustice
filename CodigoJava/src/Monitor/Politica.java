@@ -8,9 +8,16 @@ public class Politica {
 	private int modoPolitica;
 	
 	public Politica(int modo){
-		modoPolitica=modo;
+		setModo(modo);
 	}
 	
+	public int getModo(){
+		return this.modoPolitica;
+	}
+	
+	public void setModo(int modo){
+		this.modoPolitica=modo;
+	}
 	
 	
 	private int politicaAleatoria(List<Integer> listaM){
