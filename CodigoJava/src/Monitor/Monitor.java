@@ -36,6 +36,9 @@ public class Monitor {
 		return this.cantTransiciones;
 	}
 	
+	public int getPolitica(){
+		return this.politica.getModo();
+	}
 	
 	public void configRdp(String path){
 		try {
