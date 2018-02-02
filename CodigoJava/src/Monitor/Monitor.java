@@ -68,6 +68,14 @@ public class Monitor {
 	
 	public List<Integer> quienesEstanEnColas() {
 		ArrayList<Integer> Vc = new ArrayList<>();
+        for(int i=0;i<this.getNumeroTransiciones();i++){
+        	if (colas[i].isEmpty()==true) {
+        		Vc.add(0);
+        	}
+        	else {
+        		Vc.add(1);
+        	}
+        }
 		return Vc;
 	}
 	
@@ -152,7 +160,7 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 				try{
 					colas[transicion].delay(); //Se encola en una cola de condicion.
 				}
-				catch(Exception e){ //Puede haber mas de un tipo de excepcion. (Por interrupción o por exceder los límites).
+				catch(Exception e){ //Puede haber mas de un tipo de excepcion. (Por interrupciï¿½n o por exceder los lï¿½mites).
 					e.printStackTrace();
 				}
 			
