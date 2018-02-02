@@ -8,6 +8,10 @@ public class Cola {
 		this.cantHilosEnCola=0;
 	}
 	
+	public int getCantHilosEnCola(){
+		return this.cantHilosEnCola;
+	}
+	
 	public synchronized void resume(){
 		notify();
 	}
