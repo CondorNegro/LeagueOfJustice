@@ -11,12 +11,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * @author Gastón
- *
- */
+
 public class testCola {
 	private Monitor.Cola cola;
+	private HiloDelay hiloDelay;
+	private HiloResume hiloResume;
+	private Thread threadDelay;
+	private Thread threadResume;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -37,6 +38,11 @@ public class testCola {
 	@Before
 	public void setUp() throws Exception {
 		cola=new Monitor.Cola();
+		hiloDelay=new HiloDelay(cola);
+		hiloResume=new HiloResume(cola);
+		threadDelay=new Thread(hiloDelay);
+		threadResume=new Thread(hiloResume);
+		
 		
 	}
 
@@ -45,31 +51,44 @@ public class testCola {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		
 	}
 
+	
 	/**
-	 * Test method for {@link Monitor.Cola#Cola()}.
+	 * Test method for {@link Monitor.Cola#delay()} and for {@link Monitor.Cola#resume()}.
 	 */
 	@Test
-	public void testCola() {
-		fail("Not yet implemented");
+	public void testDelayAndTestResume() {
+		assert(cola.isEmpty());
+		threadDelay.start();
+		try{
+			Thread.sleep(3);
+		}
+		catch(InterruptedException e){
+			fail("Se generó error por interrupción de thread");
+		}
+		assert(!cola.isEmpty());
+		assert(!hiloDelay.getFlag());
+		assert(!hiloResume.getFlag());
+		threadResume.start();
+		
+		try{
+			threadResume.join();
+			threadDelay.join();
+		}
+		catch(InterruptedException e){
+			fail("Se generó error por interrupción de thread");
+		}
+		
+		assert(hiloDelay.getFlag());
+		assert(hiloResume.getFlag());
+		assert(cola.isEmpty());
+		threadDelay.interrupt();
+		threadResume.interrupt();
 	}
 
-	/**
-	 * Test method for {@link Monitor.Cola#resume()}.
-	 */
-	@Test
-	public void testResume() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link Monitor.Cola#delay()}.
-	 */
-	@Test
-	public void testDelay() {
-		fail("Not yet implemented");
-	}
+	
 
 	/**
 	 * Test method for {@link Monitor.Cola#isEmpty()}.
