@@ -45,14 +45,40 @@ public class OperacionesMatricesListas {
 	}
 	 
 	
-	 public static synchronized int[][] sumaMatrices(int[][] a, int[][] b){
-    	 int[][] deltaDisparo = new int[1][1];
-    	 return deltaDisparo;
+	 public static synchronized int[][] productoMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
+		    int[][] c = new int[a.length][b[0].length]; //inicializo c
+		    //se comprueba si las matrices se pueden multiplicar
+		    if (a[0].length == b.length) {
+		        for (int i = 0; i < a.length; i++) {
+		            for (int j = 0; j < b[0].length; j++) {
+		                for (int k = 0; k < a[0].length; k++) {
+		                    //se multiplica la matriz
+		                    c[i][j] += a[i][k] * b[k][j];
+		                }
+		            }
+		        }
+		    }
+		    else { 
+		    	 throw new IllegalArgumentException("Matrices diferentes tamanios"); //si no se cumple la condición tira IllegalArgumentException
+		    }
+		    return c;
+	 }
+	 
+    public static synchronized int[][] sumaMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
+    	int[][] c = new int[a.length][a[0].length]; //inicializo c con mismos tamanios
+    	if ((a[0].length == b[0].length)&&(a.length == b.length)) { //compruebo que a y b sean del mismo tamanio
+		    for (int x=0; x < a.length; x++) { //recorro en un for y sumo los elementos de las matrices
+		        for (int y=0; y < a[x].length; y++) {				
+		          c[x][y]=a[x][y]+b[x][y];								
+		        }
+		    }
+    	}
+    	else {
+    		throw new IllegalArgumentException("Matrices diferentes tamanios"); //si no se cumple la condición tira IllegalArgumentException
+    	}
+    	return c;
     }
     
-    public static synchronized int[][] productoMatrices(int[][] a, int[][] b){
-    	 int[][] deltaDisparo = new int[1][1];
-    	 return deltaDisparo;
-    }
+   
 	 
 }
