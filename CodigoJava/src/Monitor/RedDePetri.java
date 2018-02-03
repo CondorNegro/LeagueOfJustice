@@ -38,7 +38,7 @@ public class RedDePetri{
 		
 	    for (int transicion = 0; transicion < getCantTransiciones(); transicion++) {
 	            try {
-	                if (esDisparoValido(transicion)) {
+	                if (esDisparoValido(getMarcadoSiguiente(transicion))) {
 	                	  transicionesSensibilizadas.add(1);
 	                }
 	                else{
@@ -64,8 +64,17 @@ public class RedDePetri{
 	}
 	
 	public boolean disparar(int transicion){
-		return true;
-	}
+		int[][] marcado_siguiente = this.getMarcadoSiguiente(transicion);
+        if (esDisparoValido(marcado_siguiente)) {
+                M = marcado_siguiente;
+                return true;
+         
+        }
+
+
+	    return false;
+ }
+
 	
 	
 	
@@ -116,8 +125,7 @@ public class RedDePetri{
     }
     
     
-    
-    public boolean esDisparoValido(int transicion) throws IllegalArgumentException{
+    public int[][] getMarcadoSiguiente(int transicion) throws IllegalArgumentException{
     	if (transicion >= this.getCantTransiciones()) {
             throw new IllegalArgumentException("Transición inválida.");
         }
@@ -127,9 +135,11 @@ public class RedDePetri{
         int[][] deltaDisparo = new int[I[1].length][1];
         deltaDisparo[transicion][0] = 1;
         
-        int[][] marcado_siguiente = OperacionesMatricesListas.sumaMatrices(M,OperacionesMatricesListas.productoMatrices(I,deltaDisparo));
-        
-        
+        return OperacionesMatricesListas.sumaMatrices(M,OperacionesMatricesListas.productoMatrices(I,deltaDisparo));
+    }
+    
+    public boolean esDisparoValido(int[][] marcado_siguiente) throws NullPointerException{
+   
         if (marcado_siguiente==null){throw new NullPointerException("Marcado null.");}
         
         for (int i = 0; i < marcado_siguiente.length; i++) {
