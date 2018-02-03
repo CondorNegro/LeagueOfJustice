@@ -5,15 +5,22 @@ package UnitTests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Monitor.OperacionesMatricesListas;
+import Monitor.RedDePetri;
+
 
 public class testRedDePetri {
-
+	private RedDePetri redTest;
+	private ArrayList<Integer> transicionesSensibilizadasTest = new ArrayList<>();
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -33,6 +40,10 @@ public class testRedDePetri {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		transicionesSensibilizadasTest.add(1);
+		transicionesSensibilizadasTest.add(0);
+		transicionesSensibilizadasTest.add(0);
+		transicionesSensibilizadasTest.add(0);
 	}
 
 	/**
@@ -47,7 +58,8 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testRedDePetri() {
-		fail("Not yet implemented");
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		assertEquals(redTest.getCantTransiciones(), 4);
 	}
 
 	/**
@@ -55,7 +67,11 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetCantTransiciones() {
-		fail("Not yet implemented");
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		assertEquals(redTest.getCantTransiciones(), 4);
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel5.xls");
+		assertTrue(redTest.getCantTransiciones()==5);
+		assertFalse(redTest.getCantTransiciones()==4);
 	}
 
 	/**
@@ -63,7 +79,8 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetSensibilizadas() {
-		fail("Not yet implemented");
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		assertEquals(redTest.getSensibilizadas(), transicionesSensibilizadasTest);
 	}
 
 	/**
@@ -71,7 +88,13 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testDisparar() {
-		fail("Not yet implemented");
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
+		assertEquals(redTest.getSensibilizadas(),transicionesSensibilizadasTest);
+		redTest.disparar(0);
+		transicionesSensibilizadasTest.set(0, 0);
+		transicionesSensibilizadasTest.set(1, 1);
+		assertEquals(redTest.getSensibilizadas(),transicionesSensibilizadasTest);
 	}
 
 	/**
@@ -79,7 +102,19 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetMarcadoSiguiente() {
-		fail("Not yet implemented");
+		int[][] a = { {0}, {2}, {0}, {0} };
+		int[][] b = { {2}, {0}, {0}, {-2} };
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		assertEquals(redTest.getMarcadoSiguiente(0), a);
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel5.xls");
+		//System.out.println(Arrays.deepToString(redTest.getMarcadoSiguiente(4)));
+		assertEquals(redTest.getMarcadoSiguiente(4),b);	
+	}
+	
+	@Test (expected=IllegalArgumentException.class) public void testGetMarcadoSiguienteException() {
+		int[][] b = { {2}, {0}, {0}, {-2} };
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		assertEquals(redTest.getMarcadoSiguiente(4),b);
 	}
 
 	/**
@@ -87,7 +122,12 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testEsDisparoValido() {
-		fail("Not yet implemented");
+		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)),true);
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(1)),false);
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(2)),false);
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(3)),false);
 	}
 
 }

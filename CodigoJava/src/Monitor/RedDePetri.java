@@ -33,7 +33,7 @@ public class RedDePetri{
 		return cantTransiciones;
 	}
 	
-	public List<Integer> getSensibilizadas() {
+	public ArrayList<Integer> getSensibilizadas() {
 		ArrayList<Integer> transicionesSensibilizadas = new ArrayList<>();
 		
 	    for (int transicion = 0; transicion < getCantTransiciones(); transicion++) {
@@ -47,7 +47,7 @@ public class RedDePetri{
 	            } 
 	            catch (IllegalArgumentException e) {
 	            	e.printStackTrace();
-	            	System.out.println("Transición u operaciones matriciales inválidas");
+	            	System.out.println("Transiciï¿½n u operaciones matriciales invï¿½lidas");
 	            }
 	            catch (NullPointerException e) {
 	            	e.printStackTrace();
@@ -82,7 +82,7 @@ public class RedDePetri{
 	
 	
 	/**
-     * Matrices colocadas en páginas de Excel:
+     * Matrices colocadas en pï¿½ginas de Excel:
      *
      * Hoja 1:  I (matriz de incidencia)
      * Hoja 2:  M (matriz de marcado)
@@ -127,7 +127,7 @@ public class RedDePetri{
     
     public int[][] getMarcadoSiguiente(int transicion) throws IllegalArgumentException{
     	if (transicion >= this.getCantTransiciones()) {
-            throw new IllegalArgumentException("Transición inválida.");
+            throw new IllegalArgumentException("Transiciï¿½n invï¿½lida.");
         }
 
         //Vector de disparo.
@@ -144,7 +144,7 @@ public class RedDePetri{
         
         for (int i = 0; i < marcado_siguiente.length; i++) {
             for (int j = 0; j < marcado_siguiente[0].length; j++) {
-                if (marcado_siguiente[i][j] < 0) { //Valor negativo. Disparo inválido.
+                if (marcado_siguiente[i][j] < 0) { //Valor negativo. Disparo invï¿½lido.
                     return false;
                 }
             }
