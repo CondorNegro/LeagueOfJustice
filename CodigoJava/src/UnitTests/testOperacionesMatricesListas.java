@@ -19,6 +19,11 @@ import Monitor.OperacionesMatricesListas;
 public class testOperacionesMatricesListas {
 	ArrayList<Integer> list1Test = new ArrayList<>();
 	ArrayList<Integer> list2Test = new ArrayList<>();
+	int[][] a = { { 1, 2, -3 }, { 4, 0, -2 } };
+    int[][] b = { { 2, 2, 3 }, { 1, -1, -6 } };
+    
+    int[][] x = { { 1, 2, -3 }, { 4, 0, -2 } };
+    int[][] z = { { 3, 1 }, { 2, 4 }, { -1, 5 } };
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -46,6 +51,7 @@ public class testOperacionesMatricesListas {
 		list2Test.add(0);
 		list2Test.add(0);
 		list2Test.add(1);
+
 	}
 
 	/**
@@ -99,7 +105,9 @@ public class testOperacionesMatricesListas {
 	 */
 	@Test
 	public void testSumaMatrices() {
-		fail("Not yet implemented");
+		int[][] c = { { 3, 4, 0 }, { 5, -1, -8 } };
+		assertEquals(OperacionesMatricesListas.sumaMatrices(a, b),c);
+		assertEquals(OperacionesMatricesListas.sumaMatrices(b, a),c);
 	}
 
 	/**
@@ -107,7 +115,8 @@ public class testOperacionesMatricesListas {
 	 */
 	@Test
 	public void testProductoMatrices() {
-		fail("Not yet implemented");
+		int[][] c = { { 10,-6 }, { 14,-6 } };
+		assertEquals(OperacionesMatricesListas.productoMatrices(x, z),c);
 	}
 
 }
