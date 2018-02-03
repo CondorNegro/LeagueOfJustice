@@ -15,31 +15,58 @@ public class RedDePetri{
 	private int cantTransiciones;
 	
 	private int[][] I; // Matriz de incidencia (Plazas x Transiciones)
-	private int[] M; // Matriz de marcado. 
+	private int[][] M; // Matriz de marcado. 
 	
 	
 	
 	public RedDePetri(String path){
 		this.path=path;
 		this.setMatricesFromExcel(path);
-		
-		
-		
-		cantTransiciones=0; //Corregir
+		setCantTransiciones(I[1].length);
 	}
 	
-	public int getNumeroTransiciones(){ //Esto es lo unico que esta OK.
+	
+	private void setCantTransiciones(int cantidad){
+		this.cantTransiciones=cantidad;
+	}
+	
+	public int getCantTransiciones(){ //Esto es lo unico que esta OK.
 		return cantTransiciones;
 	}
 	
 	public List<Integer> getSensibilizadas() {
 		ArrayList<Integer> transicionesSensibilizadas = new ArrayList<>();
+		
+	    for (int transicion = 0; transicion < getCantTransiciones(); transicion++) {
+	            try {
+	                if (esDisparoValido(transicion)) {
+	                	  transicionesSensibilizadas.add(1);
+	                }
+	                else{
+	                	 transicionesSensibilizadas.add(0);
+	                }
+	            } 
+	            catch (IllegalArgumentException e) {
+	            	e.printStackTrace();
+	            	System.out.println("Transición inválida");
+	            }
+	            catch (Exception e) {
+	            	e.printStackTrace();
+	            	System.out.println("Error en getSensibilizadas()");
+	            }
+
+	     }
+	      
 		return transicionesSensibilizadas;
 	}
 	
 	public boolean disparar(int transicion){
 		return true;
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -64,12 +91,14 @@ public class RedDePetri{
                     I[j - 1][i - 1] = Integer.parseInt(paginaExcel0.getCell(i, j).getContents());
                 }
             }
+            
+            
 
             Sheet paginaExcel1= archivoExcelMatrices.getSheet(1);
             columnas = paginaExcel1.getColumns();
-            M = new int[columnas - 1];
+            M = new int[columnas - 1][1];
             for (int j = 1; j < columnas; j++) {
-                M[j - 1] = Integer.parseInt(paginaExcel1.getCell(j, 1).getContents());
+                M[j - 1][0]= Integer.parseInt(paginaExcel1.getCell(j, 1).getContents());
             }
 
 
@@ -82,6 +111,36 @@ public class RedDePetri{
         }
 
     }
+    
+    
+    
+    public boolean esDisparoValido(int transicion) throws IllegalArgumentException{
+    	if (transicion >= this.getCantTransiciones()) {
+            throw new IllegalArgumentException("Transición inválida.");
+        }
+
+        //Vector de disparo.
+
+        int[][] deltaDisparo = new int[I[1].length][1];
+        deltaDisparo[transicion][0] = 1;
+
+        sumaMatrices(M,productoMatrices(I,deltaDisparo));
+        return true;
+    }
+    
+    
+    public int[][] sumaMatrices(int[][] a, int[][] b){
+    	 int[][] deltaDisparo = new int[I[1].length][1];
+    	 return deltaDisparo;
+    }
+    
+    public int[][] productoMatrices(int[][] a, int[][] b){
+    	 int[][] deltaDisparo = new int[I[1].length][1];
+    	 return deltaDisparo;
+    }
+    
+    
+    
 	
 	
 	

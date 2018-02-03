@@ -48,7 +48,7 @@ public class Monitor {
 			e.printStackTrace();
 		}
 		this.rdp=new RedDePetri(path);
-		this.setNumeroTransiciones(rdp.getNumeroTransiciones());
+		this.setNumeroTransiciones(rdp.getCantTransiciones());
 		colas= new Cola[this.getNumeroTransiciones()];
         for(int i=0;i<this.getNumeroTransiciones();i++){ 
             colas[i]=new Cola(); //Inicialización de colas.
