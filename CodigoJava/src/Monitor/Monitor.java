@@ -84,39 +84,7 @@ public class Monitor {
 	
 
 
-public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throws IndexOutOfBoundsException{
-	if (lista1.size()==lista2.size()) {
-		ArrayList<Integer> resultado = new ArrayList<>();
-		Iterator<Integer> iterador1=lista1.iterator();
-		Iterator<Integer> iterador2=lista2.iterator();
 
-		while(iterador1.hasNext()&iterador2.hasNext()) {
-    		resultado.add(new Integer(iterador1.next().intValue()&iterador2.next().intValue()));
-		}   
-
-		return resultado;
-	}
-
-	else{
-		throw new IndexOutOfBoundsException("Listas de diferentes tamanios");
-	}
-
-}
-
-
-	
-	//Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
-	public boolean isNotAllZeros(List<Integer> lista){
-		Iterator<Integer> iterador=lista.iterator();
-		boolean var=false;
-		while(iterador.hasNext()) {
-			if(iterador.next().intValue()!=0) {
-				var=true;
-			}
-		} 
-		return var;
-	}
-	
 	
 	
 	
@@ -138,13 +106,13 @@ public List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throw
 				List<Integer> Vs=rdp.getSensibilizadas(); //get transiciones sensibilizadas
 				List<Integer> Vc=quienesEstanEnColas(); //get transiciones sensibilizadas
 				try{
-					m= andVector(Vs, Vc);
+					m= OperacionesMatricesListas.andVector(Vs, Vc);
 				}
 				catch(IndexOutOfBoundsException e){
 					e.printStackTrace();
 					return;
 				}	
-				if(isNotAllZeros(m)){
+				if(OperacionesMatricesListas.isNotAllZeros(m)){
 					try{
 						int transicionADisparar=politica.cualDisparar(m);
 						colas[transicionADisparar].resume(); //Sale de una cola de condicion.

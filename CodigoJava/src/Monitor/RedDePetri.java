@@ -3,7 +3,6 @@ package Monitor;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
-import java.util.*;
 import jxl.*;
 
 
@@ -124,20 +123,12 @@ public class RedDePetri{
         int[][] deltaDisparo = new int[I[1].length][1];
         deltaDisparo[transicion][0] = 1;
 
-        sumaMatrices(M,productoMatrices(I,deltaDisparo));
+        OperacionesMatricesListas.sumaMatrices(M,OperacionesMatricesListas.productoMatrices(I,deltaDisparo));
         return true;
     }
     
     
-    public int[][] sumaMatrices(int[][] a, int[][] b){
-    	 int[][] deltaDisparo = new int[I[1].length][1];
-    	 return deltaDisparo;
-    }
-    
-    public int[][] productoMatrices(int[][] a, int[][] b){
-    	 int[][] deltaDisparo = new int[I[1].length][1];
-    	 return deltaDisparo;
-    }
+   
     
     
     

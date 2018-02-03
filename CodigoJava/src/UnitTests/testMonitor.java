@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import Monitor.Monitor;
+
 
 
 public class testMonitor {
@@ -101,43 +102,7 @@ public class testMonitor {
 		fail("Not yet implemented");
 	}
 
-	/**
-	 * Test method for {@link Monitor.Monitor#andVector(java.util.List, java.util.List)}.
-	 */
-	@Test
-	public void testAndVector() {
-		//assertTrue(list1Test==list2Test);
-		assertEquals(monitor1.andVector(list1Test, list2Test), list1Test); //compruebo que 1001 and 1001 da 1001 
-		list2Test.set(0, 0); //seteo un 0 en la posicion 0, quedando 0001
-		assertEquals(monitor1.andVector(list1Test, list2Test),list2Test); //compruebo que 1001 and 0001 da 0001
-		list2Test.set(3, 0); //seteo un 0 en la posicion 0, quedando 0000
-		list1Test.set(1, 0); //seteo un 1 en la posicion 1, quedando 1101
-		list1Test.set(2, 0); //seteo un 1 en la posicion 1, quedando 1111
-		assertEquals(monitor1.andVector(list1Test, list2Test),list2Test); //compruebo que 1111 and 0000 da 0000
-	}
-
-	@Test (expected=IndexOutOfBoundsException.class) public void testAndVectorException() {
-		list1Test.add(1);
-		assertEquals(monitor1.andVector(list1Test, list2Test),list2Test); // deberia arrojar IndexOutOfBoundsException
-																	      //porque list1Test tiene un elemento de mas
-	}
 	
-	
-	/**
-	 * Test method for {@link Monitor.Monitor#isNotAllZeros(java.util.List)}.
-	 */
-	@Test
-	public void testIsNotAllZeros() {
-		assertEquals(monitor1.isNotAllZeros(list1Test), true); // pruebo que no todos los elementos de list1Test sean 0
-		ArrayList<Integer> list3Test = new ArrayList<>();
-		list3Test.add(0);
-		list3Test.add(0);
-		list3Test.add(0);
-		assertTrue(monitor1.isNotAllZeros(list3Test)==false); //en list3Test, todos los elementos son 0, debe dar false
-		list3Test.add(1);
-		assertTrue(monitor1.isNotAllZeros(list3Test)==true); //ahora debe dar true
-	}
-
 	/**
 	 * Test method for {@link Monitor.Monitor#dispararTransicion(int)}.
 	 */
