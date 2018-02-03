@@ -47,7 +47,11 @@ public class RedDePetri{
 	            } 
 	            catch (IllegalArgumentException e) {
 	            	e.printStackTrace();
-	            	System.out.println("Transición inválida");
+	            	System.out.println("Transición u operaciones matriciales inválidas");
+	            }
+	            catch (NullPointerException e) {
+	            	e.printStackTrace();
+	            	System.out.println("Marcado null");
 	            }
 	            catch (Exception e) {
 	            	e.printStackTrace();
@@ -122,8 +126,19 @@ public class RedDePetri{
 
         int[][] deltaDisparo = new int[I[1].length][1];
         deltaDisparo[transicion][0] = 1;
-
-        OperacionesMatricesListas.sumaMatrices(M,OperacionesMatricesListas.productoMatrices(I,deltaDisparo));
+        
+        int[][] marcado_siguiente = OperacionesMatricesListas.sumaMatrices(M,OperacionesMatricesListas.productoMatrices(I,deltaDisparo));
+        
+        
+        if (marcado_siguiente==null){throw new NullPointerException("Marcado null.");}
+        
+        for (int i = 0; i < marcado_siguiente.length; i++) {
+            for (int j = 0; j < marcado_siguiente[0].length; j++) {
+                if (marcado_siguiente[i][j] < 0) { //Valor negativo. Disparo inválido.
+                    return false;
+                }
+            }
+        }
         return true;
     }
     
