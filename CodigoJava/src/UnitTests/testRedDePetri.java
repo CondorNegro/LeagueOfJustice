@@ -5,8 +5,11 @@ package UnitTests;
 
 import static org.junit.Assert.*;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -21,18 +24,15 @@ import Monitor.RedDePetri;
 public class testRedDePetri {
 	private RedDePetri redTest;
 	private ArrayList<Integer> transicionesSensibilizadasTest = new ArrayList<>();
-	private static String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
-	private static String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
+	private String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
+	private String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		if((System.getProperty("os.name")).equals("Windows 10")){
-			redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel.xls";
-			redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel5.xls";
-		}
+		
 	}
 
 	/**
@@ -47,6 +47,11 @@ public class testRedDePetri {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		if((System.getProperty("os.name")).equals("Windows 10")){
+			redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel.xls";
+			redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel5.xls";
+			
+		}
 		transicionesSensibilizadasTest.add(1);
 		transicionesSensibilizadasTest.add(0);
 		transicionesSensibilizadasTest.add(0);
