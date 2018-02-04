@@ -21,12 +21,18 @@ import Monitor.RedDePetri;
 public class testRedDePetri {
 	private RedDePetri redTest;
 	private ArrayList<Integer> transicionesSensibilizadasTest = new ArrayList<>();
+	private static String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
+	private static String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		if((System.getProperty("os.name")).equals("Windows 10")){
+			redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel.xls";
+			redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel5.xls";
+		}
 	}
 
 	/**
@@ -59,7 +65,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testRedDePetri() {
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.getCantTransiciones(), 4);
 	}
 
@@ -68,9 +74,9 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetCantTransiciones() {
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.getCantTransiciones(), 4);
-		redTest= new RedDePetri("./RedesParaTest/testExcel5.xls");
+		redTest= new RedDePetri(this.redExcel2);
 		assertTrue(redTest.getCantTransiciones()==5);
 		assertFalse(redTest.getCantTransiciones()==4);
 	}
@@ -80,7 +86,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetSensibilizadas() {
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.getSensibilizadas(), transicionesSensibilizadasTest);
 	}
 
@@ -89,7 +95,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testDisparar() {
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
 		assertEquals(redTest.getSensibilizadas(),transicionesSensibilizadasTest);
 		redTest.disparar(0);
@@ -105,16 +111,16 @@ public class testRedDePetri {
 	public void testGetMarcadoSiguiente() {
 		int[][] a = { {0}, {2}, {0}, {0} };
 		int[][] b = { {2}, {0}, {0}, {-2} };
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.getMarcadoSiguiente(0), a);
-		redTest= new RedDePetri("./RedesParaTest/testExcel5.xls");
+		redTest= new RedDePetri(this.redExcel2);
 		//System.out.println(Arrays.deepToString(redTest.getMarcadoSiguiente(4)));
 		assertEquals(redTest.getMarcadoSiguiente(4),b);	
 	}
 	
 	@Test (expected=IllegalArgumentException.class) public void testGetMarcadoSiguienteException() {
 		int[][] b = { {2}, {0}, {0}, {-2} };
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.getMarcadoSiguiente(4),b);
 	}
 
@@ -123,7 +129,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testEsDisparoValido() {
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)),true);
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(1)),false);
@@ -138,7 +144,7 @@ public class testRedDePetri {
 	
 	@Test (expected=NullPointerException.class) public void testEsDisparoValidoException() {
 		int[][] b = { {2}, {0}, {0}, {-2} };
-		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.esDisparoValido(null),b);
 	}
 

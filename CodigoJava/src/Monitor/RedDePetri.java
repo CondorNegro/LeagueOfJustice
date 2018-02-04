@@ -82,7 +82,7 @@ public class RedDePetri{
 	
 	
 	/**
-     * Matrices colocadas en p�ginas de Excel:
+     * Matrices colocadas en paginas de Excel:
      *
      * Hoja 1:  I (matriz de incidencia)
      * Hoja 2:  M (matriz de marcado)
@@ -120,6 +120,7 @@ public class RedDePetri{
         } 
         catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error en metodo setMatricesFromExcel");
         }
 
     }
@@ -127,7 +128,7 @@ public class RedDePetri{
     
     public int[][] getMarcadoSiguiente(int transicion) throws IllegalArgumentException{
     	if (transicion >= this.getCantTransiciones()) {
-            throw new IllegalArgumentException("Transici�n inv�lida.");
+            throw new IllegalArgumentException("Transicion invalida.");
         }
 
         //Vector de disparo.
