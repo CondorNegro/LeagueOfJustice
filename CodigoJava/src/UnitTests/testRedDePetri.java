@@ -21,6 +21,7 @@ import Monitor.RedDePetri;
 public class testRedDePetri {
 	private RedDePetri redTest;
 	private ArrayList<Integer> transicionesSensibilizadasTest = new ArrayList<>();
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -58,7 +59,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testRedDePetri() {
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
 		assertEquals(redTest.getCantTransiciones(), 4);
 	}
 
@@ -67,9 +68,9 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetCantTransiciones() {
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
 		assertEquals(redTest.getCantTransiciones(), 4);
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel5.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel5.xls");
 		assertTrue(redTest.getCantTransiciones()==5);
 		assertFalse(redTest.getCantTransiciones()==4);
 	}
@@ -79,7 +80,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetSensibilizadas() {
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
 		assertEquals(redTest.getSensibilizadas(), transicionesSensibilizadasTest);
 	}
 
@@ -88,7 +89,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testDisparar() {
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
 		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
 		assertEquals(redTest.getSensibilizadas(),transicionesSensibilizadasTest);
 		redTest.disparar(0);
@@ -104,16 +105,16 @@ public class testRedDePetri {
 	public void testGetMarcadoSiguiente() {
 		int[][] a = { {0}, {2}, {0}, {0} };
 		int[][] b = { {2}, {0}, {0}, {-2} };
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
 		assertEquals(redTest.getMarcadoSiguiente(0), a);
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel5.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel5.xls");
 		//System.out.println(Arrays.deepToString(redTest.getMarcadoSiguiente(4)));
 		assertEquals(redTest.getMarcadoSiguiente(4),b);	
 	}
 	
 	@Test (expected=IllegalArgumentException.class) public void testGetMarcadoSiguienteException() {
 		int[][] b = { {2}, {0}, {0}, {-2} };
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
 		assertEquals(redTest.getMarcadoSiguiente(4),b);
 	}
 
@@ -122,12 +123,23 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testEsDisparoValido() {
-		redTest= new RedDePetri("/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/RedesParaTest/testExcel.xls");
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
 		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)),true);
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(1)),false);
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(2)),false);
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(3)),false);
+		redTest.disparar(0);
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)),false);
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(1)),true);
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(2)),false);
+		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(3)),false);
+	}
+	
+	@Test (expected=NullPointerException.class) public void testEsDisparoValidoException() {
+		int[][] b = { {2}, {0}, {0}, {-2} };
+		redTest= new RedDePetri("./RedesParaTest/testExcel.xls");
+		assertEquals(redTest.esDisparoValido(null),b);
 	}
 
 }
