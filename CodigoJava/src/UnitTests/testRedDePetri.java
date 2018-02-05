@@ -48,8 +48,8 @@ public class testRedDePetri {
 	@Before
 	public void setUp() throws Exception {
 		if((System.getProperty("os.name")).equals("Windows 10")){
-			redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel.xls";
-			redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel5.xls";
+			this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel.xls";
+			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel5.xls";
 			
 		}
 		transicionesSensibilizadasTest.add(1);

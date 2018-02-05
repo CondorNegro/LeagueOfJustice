@@ -15,6 +15,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+
 import Monitor.Monitor;
 
 
@@ -24,6 +28,8 @@ public class testMonitor {
 	private Monitor monitor2=Monitor.getInstance();
 	ArrayList<Integer> list1Test = new ArrayList<>();
 	ArrayList<Integer> list2Test = new ArrayList<>();
+	private String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
+	private String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -43,17 +49,22 @@ public class testMonitor {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		monitor1.setPolitica(1); //creo dos instancias de monitor y seteo politicas diferentes
-		monitor2.setPolitica(2); //quiero probar que se crea un solo monitor, con la ultima politica definida
 		
-		list1Test.add(1);
-		list1Test.add(0);
-		list1Test.add(0);
-		list1Test.add(1);
-		list2Test.add(1);
-		list2Test.add(0);
-		list2Test.add(0);
-		list2Test.add(1);
+		
+		this.list1Test.add(1);
+		this.list1Test.add(0);
+		this.list1Test.add(0);
+		this.list1Test.add(1);
+		this.list2Test.add(1);
+		this.list2Test.add(0);
+		this.list2Test.add(0);
+		this.list2Test.add(1);
+		if((System.getProperty("os.name")).equals("Windows 10")){
+			this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel.xls";
+			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel5.xls";
+			
+		}
+
 	}
 
 	/**
@@ -65,33 +76,62 @@ public class testMonitor {
 
 	/**
 	 * Test method for {@link Monitor.Monitor#getInstance()}.
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testGetInstance() {
-		assertFalse(monitor2.getPolitica()==1);
-		assertTrue(monitor2.getPolitica()==2);
-		assertEquals(monitor2.getPolitica(), monitor1.getPolitica()); //monitor1 y monitor2 en realidad
-																	  // son las mismas intancias
+	public void testGetInstance() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		this.monitor1.setPolitica(1); //creo dos instancias de monitor y seteo politicas diferentes
+		this.monitor2.setPolitica(2); //quiero probar que se crea un solo monitor, con la ultima politica definida
+		Method getPolitica = Monitor.class.getDeclaredMethod("getPolitica", null);
+		getPolitica.setAccessible(true);
+		Object Politica = getPolitica.invoke(monitor1);
+		assertFalse((int)Politica==1);
+		assertTrue((int)Politica==2);   //monitor1 y monitor2 en realidad
+								  		// son las mismas intancias
 	}
 
 	/**
 	 * Test method for {@link Monitor.Monitor#configRdp(java.lang.String)}.
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
 	 */
 	@Test
-	public void testConfigRdp() {
-		fail("Not yet implemented");
+	public void testConfigRdp() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		this.monitor1.configRdp(this.redExcel1);
+		Method getNumeroTransiciones = Monitor.class.getDeclaredMethod("getNumeroTransiciones", null);
+		getNumeroTransiciones.setAccessible(true);
+		//Object[] parameters = new Object[1];
+		//parameters[0] = "A String parameter";
+		Object cantidadTransiciones = getNumeroTransiciones.invoke(monitor1);
+		assertEquals(cantidadTransiciones, 4); //monitor1 y monitor2 en realidad
 	}
 
 	/**
 	 * Test method for {@link Monitor.Monitor#setPolitica(int)}.
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
 	 */
 	@Test
-	public void testSetPolitica() {
-		monitor1.setPolitica(1);
-		assertFalse(monitor1.getPolitica()==2);
-		assertTrue(monitor1.getPolitica()==1);
-		monitor1.setPolitica(2);
-		assertEquals(monitor1.getPolitica(), 2);
+	public void testSetPolitica() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		this.monitor1.setPolitica(1);
+		Method getPolitica = Monitor.class.getDeclaredMethod("getPolitica", null);
+		getPolitica.setAccessible(true);
+		Object Politica = getPolitica.invoke(monitor1);
+		assertFalse((int)Politica==2);
+		assertTrue((int)Politica==1);
+		this.monitor1.setPolitica(2);
+		Politica = getPolitica.invoke(monitor1);
+		assertEquals((int)Politica, 2);
 	}
 
 	/**

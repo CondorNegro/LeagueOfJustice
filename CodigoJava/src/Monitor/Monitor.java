@@ -17,7 +17,7 @@ public class Monitor {
     //Aplicación de Singleton.
     private static final Monitor instance = new Monitor();
 	 private Monitor(){
-		//Semaforo binario a la entrada del monitor.
+		 //Semaforo binario a la entrada del monitor.
 		 //Fairness true: FIFO en cola de hilos bloqueados.
 	       mutex=new Semaphore(1,true);
 	       setNumeroTransiciones(0);
@@ -36,7 +36,7 @@ public class Monitor {
 		return this.cantTransiciones;
 	}
 	
-	public int getPolitica(){
+	private int getPolitica(){
 		return this.politica.getModo();
 	}
 	
@@ -69,7 +69,7 @@ public class Monitor {
 	}
 	
 	
-	public List<Integer> quienesEstanEnColas() {
+	private List<Integer> quienesEstanEnColas() {
 		ArrayList<Integer> Vc = new ArrayList<>();
         for(int i=0;i<this.getNumeroTransiciones();i++){
         	if (colas[i].isEmpty()==true) {
