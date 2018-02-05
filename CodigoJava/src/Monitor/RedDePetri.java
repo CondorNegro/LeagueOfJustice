@@ -47,7 +47,7 @@ public class RedDePetri{
 	            } 
 	            catch (IllegalArgumentException e) {
 	            	e.printStackTrace();
-	            	System.out.println("Transici�n u operaciones matriciales inv�lidas");
+	            	System.out.println("Transicion u operaciones matriciales invalidas");
 	            }
 	            catch (NullPointerException e) {
 	            	e.printStackTrace();
@@ -84,8 +84,11 @@ public class RedDePetri{
 	/**
      * Matrices colocadas en paginas de Excel:
      *
-     * Hoja 1:  I (matriz de incidencia)
-     * Hoja 2:  M (matriz de marcado)
+     * Hoja 1:  I+
+     * Hoja 2:  I-
+     * Hoja 3:  I (matriz de incidencia)
+     * Hoja 4:  H
+     * Hoja 5:  M (matriz de marcado)
      * 
      */
     private void setMatricesFromExcel(String path) {
@@ -94,23 +97,23 @@ public class RedDePetri{
         
         try {
         	archivoExcelMatrices = Workbook.getWorkbook(file);
-        	Sheet paginaExcel0 = archivoExcelMatrices.getSheet(0);
-            int columnas = paginaExcel0.getColumns();
-            int filas = paginaExcel0.getRows();
+        	Sheet paginaExcelI = archivoExcelMatrices.getSheet(2);
+            int columnas = paginaExcelI.getColumns();
+            int filas = paginaExcelI.getRows();
             I = new int[filas - 1][columnas - 1];
             for (int i = 1; i < columnas; i++) {
                 for (int j = 1; j < filas; j++) {
-                    I[j - 1][i - 1] = Integer.parseInt(paginaExcel0.getCell(i, j).getContents());
+                    I[j - 1][i - 1] = Integer.parseInt(paginaExcelI.getCell(i, j).getContents());
                 }
             }
             
             
 
-            Sheet paginaExcel1= archivoExcelMatrices.getSheet(1);
-            columnas = paginaExcel1.getColumns();
+            Sheet paginaExcelM= archivoExcelMatrices.getSheet(4);
+            columnas = paginaExcelM.getColumns();
             M = new int[columnas - 1][1];
             for (int j = 1; j < columnas; j++) {
-                M[j - 1][0]= Integer.parseInt(paginaExcel1.getCell(j, 1).getContents());
+                M[j - 1][0]= Integer.parseInt(paginaExcelM.getCell(j, 1).getContents());
             }
 
 
