@@ -40,6 +40,10 @@ public class Monitor {
 		return this.politica.getModo();
 	}
 	
+	private Cola getColaCero(){
+		return colas[0];
+	}
+	
 	public void configRdp(String path){
 		try {
 	            mutex.acquire();

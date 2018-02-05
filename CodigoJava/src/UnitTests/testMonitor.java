@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
+import Monitor.Cola;
 import Monitor.Monitor;
 
 
@@ -28,6 +29,12 @@ public class testMonitor {
 	private Monitor monitor2=Monitor.getInstance();
 	ArrayList<Integer> list1Test = new ArrayList<>();
 	ArrayList<Integer> list2Test = new ArrayList<>();
+	
+	private HiloDelay hiloDelay;
+	private HiloResume hiloResume;
+	private Thread threadDelay;
+	private Thread threadResume;
+	
 	private String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
 	private String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
 	/**
@@ -49,6 +56,7 @@ public class testMonitor {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		
 		
 		
 		this.list1Test.add(1);
@@ -139,7 +147,61 @@ public class testMonitor {
 	 */
 	@Test
 	public void testQuienesEstanEnColas() {
-		fail("Not yet implemented");
+		this.monitor1.configRdp(this.redExcel1);
+		
+		
+		try {
+			Method quienesEstanEnColas;
+		
+			quienesEstanEnColas = Monitor.class.getDeclaredMethod("quienesEstanEnColas", null);
+			quienesEstanEnColas.setAccessible(true);
+					
+		
+			Method getColaCero;
+		
+			getColaCero = Monitor.class.getDeclaredMethod("getColaCero", null);
+			getColaCero.setAccessible(true);
+			Object cola = getColaCero.invoke(monitor1);
+			
+			hiloDelay=new HiloDelay((Cola) cola);
+			hiloResume=new HiloResume((Cola) cola);
+			threadDelay=new Thread(hiloDelay);
+			threadResume=new Thread(hiloResume);
+			
+			
+			threadDelay.start();
+			try{
+				Thread.sleep(3);
+			}
+			catch(InterruptedException e){
+				fail("Se generó error por interrupción de thread");
+			}
+			List<Integer> Lista1 = (List<Integer>) quienesEstanEnColas.invoke(monitor1);
+			assertEquals((int)Lista1.get(0),1);
+			
+			threadResume.start();
+			threadResume.join();
+			List<Integer> Lista2 = (List<Integer>) quienesEstanEnColas.invoke(monitor1);
+			assertEquals((int)Lista2.get(0),0);
+			
+			} 
+		catch (Exception e){
+			
+				e.printStackTrace();
+				System.out.println("Error en testQuienesEstanEnColas");
+				fail("Error en testQuienesEstanEnColas");
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	
