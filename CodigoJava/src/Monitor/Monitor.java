@@ -44,6 +44,10 @@ public class Monitor {
 		return colas[0];
 	}
 	
+	private RedDePetri getRDP(){
+		return this.rdp;
+	}
+	
 	public void configRdp(String path){
 		try {
 	            mutex.acquire();

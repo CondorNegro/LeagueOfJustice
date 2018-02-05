@@ -25,6 +25,10 @@ public class RedDePetri{
 	}
 	
 	
+	public int[][] getMatrizM(){
+		return M;
+	}
+	
 	private void setCantTransiciones(int cantidad){
 		this.cantTransiciones=cantidad;
 	}
