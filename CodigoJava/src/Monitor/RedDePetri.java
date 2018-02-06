@@ -30,7 +30,7 @@ public class RedDePetri{
 	 * @return int[][] Marcado actual de la red.
 	 */
 	public int[][] getMatrizM(){
-		return M;
+		return M.clone();
 	}
 	
 	
