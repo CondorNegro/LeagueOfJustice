@@ -17,15 +17,28 @@ public class Politica {
 		setModo(modo);
 	}
 	
+	
+	/**
+	 * Metodo getModo.
+	 * @return int atributo modoPolitica
+	 */
 	public int getModo(){
 		return this.modoPolitica;
 	}
 	
+	/**
+	 * Metodo setModo
+	 * @param modo Modo con el que va a decidir la politica
+	 */
 	public void setModo(int modo){
 		this.modoPolitica=modo;
 	}
 	
-	
+	/**
+	 * Método politicaAleatoria. Implementa la decision de cual disparar en base a la aleatoriedad.
+	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
+	 * @return int indice que representa a la transicion a disparar del vector de transiciones
+	 */
 	private int politicaAleatoria(List<Integer> listaM){
 	
 			int indice=0;
@@ -41,7 +54,11 @@ public class Politica {
 		
 	}
 	
-	
+	/**
+	 * Método politicaPrimeroSuben. Implementa la decision de cual disparar en base a darle mayor prioridad a la gente que tiene que subir al ferrocarril.
+	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
+	 * @return int indice que representa a la transicion a disparar del vector de transiciones
+	 */
 	private int politicaPrimeroSuben(List<Integer> listaM){
 		
 			
@@ -55,6 +72,11 @@ public class Politica {
 	
 	}
 	
+	/**
+	 * Método politicaPrimeroBajan. Implementa la decision de cual disparar en base a darle mayor prioridad a la gente que tiene que bajar del ferrocarril.
+	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
+	 * @return int indice que representa a la transicion a disparar del vector de transiciones
+	 */
 	private int politicaPrimeroBajan(List<Integer> listaM){
 		
 			
@@ -70,7 +92,12 @@ public class Politica {
 	
 	
 	
-	//Metodo que indica cual transicion se dispara segun el modo de politica elegido.
+	/**
+	 * Metodo cualDisparar. Metodo que indica cual transicion se dispara segun el modo de politica elegido.
+	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
+	 * @return int indice que representa a la transicion a disparar del vector de transiciones
+	 * @throws IndexOutOfBoundsException en caso de que listaM sea una lista vacia.
+	 */
 	public int cualDisparar(List<Integer> listaM) throws IndexOutOfBoundsException{
 		if(listaM.size()>0){
 			if(this.modoPolitica==0){ //Politica aleatoria.

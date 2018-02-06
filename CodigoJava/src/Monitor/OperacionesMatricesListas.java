@@ -12,6 +12,14 @@ public class OperacionesMatricesListas {
 		
 	 }
 	
+	 /**
+	  * 
+	  * 
+	  * @param lista1 lista con enteros 1 y 0. 
+	  * @param lista2 lista con enteros 1 y 0.
+	  * @return List<Integer> Conteniendo el resultado de aplicar la operacion AND elemento a elemento entre lista1 y lista2
+	  * @throws IndexOutOfBoundsException En caso de tener listas de diferentes tamanios
+	  */
 	 public static synchronized  List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throws IndexOutOfBoundsException{
 			if (lista1.size()==lista2.size()) {
 				ArrayList<Integer> resultado = new ArrayList<>();
