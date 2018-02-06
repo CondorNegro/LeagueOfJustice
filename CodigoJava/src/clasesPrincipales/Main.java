@@ -8,15 +8,15 @@ package clasesPrincipales;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import Monitor.Monitor;
+import java.io.PrintStream; //Para logueo de eventos
+import Monitor.Monitor; //Clase Monitor.
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		Monitor monitor=Monitor.getInstance();
-		monitor.configRdp("");
+		Monitor monitor=Monitor.getInstance(); //Patron Singleton
+		monitor.configRdp(""); //Configuro la red de petri para el monitor segun el path.
 		
 		//Política 0: aleatoria.
 		//Política 1: primero los que suben.
@@ -25,7 +25,7 @@ public class Main {
 		
 		
 		
-		PrintStream salidaLog;
+		PrintStream salidaLog; //Logueo de eventos
         try {
             salidaLog=new PrintStream(new File("./log.txt"));
         }
