@@ -18,7 +18,7 @@ public class OperacionesMatricesListas {
 	  * @param lista1 lista con enteros 1 y 0. 
 	  * @param lista2 lista con enteros 1 y 0.
 	  * @return List<Integer> Conteniendo el resultado de aplicar la operacion AND elemento a elemento entre lista1 y lista2
-	  * @throws IndexOutOfBoundsException En caso de tener listas de diferentes tamanios
+	  * @throws IndexOutOfBoundsException En caso de tener listas de diferentes tamaños
 	  */
 	 public static synchronized  List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throws IndexOutOfBoundsException{
 			if (lista1.size()==lista2.size()) {
@@ -40,7 +40,11 @@ public class OperacionesMatricesListas {
 		}
 	 
 	 
-	//Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
+	/**
+	 * Metodo isNotAllZeros. Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
+	 * @param lista Lista a evaluar
+	 * @return boolean true si al menos un elemento de la lista es distinto de cero
+	 */
 	public static synchronized boolean isNotAllZeros(List<Integer> lista){
 		Iterator<Integer> iterador=lista.iterator();
 		boolean var=false;
@@ -52,7 +56,14 @@ public class OperacionesMatricesListas {
 		return var;
 	}
 	 
-	
+	/**
+	 * Metodo productoMatrices. Realiza el producto entre dos matrices (a x b) de datos tipo int.
+	 * @param a Primer matriz
+	 * @param b Segunda matriz
+	 * @return int[][] resultado de la multiplicacion
+	 * @throws IllegalArgumentException En caso de tener matrices que no cumplen con las condiciones para poder efectuar la multiplicacion
+		    
+	 */
 	 public static synchronized int[][] productoMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
 		    int[][] c = new int[a.length][b[0].length]; //inicializo c
 		    //se comprueba si las matrices se pueden multiplicar
@@ -67,11 +78,19 @@ public class OperacionesMatricesListas {
 		        }
 		    }
 		    else { 
-		    	 throw new IllegalArgumentException("Matrices diferentes tamanios"); //si no se cumple la condición tira IllegalArgumentException
+		    	 throw new IllegalArgumentException("Las matrices no cumplen con las condiciones para poder efectuar la multiplicacion"); //si no se cumple la condición tira IllegalArgumentException
 		    }
 		    return c;
 	 }
 	 
+	 
+	 /**
+		 * Metodo sumaMatrices. Realiza la suma entre dos matrices (a + b) de datos tipo int.
+		 * @param a Primer matriz
+		 * @param b Segunda matriz
+		 * @return int[][] resultado de la suma
+		 * @throws IllegalArgumentException En caso de tener matrices de diferentes tamaños
+		 */
     public static synchronized int[][] sumaMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
     	int[][] c = new int[a.length][a[0].length]; //inicializo c con mismos tamanios
     	if ((a[0].length == b[0].length)&&(a.length == b.length)) { //compruebo que a y b sean del mismo tamanio
@@ -82,7 +101,7 @@ public class OperacionesMatricesListas {
 		    }
     	}
     	else {
-    		throw new IllegalArgumentException("Matrices diferentes tamanios"); //si no se cumple la condición tira IllegalArgumentException
+    		throw new IllegalArgumentException("Matrices de diferentes tamanios"); //si no se cumple la condición tira IllegalArgumentException
     	}
     	return c;
     }
