@@ -20,7 +20,7 @@ public class Cola {
 	
 	public synchronized void delay() throws InterruptedException{
 		this.cantHilosEnCola++;
-		super.wait(); //El hilo entra a la cola
+		super.wait(); //El hilo entra a la cola, sumando la cantidad de hilos en cola
 		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
 	}
 	
