@@ -15,6 +15,8 @@ public class RedDePetri{
 	
 	private int[][] I; // Matriz de incidencia (Plazas x Transiciones)
 	private int[][] M; // Matriz de marcado. 
+	private int[][] Pinvariantes; //Matriz de P-Invariantes
+	private int[][] Tinvariantes; //Matriz de T-Invariantes
 	
 	
 	
@@ -31,6 +33,13 @@ public class RedDePetri{
 	 */
 	public int[][] getMatrizM(){
 		return M.clone();
+	}
+	
+	public int[][] getPInv(){
+		return Pinvariantes.clone();
+	}
+	public int[][] getTInv(){
+		return Tinvariantes.clone();
 	}
 	
 	
@@ -94,6 +103,14 @@ public class RedDePetri{
 		int[][] marcado_siguiente = this.getMarcadoSiguiente(transicion);
         if (esDisparoValido(marcado_siguiente)) {
                 M = marcado_siguiente;
+                try{
+                	this.verificarPInvariantes();
+                }
+                catch(Exception e){
+                	e.printStackTrace();
+                	System.out.println("Error en invariantes");
+                }
+                
                 return true;
          
         }
@@ -105,7 +122,9 @@ public class RedDePetri{
 	
 	
 	
+	private void verificarPInvariantes() throws IllegalStateException{
 	
+	}
 	
 	
 	/**
@@ -117,6 +136,8 @@ public class RedDePetri{
      * Hoja 3:  I (matriz de incidencia)
      * Hoja 4:  H
      * Hoja 5:  M (matriz de marcado)
+     * Hoja 6:  T-invariantes
+     * Hoja 7:  P-invariantes
      * 
      * @param path Direccion absoluta donde se encuentra el archivo de Excel
      * 
@@ -144,6 +165,20 @@ public class RedDePetri{
             M = new int[columnas - 1][1];
             for (int j = 1; j < columnas; j++) {
                 M[j - 1][0]= Integer.parseInt(paginaExcelM.getCell(j, 1).getContents());
+            }
+            
+            Sheet paginaExcelPinv= archivoExcelMatrices.getSheet(6);
+            columnas = paginaExcelPinv.getColumns();
+            M = new int[columnas - 1][1];
+            for (int j = 1; j < columnas; j++) {
+                M[j - 1][0]= Integer.parseInt(paginaExcelPinv.getCell(j, 1).getContents());
+            }
+            
+            Sheet paginaExcelTinv= archivoExcelMatrices.getSheet(5);
+            columnas = paginaExcelTinv.getColumns();
+            M = new int[columnas - 1][1];
+            for (int j = 1; j < columnas; j++) {
+                M[j - 1][0]= Integer.parseInt(paginaExcelTinv.getCell(j, 1).getContents());
             }
 
 
