@@ -2,6 +2,9 @@ package Monitor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import jxl.*;
 
@@ -17,6 +20,7 @@ public class RedDePetri{
 	private int[][] M; // Matriz de marcado. 
 	private int[][] Pinvariantes; //Matriz de P-Invariantes
 	private int[][] Tinvariantes; //Matriz de T-Invariantes
+	private int[] constantePinvariante;
 	
 	
 	
@@ -32,14 +36,14 @@ public class RedDePetri{
 	 * @return int[][] Marcado actual de la red.
 	 */
 	public int[][] getMatrizM(){
-		return M.clone();
+		return M;
 	}
 	
 	public int[][] getPInv(){
 		return Pinvariantes.clone();
 	}
 	public int[][] getTInv(){
-		return Tinvariantes.clone();
+		return Tinvariantes;
 	}
 	
 	
@@ -123,8 +127,22 @@ public class RedDePetri{
 	
 	
 	private void verificarPInvariantes() throws IllegalStateException{
-	
+		if(marcadoPinvariante(this.Pinvariantes,this.M)[0]!=this.constantePinvariante[0]) {
+			throw new IllegalStateException("Error en los Pinvariantes");
+		}
 	}
+	
+    private int[] marcadoPinvariante(int[][] Pinvariantes, int[][] marcado) {
+    	
+        int[] resultado=new int[Pinvariantes.length];
+        for (int i = 0; i < Pinvariantes.length; i++) {
+            for (int j = 0; j < Pinvariantes[0].length; j++) {
+                resultado[i]=resultado[i]+(Pinvariantes[i][j]*marcado[j][0]);
+            }
+        }
+        
+        return resultado;
+    }
 	
 	
 	/**
@@ -167,24 +185,32 @@ public class RedDePetri{
                 M[j - 1][0]= Integer.parseInt(paginaExcelM.getCell(j, 1).getContents());
             }
             
-            Sheet paginaExcelPinv= archivoExcelMatrices.getSheet(6);
-            columnas = paginaExcelPinv.getColumns();
-            M = new int[columnas - 1][1];
-            for (int j = 1; j < columnas; j++) {
-                M[j - 1][0]= Integer.parseInt(paginaExcelPinv.getCell(j, 1).getContents());
+            
+            
+            paginaExcelM = archivoExcelMatrices.getSheet(5);//carga los T-invariantes
+            columnas = paginaExcelM.getColumns();
+            filas = paginaExcelM.getRows();
+            Tinvariantes = new int[filas-1][columnas];
+            for (int i = 1; i < filas-1; i++) {
+                for (int j = 0; j < columnas; j++) {
+                	Tinvariantes[i - 1][j] = Integer.parseInt(paginaExcelM.getCell(j,i).getContents());
+                }
             }
             
-            Sheet paginaExcelTinv= archivoExcelMatrices.getSheet(5);
-            columnas = paginaExcelTinv.getColumns();
-            M = new int[columnas - 1][1];
-            for (int j = 1; j < columnas; j++) {
-                M[j - 1][0]= Integer.parseInt(paginaExcelTinv.getCell(j, 1).getContents());
+            
+            paginaExcelM = archivoExcelMatrices.getSheet(6);//carga los P-invariantes
+            columnas = paginaExcelM.getColumns();
+            filas = paginaExcelM.getRows();
+            Pinvariantes = new int[filas-1][columnas];
+            for (int i = 1; i < filas-1; i++) {
+                for (int j = 0; j < columnas; j++) {
+                	Pinvariantes[i - 1][j] = Integer.parseInt(paginaExcelM.getCell(j,i).getContents());
+                }
             }
-
-
-          
            
-
+            
+            this.constantePinvariante=marcadoPinvariante(this.Pinvariantes,this.M);
+            
         } 
         catch (Exception e) {
             e.printStackTrace();
@@ -222,7 +248,7 @@ public class RedDePetri{
      */
     
     public boolean esDisparoValido(int[][] marcado_siguiente) throws NullPointerException{
-   
+    	   
         if (marcado_siguiente==null){throw new NullPointerException("Marcado null.");}
         
         for (int i = 0; i < marcado_siguiente.length; i++) {
@@ -236,13 +262,9 @@ public class RedDePetri{
     }
     
     
-   
+    private int[][] getTinvariant() {
+        return this.Tinvariantes;
+    }
     
-    
-    
-	
-	
-	
-	
 	
 }

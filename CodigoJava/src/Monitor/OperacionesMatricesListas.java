@@ -18,7 +18,7 @@ public class OperacionesMatricesListas {
 	  * @param lista1 lista con enteros 1 y 0. 
 	  * @param lista2 lista con enteros 1 y 0.
 	  * @return List<Integer> Conteniendo el resultado de aplicar la operacion AND elemento a elemento entre lista1 y lista2
-	  * @throws IndexOutOfBoundsException En caso de tener listas de diferentes tamaños
+	  * @throws IndexOutOfBoundsException En caso de tener listas de diferentes tamaï¿½os
 	  */
 	 public static synchronized  List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throws IndexOutOfBoundsException{
 			if (lista1.size()==lista2.size()) {
@@ -40,21 +40,37 @@ public class OperacionesMatricesListas {
 		}
 	 
 	 
-	/**
-	 * Metodo isNotAllZeros. Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
-	 * @param lista Lista a evaluar
-	 * @return boolean true si al menos un elemento de la lista es distinto de cero
-	 */
-	public static synchronized boolean isNotAllZeros(List<Integer> lista){
-		Iterator<Integer> iterador=lista.iterator();
-		boolean var=false;
-		while(iterador.hasNext()) {
-			if(iterador.next().intValue()!=0) {
-				var=true;
+		/**
+		 * Metodo isNotAllZeros. Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
+		 * @param lista Lista a evaluar
+		 * @return boolean true si al menos un elemento de la lista es distinto de cero
+		 */
+		public static synchronized boolean isNotAllZeros(List<Integer> lista){
+			Iterator<Integer> iterador=lista.iterator();
+			boolean var=false;
+			while(iterador.hasNext()) {
+				if(iterador.next().intValue()!=0) {
+					var=true;
+				}
+			} 
+			return var;
+		}
+		
+		/**
+		 * Metodo isNotAllZeros. Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
+		 * @param lista Lista a evaluar
+		 * @return boolean true si al menos un elemento de la lista es distinto de cero
+		 */
+		public static synchronized boolean isNotAllZerosInt(int[] lista){
+			boolean var=false;
+			for (int i = 0; i<lista.length; i++) {
+				if(lista[i]!=0) {
+					var=true;
+				}
 			}
-		} 
-		return var;
-	}
+			
+			return var;
+		}
 	 
 	/**
 	 * Metodo productoMatrices. Realiza el producto entre dos matrices (a x b) de datos tipo int.
@@ -78,7 +94,7 @@ public class OperacionesMatricesListas {
 		        }
 		    }
 		    else { 
-		    	 throw new IllegalArgumentException("Las matrices no cumplen con las condiciones para poder efectuar la multiplicacion"); //si no se cumple la condición tira IllegalArgumentException
+		    	 throw new IllegalArgumentException("Las matrices no cumplen con las condiciones para poder efectuar la multiplicacion"); //si no se cumple la condiciï¿½n tira IllegalArgumentException
 		    }
 		    return c;
 	 }
@@ -89,7 +105,7 @@ public class OperacionesMatricesListas {
 		 * @param a Primer matriz
 		 * @param b Segunda matriz
 		 * @return int[][] resultado de la suma
-		 * @throws IllegalArgumentException En caso de tener matrices de diferentes tamaños
+		 * @throws IllegalArgumentException En caso de tener matrices de diferentes tamaï¿½os
 		 */
     public static synchronized int[][] sumaMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
     	int[][] c = new int[a.length][a[0].length]; //inicializo c con mismos tamanios
@@ -101,7 +117,7 @@ public class OperacionesMatricesListas {
 		    }
     	}
     	else {
-    		throw new IllegalArgumentException("Matrices de diferentes tamanios"); //si no se cumple la condición tira IllegalArgumentException
+    		throw new IllegalArgumentException("Matrices de diferentes tamanios"); //si no se cumple la condiciï¿½n tira IllegalArgumentException
     	}
     	return c;
     }

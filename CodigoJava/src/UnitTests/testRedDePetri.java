@@ -5,27 +5,32 @@ package UnitTests;
 
 import static org.junit.Assert.*;
 
-
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Monitor.Monitor;
 import Monitor.OperacionesMatricesListas;
 import Monitor.RedDePetri;
 
 
 public class testRedDePetri {
 	private RedDePetri redTest;
+	private OperacionesMatricesListas operaciones;
 	private ArrayList<Integer> transicionesSensibilizadasTest = new ArrayList<>();
 	private String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
 	private String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
+	private String redExcel3="./RedesParaTest/testExcelRed2Invariantes.xls"; //Path para Linux.
 	
 	/**
 	 * @throws java.lang.Exception
@@ -151,6 +156,36 @@ public class testRedDePetri {
 		int[][] b = { {2}, {0}, {0}, {-2} };
 		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.esDisparoValido(null),b);
+	}
+	
+	/**
+	 * Test method for {@link Monitor.RedDePetri#esDisparoValido(int[][])}.
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 */
+	@Test
+	public void verificarTInvariantes() {
+		redTest=new RedDePetri(this.redExcel3);
+		
+		int[][] tinvariant=redTest.getTInv();
+		int[][] marcaActual=redTest.getMatrizM();
+		for(int j = 0; j<tinvariant.length; j++){
+			while(operaciones.isNotAllZerosInt(tinvariant[j])){
+		        for(int i = 0; i<tinvariant[j].length; i++){
+		        	if(redTest.esDisparoValido(redTest.getMarcadoSiguiente(i))&&(tinvariant[j][i]!=0)){
+		        		redTest.disparar(i);
+		        		tinvariant[j][i]=tinvariant[j][i]-1;
+		        	}
+		        }
+	        }
+		}
+		
+		
+		int[][] marcaActual2=redTest.getMatrizM();
+		assertEquals(marcaActual,marcaActual2);
 	}
 
 }
