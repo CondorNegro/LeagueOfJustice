@@ -108,7 +108,7 @@ public class RedDePetri{
         if (esDisparoValido(marcado_siguiente)) {
                 M = marcado_siguiente;
                 try{
-                	this.verificarPInvariantes();
+                	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
                 }
                 catch(Exception e){
                 	e.printStackTrace();
@@ -127,31 +127,36 @@ public class RedDePetri{
 	/**
 	 * Metodo verificarPInvariantes.
 	 * @throws IllegalStateException
+	 * 
+	 * El objetivo es verificar que la cantidad de marcas se mantiene constante, para ello
+	 * 	compara el valor que retorna marcadoPinvariante(Pinvariantes,Marcado Actual) con el marcado inicial "constantePinvariante" obtenida al momento de configurar la red de petri
 	 */
 	
 	private void verificarPInvariantes() throws IllegalStateException{
-		if(marcadoPinvariante(this.Pinvariantes,this.M)[0]!=this.constantePinvariante[0]) {
-			throw new IllegalStateException("Error en los Pinvariantes");
+		for (int i = 0; i < Pinvariantes.length; i++) {	//Recorro todas las filas del Pinvariantes
+			if(marcadoPinvariante(this.Pinvariantes,this.M)[i]!=this.constantePinvariante[i]) { //verifico que cada solucion del P-invariante con el marcado actual sea igual a la solucion arrojada al momento de configurar la red de petri en "constantePinvariante"
+				throw new IllegalStateException("Error en los Pinvariantes");	//en otras palabras, si el marcado en esas plazas resulta diferente, se dispara IllegalStateException
+			}
 		}
 	}
 	
 	
 	/**
 	 * Metodo marcadoPinvariante.
-	 * @param Pinvariantes
-	 * @param marcado
-	 * @return int[]
+	 * @param int[][] Pinvariantes 		Matriz de Pinvariantes
+	 * @param int[][] marcado			Matriz de marcado
+	 * @return int[]					Vector que contiene las soluciones a las ecuaciones de los P-invariantes
 	 */
     private int[] marcadoPinvariante(int[][] Pinvariantes, int[][] marcado) {
     	
-        int[] resultado=new int[Pinvariantes.length];
-        for (int i = 0; i < Pinvariantes.length; i++) {
-            for (int j = 0; j < Pinvariantes[0].length; j++) {
-                resultado[i]=resultado[i]+(Pinvariantes[i][j]*marcado[j][0]);
+        int[] resultado=new int[Pinvariantes.length];			//Inicializacion del vector resultado
+        for (int i = 0; i < Pinvariantes.length; i++) {			//Recorro las filas del vector Pinvariantes
+            for (int j = 0; j < Pinvariantes[0].length; j++) {	// 'j' representa cada columna del vector Pinvariantes[fila]
+                resultado[i]=resultado[i]+(Pinvariantes[i][j]*marcado[j][0]); //Multiplico Pinvariantes[fila][columna] con marcado[fila][columna]
             }
         }
         
-        return resultado;
+        return resultado; //retorno resultado, que contiene las soluciones a las ecuaciones de los Pinvariantes
     }
 	
 	
@@ -219,7 +224,8 @@ public class RedDePetri{
             }
            
             
-            this.constantePinvariante=marcadoPinvariante(this.Pinvariantes,this.M);
+            this.constantePinvariante=marcadoPinvariante(this.Pinvariantes,this.M); //Obtiene el resultado de las ecuaciones del P-invariante
+            //System.out.println(constantePinvariante.length);
             
         } 
         catch (Exception e) {
