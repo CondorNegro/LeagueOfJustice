@@ -36,8 +36,8 @@ public class testMonitor {
 	private Thread threadDelay;
 	private Thread threadResume;
 	
-	private String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
-	private String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
+	private String redExcel1="./RedesParaTest/RedTest1/testExcel.xls"; //Path para Linux.
+	private String redExcel2="./RedesParaTest/RedTest2/testExcel5.xls"; //Path para Linux.
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -175,7 +175,7 @@ public class testMonitor {
 				Thread.sleep(3);
 			}
 			catch(InterruptedException e){
-				fail("Se generó error por interrupción de thread");
+				fail("Se generï¿½ error por interrupciï¿½n de thread");
 			}
 			List<Integer> Lista1 = (List<Integer>) quienesEstanEnColas.invoke(monitor1);
 			assertEquals((int)Lista1.get(0),1);
@@ -235,7 +235,7 @@ public class testMonitor {
 				Thread.sleep(3);
 			}
 			catch(InterruptedException e){
-				fail("Se generó error por interrupción de thread");
+				fail("Se generï¿½ error por interrupciï¿½n de thread");
 			}
 			
 			
@@ -250,7 +250,7 @@ public class testMonitor {
 				Thread.sleep(3);
 			}
 			catch(InterruptedException e){
-				fail("Se generó error por interrupción de thread");
+				fail("Se generï¿½ error por interrupciï¿½n de thread");
 			}
 			RedDePetri rdp1 = (RedDePetri) getRDP.invoke(monitor1);	
 			assertEquals(rdp1.getMatrizM(),m2);
