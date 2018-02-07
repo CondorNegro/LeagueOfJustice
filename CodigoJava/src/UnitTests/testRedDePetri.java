@@ -176,7 +176,7 @@ public class testRedDePetri {
 	@Test
 	public void verificarTInvariantes() {
 		
-		redTest=new RedDePetri(this.redExcel4); 	//configuro la red a testear los Tinvariantes
+		redTest=new RedDePetri(this.redExcel3); 	//configuro la red a testear los Tinvariantes
 		
 		int[][] tinvariant=redTest.getTInv(); 		//Guardo en una variable local los Tinvariantes de la red configurada
 		int[][] primerMarcado=redTest.getMatrizM();	//Obtengo el marcado actual de la red configurada y lo guardo en la variable local "marcaActual" 
@@ -194,6 +194,7 @@ public class testRedDePetri {
 			int[][] marcaActual=redTest.getMatrizM(); //se prueba que el nuevo marcado es igual al marcado anterior, antes de disparar las transiciones
 			assertEquals(primerMarcado,marcaActual);
 		}
+		
 	}
 
 }
