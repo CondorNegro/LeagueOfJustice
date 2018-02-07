@@ -28,9 +28,10 @@ public class testRedDePetri {
 	private RedDePetri redTest;
 	private OperacionesMatricesListas operaciones;
 	private ArrayList<Integer> transicionesSensibilizadasTest = new ArrayList<>();
-	private String redExcel1="./RedesParaTest/testExcel.xls"; //Path para Linux.
-	private String redExcel2="./RedesParaTest/testExcel5.xls"; //Path para Linux.
-	private String redExcel3="./RedesParaTest/testExcelRed2Invariantes.xls"; //Path para Linux.
+	private String redExcel1="./RedesParaTest/RedTest1/testExcel.xls"; //Path para Linux.
+	private String redExcel2="./RedesParaTest/RedTest2/testExcel5.xls"; //Path para Linux.
+	private String redExcel3="./RedesParaTest/TestInvariantes1/testExcelRed2Invariantes.xls"; //Path para Linux.
+	private String redExcel4="./RedesParaTest/TestInvariantes2/testExcelRed2Invariantes2.xls"; //Path para Linux.
 	
 	/**
 	 * @throws java.lang.Exception
@@ -53,8 +54,10 @@ public class testRedDePetri {
 	@Before
 	public void setUp() throws Exception {
 		if((System.getProperty("os.name")).equals("Windows 10")){
-			this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel.xls";
-			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\testExcel5.xls";
+			this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
+			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
+			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestInvariantes1\\testExcelRed2Invariantes.xls";
+			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestInvariantes2\\testExcelRed2Invariantes2.xls";
 			
 		}
 		transicionesSensibilizadasTest.add(1);
@@ -168,7 +171,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void verificarTInvariantes() {
-		redTest=new RedDePetri(this.redExcel3);
+		redTest=new RedDePetri(this.redExcel4);
 		
 		int[][] tinvariant=redTest.getTInv();
 		int[][] marcaActual=redTest.getMatrizM();
@@ -186,6 +189,8 @@ public class testRedDePetri {
 		
 		int[][] marcaActual2=redTest.getMatrizM();
 		assertEquals(marcaActual,marcaActual2);
+		
+		
 	}
 
 }
