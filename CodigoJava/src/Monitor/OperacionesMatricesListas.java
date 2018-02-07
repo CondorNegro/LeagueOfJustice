@@ -13,8 +13,7 @@ public class OperacionesMatricesListas {
 	 }
 	
 	 /**
-	  * 
-	  * 
+	  * Metodo andVector.
 	  * @param lista1 lista con enteros 1 y 0. 
 	  * @param lista2 lista con enteros 1 y 0.
 	  * @return List<Integer> Conteniendo el resultado de aplicar la operacion AND elemento a elemento entre lista1 y lista2
