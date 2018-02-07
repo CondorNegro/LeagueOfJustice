@@ -124,7 +124,10 @@ public class RedDePetri{
  }
 
 	
-	
+	/**
+	 * Metodo verificarPInvariantes.
+	 * @throws IllegalStateException
+	 */
 	
 	private void verificarPInvariantes() throws IllegalStateException{
 		if(marcadoPinvariante(this.Pinvariantes,this.M)[0]!=this.constantePinvariante[0]) {
@@ -132,6 +135,13 @@ public class RedDePetri{
 		}
 	}
 	
+	
+	/**
+	 * Metodo marcadoPinvariante.
+	 * @param Pinvariantes
+	 * @param marcado
+	 * @return int[]
+	 */
     private int[] marcadoPinvariante(int[][] Pinvariantes, int[][] marcado) {
     	
         int[] resultado=new int[Pinvariantes.length];
