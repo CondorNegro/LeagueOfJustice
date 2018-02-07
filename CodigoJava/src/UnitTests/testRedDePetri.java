@@ -162,35 +162,38 @@ public class testRedDePetri {
 	}
 	
 	/**
-	 * Test method for {@link Monitor.RedDePetri#esDisparoValido(int[][])}.
+	 * Test method for {@link Monitor.RedDePetri#verificarTInvariantes()}.
 	 * @throws InvocationTargetException 
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
+	 * 
+	 * El objetivo probar que el marcado antes de disparar todas las transiciones 
+	 * que se encuentren en el vector tinvariant es igual al marcado que se obtiene 
+	 * despues de haber disparado dichas transiciones
 	 */
 	@Test
 	public void verificarTInvariantes() {
-		redTest=new RedDePetri(this.redExcel4);
 		
-		int[][] tinvariant=redTest.getTInv();
-		int[][] marcaActual=redTest.getMatrizM();
-		for(int j = 0; j<tinvariant.length; j++){
-			while(operaciones.isNotAllZerosInt(tinvariant[j])){
-		        for(int i = 0; i<tinvariant[j].length; i++){
-		        	if(redTest.esDisparoValido(redTest.getMarcadoSiguiente(i))&&(tinvariant[j][i]!=0)){
+		redTest=new RedDePetri(this.redExcel4); 	//configuro la red a testear los Tinvariantes
+		
+		int[][] tinvariant=redTest.getTInv(); 		//Guardo en una variable local los Tinvariantes de la red configurada
+		int[][] primerMarcado=redTest.getMatrizM();	//Obtengo el marcado actual de la red configurada y lo guardo en la variable local "marcaActual" 
+		
+		for(int j = 0; j<tinvariant.length; j++){ 	//Recorro todas las filas del vector tinvariant
+			while(operaciones.isNotAllZerosInt(tinvariant[j])){ //Si hay un elemento distinto de cero en esa fila del tinvariant, repetir
+		        for(int i = 0; i<tinvariant[j].length; i++){	//Recorro las columnas de esa fila de tinvariant
+		        	if(redTest.esDisparoValido(redTest.getMarcadoSiguiente(i))&&(tinvariant[j][i]!=0)){ //Si la transicion i se encuentra sensibilizada y ademas pertenece al vector tinvariant, disparar la transicion
 		        		redTest.disparar(i);
-		        		tinvariant[j][i]=tinvariant[j][i]-1;
+		        		tinvariant[j][i]=tinvariant[j][i]-1; //una vez disparada la transicion i, se marca esa transicion como cero en el vector tinvariant
 		        	}
 		        }
-	        }
+	        } // si tinvariant tiene toda la columna en cero, no hay mas transiciones que disparar, se sale del while.
+		
+			int[][] marcaActual=redTest.getMatrizM(); //se prueba que el nuevo marcado es igual al marcado anterior, antes de disparar las transiciones
+			assertEquals(primerMarcado,marcaActual);
 		}
-		
-		
-		int[][] marcaActual2=redTest.getMatrizM();
-		assertEquals(marcaActual,marcaActual2);
-		
-		
 	}
 
 }
