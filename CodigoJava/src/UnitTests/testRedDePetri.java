@@ -169,7 +169,7 @@ public class testRedDePetri {
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
 	 * 
-	 * El objetivo probar que el marcado antes de disparar todas las transiciones 
+	 * El objetivo es probar que el marcado antes de disparar todas las transiciones 
 	 * que se encuentren en el vector tinvariant es igual al marcado que se obtiene 
 	 * despues de haber disparado dichas transiciones
 	 */
