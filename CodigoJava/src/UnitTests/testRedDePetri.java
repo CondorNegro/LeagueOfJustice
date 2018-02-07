@@ -123,7 +123,7 @@ public class testRedDePetri {
 	@Test
 	public void testGetMarcadoSiguiente() {
 		int[][] a = { {0}, {2}, {0}, {0} };
-		int[][] b = { {2}, {0}, {0}, {-2} };
+		int[][] b = { {4}, {0}, {0}, {-2} };
 		redTest= new RedDePetri(this.redExcel1);
 		assertEquals(redTest.getMarcadoSiguiente(0), a);
 		redTest= new RedDePetri(this.redExcel2);

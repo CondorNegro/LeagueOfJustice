@@ -192,7 +192,7 @@ public class RedDePetri{
             columnas = paginaExcelM.getColumns();
             M = new int[columnas - 1][1];
             for (int j = 1; j < columnas; j++) {
-                M[j - 1][0]= Integer.parseInt(paginaExcelM.getCell(j, 1).getContents());
+                M[j - 1][0]= Integer.parseInt(paginaExcelM.getCell(j, 2).getContents());
             }
             
             
