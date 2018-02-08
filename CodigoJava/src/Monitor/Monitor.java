@@ -13,6 +13,8 @@ public class Monitor {
     private Cola colas[];
     private RedDePetri rdp;
     private Semaphore mutex;
+   
+    
     
     //Aplicacion de Singleton.
     private static final Monitor instance = new Monitor();
