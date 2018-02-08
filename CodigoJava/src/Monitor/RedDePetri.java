@@ -21,6 +21,7 @@ public class RedDePetri{
 	private int[][] Pinvariantes; //Matriz de P-Invariantes
 	private int[][] Tinvariantes; //Matriz de T-Invariantes
 	private int[] constantePinvariante;
+	private int[][] H; //Matriz H.
 	private LogicaTemporal logicaTemporal;
 	
 	
