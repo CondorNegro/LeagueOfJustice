@@ -232,7 +232,7 @@ public class testRedDePetri {
 	 * Test method for {@link Monitor.RedDePetri#setTransicionesInmediatas}.
 	 */
 	@Test
-	public void testsetTransicionesInmediatas() {
+	public void testSetTransicionesInmediatas() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel1);
