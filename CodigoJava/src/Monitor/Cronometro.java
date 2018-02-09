@@ -19,7 +19,6 @@ public class Cronometro{
 
     public void setNuevoTimeStamp() {
     	contador = System.currentTimeMillis();
-
     }
     
     
@@ -27,7 +26,7 @@ public class Cronometro{
      * Metodo resetearContador.
      */
     public void resetearContador() {
-    	contador = 0;
+    	contador = -1;
     }
     
     
@@ -36,8 +35,13 @@ public class Cronometro{
      * @return long
      */
     public long getMillis() {
-    	this.millis = System.currentTimeMillis() - contador;
-        return this.millis;
+    	if(this.contador==-1) {
+    		return (long)-1;
+    	}
+    	else {
+    		this.millis = System.currentTimeMillis() - contador;
+        	return this.millis;
+    	}
     }
     
 
@@ -46,8 +50,13 @@ public class Cronometro{
      * @return long 
      */
     public long getSeconds() {
-    	this.millis = System.currentTimeMillis() - contador;
-        return this.millis/MILLIS_TO_SECONDS;
+    	if(this.contador==-1) {
+    		return (long)-1;
+    	}
+    	else {
+    		this.millis = System.currentTimeMillis() - contador;
+    		return this.millis/MILLIS_TO_SECONDS;
+    	}
     }
     
 

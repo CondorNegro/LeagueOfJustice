@@ -91,7 +91,6 @@ public class LogicaTemporal {
 		
 		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
 			
-			
 			if(tSensibilizadasAntesDisparar.get(transicion)==1 && tSensibilizadasDespuesDisparar.get(transicion)==0) {
 				this.vectorDeTimeStamps[transicion].resetearContador();
 			}

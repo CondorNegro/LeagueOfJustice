@@ -20,8 +20,8 @@ import jxl.Workbook;
 
 public class testLogicaTemporal {
 	private LogicaTemporal time;
-	private String redExcel1="./RedesParaTest/RedTest1/testExcel.xls"; //Path para Linux.
-	private String redExcel2="./RedesParaTest/RedTest2/testExcel5.xls"; //Path para Linux.
+	private String redExcel1="./RedesParaTest/RedTestIntervalosAlfaBeta/RedTest1.xls"; //Path para Linux.
+	private String redExcel2="./RedesParaTest/RedTestIntervalosAlfaBeta/RedTest2.xls"; //Path para Linux.
 	
 	/**
 	 * @throws java.lang.Exception
