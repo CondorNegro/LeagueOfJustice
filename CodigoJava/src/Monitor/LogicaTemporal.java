@@ -14,7 +14,7 @@ public class LogicaTemporal {
 	private int[][] vectorDeIntervalos;
 	private int[][] vectorDeEstado;
 	private Cronometro vectorDeTimeStamps[];
-	private int [][] vectorZ; //Contiene un uno si el contador esta entre alfa y beta. De lo contrario un cero.
+	private int [] vectorZ; //Contiene un uno si el contador esta entre alfa y beta. De lo contrario un cero.
 	
 	
 	public LogicaTemporal(int cantTransiciones){
@@ -24,7 +24,7 @@ public class LogicaTemporal {
 			this.vectorDeTimeStamps[i] = new Cronometro();
         }
 		this.vectorID=new IDVector(this.cantTransiciones);
-		this.vectorZ=new int[this.getCantTransiciones()][1];
+		this.vectorZ=new int[this.getCantTransiciones()];
 		
 	}
 	
@@ -78,10 +78,44 @@ public class LogicaTemporal {
 		return this.vectorDeIntervalos.clone();
 	}
 	
-    
+	
+	/**
+	 * Metodo updateVectorZ
+	 */
+	public void updateVectorZ(){
+		for (int i= 0; i < this.getCantTransiciones(); i++) {
+			if(isInWindowsTime(i)) {
+				vectorZ[i]=1;
+			}
+			else {
+				vectorZ[i]=0;
+			}
+		}
+	}
 	
 	
+	/**
+	 * Metodo isInWindowsTime
+	 * 
+	 * @return boolean true si se encuentra dentro de la ventana, de lo contrario false.
+	 */
+	public boolean isInWindowsTime(int transicion) throws IllegalArgumentException{
+		
+		if(transicion>this.cantTransiciones) {
+			throw new IllegalArgumentException("Transicion invalida");	
+		}
+		
+		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()>=(long)vectorDeIntervalos[0][transicion];
+		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()<=(long)vectorDeIntervalos[1][transicion];
+		boolean comparacion3=(long)vectorDeIntervalos[1][transicion]==(long)-1;
+		
+		if(comparacion1&&(comparacion2||comparacion3)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	
-	
+	}
 
 }
