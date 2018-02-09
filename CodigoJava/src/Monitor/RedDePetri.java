@@ -30,6 +30,7 @@ public class RedDePetri{
 		this.path=path;
 		this.setMatricesFromExcel(path);
 		setCantTransiciones(I[1].length);
+		logicaTemporal=new LogicaTemporal(this.getCantTransiciones());
 	}
 	
 	
@@ -163,6 +164,7 @@ public class RedDePetri{
 	 * Metodo setMatricesFromExcel. Encargado de cargar las matrices que forman parte de los atributos a partir de un archivo de Excel. 
      * Matrices colocadas en paginas de Excel:
      *
+     * Primer archivo de Excel
      * Hoja 1:  I+
      * Hoja 2:  I-
      * Hoja 3:  I (matriz de incidencia)
@@ -170,7 +172,7 @@ public class RedDePetri{
      * Hoja 5:  M (matriz de marcado)
      * Hoja 6:  T-invariantes
      * Hoja 7:  P-invariantes
-     * Hoja 9:  Intervalos [alfa,beta]
+     * Hoja 8:  Intervalos [alfa,beta]
      * 
      * @param path Direccion absoluta donde se encuentra el archivo de Excel
      * 
@@ -222,10 +224,13 @@ public class RedDePetri{
                 	Pinvariantes[i - 1][j] = Integer.parseInt(paginaExcelM.getCell(j,i).getContents());
                 }
             }
+            
            
             
             this.constantePinvariante=marcadoPinvariante(); //Obtiene el resultado de las ecuaciones del P-invariante
             //System.out.println(constantePinvariante.length);
+            
+            //logicaTemporal.setVectorIntervalosFromExcel(archivoExcelMatrices);
             
         } 
         catch (Exception e) {

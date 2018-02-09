@@ -38,7 +38,7 @@ public class LogicaTemporal {
 	 */
 	public void setVectorIntervalosFromExcel(Workbook libroExcel){
 		try{
-			 Sheet pagina = libroExcel.getSheet(8);
+			 Sheet pagina = libroExcel.getSheet(7);
 	         int columnas = pagina.getColumns();
 	         int  filas = pagina.getRows();
 	         this.vectorDeIntervalos = new int[columnas-1][filas-1];
@@ -47,7 +47,7 @@ public class LogicaTemporal {
 	                 this.vectorDeIntervalos[i - 1][j - 1] = Integer.parseInt(pagina.getCell(i, j).getContents());
 	             }
 	         }
-	         if(columnas!=this.getCantTransiciones()){
+	         if((columnas-1)!=this.getCantTransiciones()){
 	        	 throw new IllegalStateException("Error en la cantidad de transiciones");
 	        	 
 	         }
