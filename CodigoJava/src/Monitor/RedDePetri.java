@@ -170,6 +170,7 @@ public class RedDePetri{
      * Hoja 5:  M (matriz de marcado)
      * Hoja 6:  T-invariantes
      * Hoja 7:  P-invariantes
+     * Hoja 9:  Intervalos [alfa,beta]
      * 
      * @param path Direccion absoluta donde se encuentra el archivo de Excel
      * 

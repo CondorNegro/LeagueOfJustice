@@ -7,8 +7,12 @@ public class Cronometro{
     public static final long MILLIS_TO_HOURS = 3600000;
     private long contador;
     private long millis;
-    private boolean stop;
+   
     
+    
+    public Cronometro(){
+    	this.contador=0;
+    }
    /**
     * Metodo setNuevoTimeStamp. 
     */
