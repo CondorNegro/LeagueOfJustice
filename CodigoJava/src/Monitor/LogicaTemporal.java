@@ -164,5 +164,21 @@ public class LogicaTemporal {
 		}
 	
 	}
+	
+	
+	
+	public int[][] construirVectorTransicionesInmediatas(){
+		int aux[][]=new int[this.getCantTransiciones()][1];
+		for(int i=0; i< this.getCantTransiciones();i++){
+			if(this.vectorDeIntervalos[i][0]==0 & this.vectorDeIntervalos[i][1]==-1){
+				aux[i][0]=1;
+			}
+			else{
+				aux[i][0]=0;
+			}
+				
+		}
+		return aux;
+	}
 
 }
