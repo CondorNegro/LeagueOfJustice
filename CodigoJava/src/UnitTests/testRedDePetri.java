@@ -225,5 +225,44 @@ public class testRedDePetri {
 		
 		
 	}
+	
+	
+	/**
+	 * Test method for {@link Monitor.RedDePetri#setTransicionesInmediatas}.
+	 */
+	@Test
+	public void testsetTransicionesInmediatas() {
+		
+		try{
+			redTest= new RedDePetri(this.redExcel1);
+		
+			Method getVectorTransicionesInmediatas  = RedDePetri.class.getDeclaredMethod("getVectorTransicionesInmediatas", null);
+			getVectorTransicionesInmediatas.setAccessible(true);
+			int T[][] =(int[][]) getVectorTransicionesInmediatas.invoke(redTest);
+			for(int i=0; i<redTest.getCantTransiciones(); i++){
+				
+				if(i!=0){
+					if(T[i][0] != 0){
+						
+						
+						assertEquals(T[i][0], 0);
+					}
+					
+				}
+				else{
+					if(T[i][0]!= 1){
+						
+						assertEquals(T[i][0], 1);
+					}
+					
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+	}
 
 }

@@ -39,6 +39,10 @@ public class RedDePetri{
 
 	}
 	
+	private int[][] getVectorTransicionesInmediatas(){
+		return this.transicionesInmediatas;
+	}
+	
 	
 	public void setTransicionesInmediatas(){
 		this.transicionesInmediatas=this.logicaTemporal.construirVectorTransicionesInmediatas();
