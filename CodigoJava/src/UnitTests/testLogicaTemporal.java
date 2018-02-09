@@ -5,14 +5,19 @@ package UnitTests;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Method;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class testLogicaTemporal {
+import Monitor.LogicaTemporal;
+import Monitor.Monitor;
 
+public class testLogicaTemporal {
+	private LogicaTemporal time;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -32,6 +37,7 @@ public class testLogicaTemporal {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		 time= new LogicaTemporal(10);
 	}
 
 	/**
@@ -46,7 +52,20 @@ public class testLogicaTemporal {
 	 */
 	@Test
 	public void testLogicaTemporal() {
-		fail("Not yet implemented");
+		
+		Method getCantTransiciones;
+		Object cantidad=null;
+		try{
+			getCantTransiciones= LogicaTemporal.class.getDeclaredMethod("getCantTransiciones", null);
+			getCantTransiciones.setAccessible(true);
+			cantidad= getCantTransiciones.invoke(time);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		assertEquals(10,cantidad );
 	}
 
 	/**
@@ -54,7 +73,7 @@ public class testLogicaTemporal {
 	 */
 	@Test
 	public void testSetVectorIntervalosFromExcel() {
-		fail("Not yet implemented");
+		
 	}
 
 	/**
@@ -62,7 +81,8 @@ public class testLogicaTemporal {
 	 */
 	@Test
 	public void testGetVectorDeIntervalos() {
-		fail("Not yet implemented");
+		
+		
 	}
 
 }

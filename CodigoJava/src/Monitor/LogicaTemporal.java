@@ -15,9 +15,9 @@ public class LogicaTemporal {
 	private int [][] vectorZ; //Contiene un uno si el contador esta entre alfa y beta. De lo contrario un cero.
 	
 	
-	public LogicaTemporal(int cantDeTransiciones){
+	public LogicaTemporal(int cantTransiciones){
 		this.cantTransiciones=cantTransiciones;
-		this.vectorDeTimeStamps=new Cronometro[cantDeTransiciones];
+		this.vectorDeTimeStamps=new Cronometro[cantTransiciones];
 		this.vectorID=new IDVector(this.cantTransiciones);
 		this.vectorZ=new int[this.getCantTransiciones()][1];
 		
