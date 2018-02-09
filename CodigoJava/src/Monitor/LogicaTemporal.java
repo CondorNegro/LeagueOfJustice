@@ -3,6 +3,8 @@
  */
 package Monitor;
 
+import java.io.File;
+
 import jxl.Sheet;
 import jxl.Workbook;
 
@@ -36,11 +38,17 @@ public class LogicaTemporal {
 	 * Metodo setVectorIntervalosFromExcel.
 	 * @param libroExcel Libro de Excel en cuya hoja 9 se encuentran los vectores que contienen los valores de alfa y beta de las transiciones.
 	 */
-	public void setVectorIntervalosFromExcel(Workbook libroExcel){
+	public void setVectorIntervalosFromExcel(String path){
+		 File file = new File(path);
+	     Workbook libroExcel;
 		try{
+			libroExcel = Workbook.getWorkbook(file);
 			 Sheet pagina = libroExcel.getSheet(7);
 	         int columnas = pagina.getColumns();
+	         
+	       
 	         int  filas = pagina.getRows();
+	        
 	         this.vectorDeIntervalos = new int[columnas-1][filas-1];
 	         for (int i = 1; i < columnas; i++) {
 	             for (int j = 1; j < filas; j++) {

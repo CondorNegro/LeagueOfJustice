@@ -31,6 +31,8 @@ public class RedDePetri{
 		this.setMatricesFromExcel(path);
 		setCantTransiciones(I[1].length);
 		logicaTemporal=new LogicaTemporal(this.getCantTransiciones());
+		this.logicaTemporal.setVectorIntervalosFromExcel(this.path); 
+
 	}
 	
 	
@@ -227,17 +229,20 @@ public class RedDePetri{
             
            
             
+            
             this.constantePinvariante=marcadoPinvariante(); //Obtiene el resultado de las ecuaciones del P-invariante
             //System.out.println(constantePinvariante.length);
             
-            //logicaTemporal.setVectorIntervalosFromExcel(archivoExcelMatrices);
+            
             
         } 
         catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error en metodo setMatricesFromExcel");
+            
         }
-
+        
+       
     }
     
     
