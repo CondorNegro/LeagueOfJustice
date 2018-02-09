@@ -80,6 +80,34 @@ public class LogicaTemporal {
 	}
 	
 	
+	
+	
+	
+	
+	/**
+	 * Metodo updateTimeStamp
+	 */
+	public void updateTimeStamp(ArrayList<Integer> tSensibilizadasAntesDisparar, ArrayList<Integer> tSensibilizadasDespuesDisparar){
+		
+		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
+			
+			
+			if(tSensibilizadasAntesDisparar.get(transicion)==1 && tSensibilizadasDespuesDisparar.get(transicion)==0) {
+				this.vectorDeTimeStamps[transicion].resetearContador();
+			}
+			
+			else if(tSensibilizadasAntesDisparar.get(transicion)==0 && tSensibilizadasDespuesDisparar.get(transicion)==1) {
+				this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
+			}
+			
+			else if(tSensibilizadasAntesDisparar.get(transicion)==0 && tSensibilizadasDespuesDisparar.get(transicion)==0) {
+				this.vectorDeTimeStamps[transicion].resetearContador();
+			}
+		
+		}
+	}
+	
+	
 	/**
 	 * Metodo updateVectorZ
 	 */
@@ -95,11 +123,15 @@ public class LogicaTemporal {
 	}
 	
 	
-	
+	/**
+	 * Metodo getVectorEstados
+	 * 
+	 * @return ArrayList<Integer> vector de transiciones sensibilizadas y dentro de su ventana temporal.
+	 */
 	public ArrayList<Integer> getVectorEstados(ArrayList<Integer> transicionesSensibilizadas) {
 		ArrayList<Integer> tSensAndWindowsTime = new ArrayList<>();
 		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
-			if(transicionesSensibilizadas.get(transicion)==1&&isInWindowsTime(transicion)) {
+			if((transicionesSensibilizadas.get(transicion)==1)&&isInWindowsTime(transicion)) {
 				tSensAndWindowsTime.add(1);
 			}
 			else {
