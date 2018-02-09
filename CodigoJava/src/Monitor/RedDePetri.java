@@ -22,6 +22,8 @@ public class RedDePetri{
 	private int[][] Tinvariantes; //Matriz de T-Invariantes
 	private int[] constantePinvariante;
 	private int[][] H; //Matriz H.
+	private int[][] B; //Matriz B. B= H * Q
+	private int[][] Q;
 	private LogicaTemporal logicaTemporal;
 	
 	
@@ -216,6 +218,8 @@ public class RedDePetri{
                
             }
             
+            //this.B=getMatrizB();
+            
 
             Sheet paginaExcelM= archivoExcelMatrices.getSheet(4);
             columnas = paginaExcelM.getColumns();
@@ -266,6 +270,30 @@ public class RedDePetri{
     }
     
     
+    
+    private int[][] getMatrizB(){
+    	this.Q=getVectorQ();
+    	int aux[][]=OperacionesMatricesListas.productoMatrices(this.H, this.Q);
+    	return aux;
+    }
+    
+    private int[][] getVectorQ(){
+    	int aux[][]=new int[this.M.length][1];
+    	for(int i=0;i<this.M.length;i++){
+    		if(M[i][1]!=0){
+    			aux[i][1]=0;
+    		}
+    		else{
+    			aux[i][1]=1;
+    		}
+    	}
+    	return aux;
+    }
+
+    
+    
+    
+    
     /**
      * Metodo getMarcadoSiguiente. Permite obtener el marcado siguiente al disparar una determinada transicion.
      * @param transicion transicion a disparar para obtener el marcado siguiente
@@ -284,6 +312,8 @@ public class RedDePetri{
         
         return OperacionesMatricesListas.sumaMatrices(M,OperacionesMatricesListas.productoMatrices(I,deltaDisparo));
     }
+    
+   
     
     
     /**

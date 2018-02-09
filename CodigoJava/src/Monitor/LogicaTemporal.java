@@ -20,6 +20,9 @@ public class LogicaTemporal {
 	public LogicaTemporal(int cantTransiciones){
 		this.cantTransiciones=cantTransiciones;
 		this.vectorDeTimeStamps=new Cronometro[cantTransiciones];
+		for (int i= 0; i < this.getCantTransiciones(); i++) {
+			this.vectorDeTimeStamps[i] = new Cronometro();
+        }
 		this.vectorID=new IDVector(this.cantTransiciones);
 		this.vectorZ=new int[this.getCantTransiciones()][1];
 		
