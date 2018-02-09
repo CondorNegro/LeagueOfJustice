@@ -32,6 +32,7 @@ public class testRedDePetri {
 	private String redExcel2="./RedesParaTest/RedTest2/testExcel5.xls"; //Path para Linux.
 	private String redExcel3="./RedesParaTest/TestInvariantes1/testExcelRed2Invariantes.xls"; //Path para Linux.
 	private String redExcel4="./RedesParaTest/TestInvariantes2/testExcelRed2Invariantes2.xls"; //Path para Linux.
+	private String redExcel5="./RedesParaTest/redTemporal/testExcel.xls"; //Path para Linux.
 	
 	/**
 	 * @throws java.lang.Exception
