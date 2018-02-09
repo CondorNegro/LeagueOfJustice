@@ -4,6 +4,7 @@
 package Monitor;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -83,7 +84,7 @@ public class LogicaTemporal {
 	 * Metodo updateVectorZ
 	 */
 	public void updateVectorZ(){
-		for (int i= 0; i < this.getCantTransiciones(); i++) {
+		for (int i= 0; i < this.cantTransiciones; i++) {
 			if(isInWindowsTime(i)) {
 				vectorZ[i]=1;
 			}
@@ -91,6 +92,21 @@ public class LogicaTemporal {
 				vectorZ[i]=0;
 			}
 		}
+	}
+	
+	
+	
+	public ArrayList<Integer> getVectorEstados(ArrayList<Integer> transicionesSensibilizadas) {
+		ArrayList<Integer> tSensAndWindowsTime = new ArrayList<>();
+		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
+			if(transicionesSensibilizadas.get(transicion)==1&&isInWindowsTime(transicion)) {
+				tSensAndWindowsTime.add(1);
+			}
+			else {
+				tSensAndWindowsTime.add(0);
+			}
+		}
+		return tSensAndWindowsTime;
 	}
 	
 	
