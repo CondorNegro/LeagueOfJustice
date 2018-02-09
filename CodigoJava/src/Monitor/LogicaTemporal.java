@@ -87,11 +87,16 @@ public class LogicaTemporal {
 	/**
 	 * Metodo updateTimeStamp
 	 */
-	public void updateTimeStamp(ArrayList<Integer> tSensibilizadasAntesDisparar, ArrayList<Integer> tSensibilizadasDespuesDisparar){
+	public void updateTimeStamp(ArrayList<Integer> tSensibilizadasAntesDisparar, ArrayList<Integer> tSensibilizadasDespuesDisparar, int transicionDisparar){
 		
 		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
 			
-			if(tSensibilizadasAntesDisparar.get(transicion)==1 && tSensibilizadasDespuesDisparar.get(transicion)==0) {
+			if(tSensibilizadasAntesDisparar.get(transicion)==1 && tSensibilizadasDespuesDisparar.get(transicion)==1) {
+				if(transicion==transicionDisparar) {
+					this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
+				}
+			}
+			else if(tSensibilizadasAntesDisparar.get(transicion)==1 && tSensibilizadasDespuesDisparar.get(transicion)==0) {
 				this.vectorDeTimeStamps[transicion].resetearContador();
 			}
 			
