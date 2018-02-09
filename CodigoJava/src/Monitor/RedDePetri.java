@@ -25,6 +25,7 @@ public class RedDePetri{
 	private int[][] B; //Matriz B. B= H * Q
 	private int[][] Q;
 	private LogicaTemporal logicaTemporal;
+	private int[][] transicionesInmediatas; //Un uno indica que la transicion es inmediata.
 	
 	
 	
@@ -34,7 +35,13 @@ public class RedDePetri{
 		setCantTransiciones(I[1].length);
 		logicaTemporal=new LogicaTemporal(this.getCantTransiciones());
 		this.logicaTemporal.setVectorIntervalosFromExcel(this.path); 
+		setTransicionesInmediatas();
 
+	}
+	
+	
+	public void setTransicionesInmediatas(){
+		this.transicionesInmediatas=this.logicaTemporal.construirVectorTransicionesInmediatas();
 	}
 	
 	

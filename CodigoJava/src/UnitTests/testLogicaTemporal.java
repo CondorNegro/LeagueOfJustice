@@ -95,6 +95,39 @@ public class testLogicaTemporal {
 	}
 	
 	
+	/**
+	 * Test method for {@link Monitor.LogicaTemporal#construirVectorTransicionesInmediatas}.
+	 */
+	@Test
+	public void testConstruirVectorTransicionesInmediatas() {
+		time.setVectorIntervalosFromExcel(this.redExcel1);
+		for(int i=0; i<10; i++){
+			
+			if(i!=3 & i!=0){
+				if(time.construirVectorTransicionesInmediatas()[i][0] != 0){
+					
+					System.out.println(i);
+					System.out.println(time.construirVectorTransicionesInmediatas()[i][0]);
+					assertEquals(time.construirVectorTransicionesInmediatas()[i][0], 0);
+				}
+				
+			}
+			else{
+				if(time.construirVectorTransicionesInmediatas()[i][0] != 1){
+					System.out.println(i);
+					System.out.println(time.construirVectorTransicionesInmediatas()[i][0]);
+					assertEquals(time.construirVectorTransicionesInmediatas()[i][0], 1);
+				}
+				
+			}
+			
+			
+		}
+		
+	
+		
+	}
+	
 
 	
 
