@@ -44,6 +44,14 @@ public class RedDePetri{
 		return M;
 	}
 	
+	/**
+	 * Metodo getMatrizH. Usado unicamente para Test.
+	 * @return int[][] Matriz de inhibicion.
+	 */
+	private int[][] getMatrizH(){
+		return H;
+	}
+	
 	public int[][] getPInv(){
 		return Pinvariantes.clone();
 	}
@@ -195,6 +203,18 @@ public class RedDePetri{
                 }
             }
             
+            Sheet paginaExcelH = archivoExcelMatrices.getSheet(3);
+            columnas = paginaExcelH.getColumns();
+            filas = paginaExcelH.getRows();
+           
+            H = new int[filas - 1][columnas - 1];
+            for (int i = 1; i < columnas; i++) {
+                for (int j = 1; j < filas; j++) {
+                    H[j - 1][i - 1] = Integer.parseInt(paginaExcelH.getCell(i, j).getContents());
+                    
+                }
+               
+            }
             
 
             Sheet paginaExcelM= archivoExcelMatrices.getSheet(4);

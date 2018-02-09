@@ -196,5 +196,34 @@ public class testRedDePetri {
 		}
 		
 	}
+	
+	
+	/**
+	 * Test method for {@link Monitor.RedDePetri#RedDePetri(java.lang.String)}.
+	 */
+	@Test
+	public void testMatrizH() {
+		redTest= new RedDePetri(this.redExcel1);
+		try{
+			Method getMatrizH  = RedDePetri.class.getDeclaredMethod("getMatrizH", null);
+			getMatrizH.setAccessible(true);
+			int H[][] =(int[][]) getMatrizH.invoke(redTest);
+			for(int fila=0; fila<H.length;fila++){
+				for(int col=0;col<H[0].length;col++){
+					if(H[fila][col]!=0){
+						assertEquals(H[fila][col],0);
+					}
+				}
+				
+			}
+			
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+	}
 
 }
