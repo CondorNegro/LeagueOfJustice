@@ -4,6 +4,9 @@
 package UnitTests;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,9 +14,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Monitor.Cronometro;
+
 
 public class testCronometro {
-
+	private Cronometro chronos;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -33,6 +38,7 @@ public class testCronometro {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		chronos=new Cronometro();
 	}
 
 	/**
@@ -47,7 +53,7 @@ public class testCronometro {
 	 */
 	@Test
 	public void testCronometro() {
-		fail("Not yet implemented");
+		assertEquals(chronos.getContador(), 0);
 	}
 
 	/**
@@ -55,7 +61,8 @@ public class testCronometro {
 	 */
 	@Test
 	public void testSetNuevoTimeStamp() {
-		fail("Not yet implemented");
+		chronos.setNuevoTimeStamp();
+		assertFalse(chronos.getContador()==0);
 	}
 
 	/**
@@ -63,23 +70,31 @@ public class testCronometro {
 	 */
 	@Test
 	public void testResetearContador() {
-		fail("Not yet implemented");
+		chronos.resetearContador();
+		assertEquals(chronos.getContador(),-1);
 	}
 
 	/**
 	 * Test method for {@link Monitor.Cronometro#getMillis()}.
+	 * @throws InterruptedException 
 	 */
 	@Test
-	public void testGetMillis() {
-		fail("Not yet implemented");
+	public void testGetMillis() throws InterruptedException {
+		chronos.setNuevoTimeStamp();
+		TimeUnit.SECONDS.sleep(3);
+		assertFalse(chronos.getMillis()==0);
+		assertEquals(chronos.getSeconds(),3);
 	}
 
 	/**
 	 * Test method for {@link Monitor.Cronometro#getSeconds()}.
+	 * @throws InterruptedException 
 	 */
 	@Test
-	public void testGetSeconds() {
-		fail("Not yet implemented");
+	public void testGetSeconds() throws InterruptedException {
+		chronos.setNuevoTimeStamp();
+		TimeUnit.SECONDS.sleep(2);
+		assertEquals(chronos.getSeconds(),2);
 	}
 
 	/**
@@ -87,7 +102,10 @@ public class testCronometro {
 	 */
 	@Test
 	public void testGetContador() {
-		fail("Not yet implemented");
+		chronos.setNuevoTimeStamp();
+		assertFalse(chronos.getContador()==0);
+		chronos.resetearContador();
+		assertEquals(chronos.getContador(),-1);
 	}
 
 }
