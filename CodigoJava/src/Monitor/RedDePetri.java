@@ -36,8 +36,9 @@ public class RedDePetri{
 		logicaTemporal=new LogicaTemporal(this.getCantTransiciones());
 		this.logicaTemporal.setVectorIntervalosFromExcel(this.path); 
 		setTransicionesInmediatas();
-		this.logicaTemporal.updateTimeStamp(this.getSensibilizadas(), this.getSensibilizadas(), -1);
 		this.B=getMatrizB();
+		this.logicaTemporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
+		
 	}
 	
 	private int[] getVectorTransicionesInmediatas(){
@@ -130,12 +131,14 @@ public class RedDePetri{
 	 * @param transicion Transicion a disparar
 	 * @return boolean true si la transicion se disparo.
 	 */
-	public boolean disparar(int transicion){
+	public boolean disparar(int transicion){ 
+		
 		int[][] marcado_siguiente = this.getMarcadoSiguiente(transicion);
-        if (esDisparoValido(marcado_siguiente)&&this.logicaTemporal.isInWindowsTime(transicion)) {
-        		int[] transSensAntesDisparo=this.getSensibilizadas();
+		//System.out.println(this.getSensibilizadasExtendido()[transicion]==1);
+        if (this.getSensibilizadasExtendido()[transicion]==1) {
+        		int[] transSensAntesDisparo=this.getConjuncionEAndB();
                 M = marcado_siguiente;
-                this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getSensibilizadas(), transicion);
+                this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getConjuncionEAndB(),  transicion);
                 try{
                 	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
                 }
@@ -150,6 +153,8 @@ public class RedDePetri{
 
         //System.out.println(transicion);
 	    return false;
+	    
+
  }
 
 	
@@ -293,7 +298,16 @@ public class RedDePetri{
     	this.Q=getVectorQ();
     	int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(this.H);
     	int aux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, this.Q);
-    	return aux;
+    	for(int i=0; i<aux.length;i++){
+    		if(aux[i][0]==0){
+    			aux[i][0]=1;
+    		}
+    		else{
+    			aux[i][0]=0;
+    		}
+    	}
+    	this.B=aux;
+    	return this.B.clone();
     }
     
     /**
@@ -369,6 +383,40 @@ public class RedDePetri{
     
     public LogicaTemporal getlogicaTemporal() {
         return this.logicaTemporal;
+    }
+    
+    public int[] getSensibilizadasExtendido(){
+    	int Ex[];
+    	int E[]= this.getSensibilizadas();
+    
+    	int B[][]=this.getMatrizB();
+    	
+    	
+    	int Baux[]=new int[B.length];
+    	for(int i=0; i<B.length;i++){
+    		Baux[i]=B[i][0];
+    	}
+    	int Z[]= logicaTemporal.getVectorZ(this.getConjuncionEAndB());
+    	
+    	Ex=OperacionesMatricesListas.andVector(OperacionesMatricesListas.andVector(E, Z),Baux);
+    	
+    	
+    	return Ex;
+    }
+    
+    public int[] getConjuncionEAndB(){
+    	int E[]= this.getSensibilizadas();
+        
+    	int B[][]=this.getMatrizB();
+    	
+    	int Baux[]=new int[B.length];
+    	for(int i=0; i<B.length;i++){
+    		Baux[i]=B[i][0];
+    	}
+    	
+    	
+    	int q[]=OperacionesMatricesListas.andVector(Baux,E);
+    	return q;
     }
     
 	

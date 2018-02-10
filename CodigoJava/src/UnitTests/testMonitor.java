@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -173,16 +174,22 @@ public class testMonitor {
 			
 			threadDelay.start();
 			try{
-				Thread.sleep(3);
+				TimeUnit.MILLISECONDS.sleep(100);
 			}
 			catch(InterruptedException e){
-				fail("Se gener� error por interrupci�n de thread");
+				fail("Se genero error por interrupcion de thread");
 			}
 			int[] Lista1 = (int[]) quienesEstanEnColas.invoke(monitor1);
 			assertEquals((int)Lista1[0],1);
 			
 			threadResume.start();
 			threadResume.join();
+			try{
+				TimeUnit.MILLISECONDS.sleep(100);
+			}
+			catch(InterruptedException e){
+				fail("Se genero error por interrupcion de thread");
+			}
 			int[] Lista2 = (int[]) quienesEstanEnColas.invoke(monitor1);
 			assertEquals((int)Lista2[0],0);
 			

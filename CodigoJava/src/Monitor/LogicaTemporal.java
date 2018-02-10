@@ -87,7 +87,7 @@ public class LogicaTemporal {
 	/**
 	 * Metodo updateTimeStamp
 	 */
-	public void updateTimeStamp(int[] tSensibilizadasAntesDisparar, int[] tSensibilizadasDespuesDisparar, int transicionDisparar){
+	public void updateTimeStamp(int[] tSensibilizadasAntesDisparar, int[] tSensibilizadasDespuesDisparar,  int transicionDisparar){
 		
 		if(transicionDisparar==-1) { //inicio de red, no se dispara ninguna t
 			for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
@@ -118,15 +118,17 @@ public class LogicaTemporal {
 			}
 		
 		}
+		this.updateVectorZ( tSensibilizadasDespuesDisparar);
 	}
 	
 	
 	/**
 	 * Metodo updateVectorZ
 	 */
-	public void updateVectorZ(){
+	public void updateVectorZ(int[] q){
+		
 		for (int i= 0; i < this.cantTransiciones; i++) {
-			if(isInWindowsTime(i)) {
+			if(isInWindowsTime(i) & q[i]==1) {
 				vectorZ[i]=1;
 			}
 			else {
@@ -137,7 +139,8 @@ public class LogicaTemporal {
 	/**
 	 * Metodo getVectorZ
 	 */
-	public int[] getVectorZ(){
+	public int[] getVectorZ(int[] q){
+		this.updateVectorZ(q);
 		return this.vectorZ;
 	}
 	

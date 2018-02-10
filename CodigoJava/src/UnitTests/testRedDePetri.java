@@ -120,7 +120,8 @@ public class testRedDePetri {
 		assertEquals(redTest.getSensibilizadas()[1],transicionesSensibilizadasTest[1]);
 		assertEquals(redTest.getSensibilizadas()[2],transicionesSensibilizadasTest[2]);
 		assertEquals(redTest.getSensibilizadas()[3],transicionesSensibilizadasTest[3]);
-		redTest.disparar(0);
+		boolean k=redTest.disparar(0);
+		//System.out.println(k);
 		transicionesSensibilizadasTest[0]=0;
 		transicionesSensibilizadasTest[1]=1;
 		assertEquals(redTest.getSensibilizadas()[0],transicionesSensibilizadasTest[0]);
@@ -183,7 +184,7 @@ public class testRedDePetri {
 	 * despues de haber disparado dichas transiciones
 	 */
 	@Test
-	public void verificarTInvariantes() throws InterruptedException {
+	public void testVerificarTInvariantes() throws InterruptedException {
 		
 		redTest=new RedDePetri(this.redExcel3); 	//configuro la red a testear los Tinvariantes
 		
@@ -270,7 +271,7 @@ public class testRedDePetri {
 	 * Test method for getCantTransiciones - temporal
 	 */
 	@Test
-	public void TemporalgetCantTransiciones() {
+	public void testTemporalgetCantTransiciones() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5);
@@ -290,7 +291,7 @@ public class testRedDePetri {
 	 * Test method for getVectorDeIntervalos - temporal
 	 */
 	@Test
-	public void TemporalgetVectorDeIntervalos() {
+	public void testTemporalgetVectorDeIntervalos() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5);
@@ -309,16 +310,16 @@ public class testRedDePetri {
 	 * Test method for getVectorDeIntervalos - temporal
 	 */
 	@Test
-	public void TemporalupdateVectorZ() {
+	public void testUpdateVectorZ() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5);
-			redTest.getlogicaTemporal().updateVectorZ();
-			assertEquals(redTest.getlogicaTemporal().getVectorZ()[0],1);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ()[1],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ()[2],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ()[3],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ()[4],1);
+			redTest.getlogicaTemporal().updateVectorZ(redTest.getConjuncionEAndB());
+			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[0],1);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[1],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[2],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[3],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[4],0);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -331,7 +332,7 @@ public class testRedDePetri {
 	 * Test method for getVectorDeIntervalos - temporal
 	 */
 	@Test
-	public void TemporalgetVectorEstados() {
+	public void testTemporalgetVectorEstados() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5);
@@ -364,7 +365,7 @@ public class testRedDePetri {
 	 * Test method for getVectorDeIntervalos - temporal
 	 */
 	@Test
-	public void TemporalupdateTimeStamp() {
+	public void testTemporalupdateTimeStamp() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5);
@@ -454,8 +455,8 @@ public class testRedDePetri {
 			int B[][]=(int[][])getMatrizB.invoke(redTest);
 			for(int i=0;i<B.length;i++){
 				for(int j=0;j<B[0].length;j++){
-					if(B[i][j]!=0){ //Matriz H es cero
-						assertEquals(B[i][j],0);
+					if(B[i][j]!=1){ //Matriz H es cero
+						assertEquals(B[i][j],1);
 					}
 				}
 			}
@@ -475,20 +476,27 @@ public class testRedDePetri {
 			
 			int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(H);
 			int Baux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, Q);
-			
+			for(int i=0; i<Baux.length;i++){
+	    		if(Baux[i][0]==0){
+	    			Baux[i][0]=1;
+	    		}
+	    		else{
+	    			Baux[i][0]=0;
+	    		}
+	    	}
 			ArrayList<Integer> listaPosiciones=new ArrayList<>();
 			
 			for(int z=0; z<Baux.length;z++){
-				if(Baux[z][0]!=0){
+				if(Baux[z][0]!=1){
 					listaPosiciones.add(z);
 				}
 			}
 			
 			for(int i=0;i<B.length;i++){
 				for(int j=0;j<B[0].length;j++){
-					if(B[i][j]!=0){ 
+					if(B[i][j]!=1){ 
 						if(!listaPosiciones.contains(i)){
-							assertEquals(B[i][j],0);
+							assertEquals(B[i][j],1);
 						}
 						
 					}
