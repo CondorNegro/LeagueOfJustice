@@ -414,4 +414,94 @@ public class testRedDePetri {
 		}
 	}
 	
+	
+	
+	/**
+	 * Test method for {@link Monitor.RedDePetri#getVectorQ()}.
+	 */
+	@Test
+	public void testGetVectorQ() {
+		
+		try{
+			redTest= new RedDePetri(this.redExcel1);
+			Method getVectorQ  = RedDePetri.class.getDeclaredMethod("getVectorQ", null);
+			getVectorQ.setAccessible(true);
+			int Q[][]=(int[][])getVectorQ.invoke(redTest);
+			assertEquals(Q[0][0],0);
+			assertEquals(Q[1][0],1);
+			assertEquals(Q[2][0],1);
+			assertEquals(Q[3][0],1);
+		
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+			
+	
+	}
+	
+	/**
+	 * Test method for {@link Monitor.RedDePetri#getMatrizB()}.
+	 */
+	@Test
+	public void testGetMatrizB() {
+		
+		try{
+			redTest= new RedDePetri(this.redExcel1);
+			Method getMatrizB  = RedDePetri.class.getDeclaredMethod("getMatrizB", null);
+			getMatrizB.setAccessible(true);
+			int B[][]=(int[][])getMatrizB.invoke(redTest);
+			for(int i=0;i<B.length;i++){
+				for(int j=0;j<B[0].length;j++){
+					if(B[i][j]!=0){ //Matriz H es cero
+						assertEquals(B[i][j],0);
+					}
+				}
+			}
+			
+			redTest= new RedDePetri(this.redExcel5);
+			getMatrizB = RedDePetri.class.getDeclaredMethod("getMatrizB", null);
+			getMatrizB.setAccessible(true);
+			B=(int[][])getMatrizB.invoke(redTest);
+			
+			Method getMatrizH  = RedDePetri.class.getDeclaredMethod("getMatrizH", null);
+			getMatrizH.setAccessible(true);
+			int H[][]=(int[][])getMatrizH.invoke(redTest);
+			
+			Method getVectorQ  = RedDePetri.class.getDeclaredMethod("getVectorQ", null);
+			getVectorQ.setAccessible(true);
+			int Q[][]=(int[][])getVectorQ.invoke(redTest);
+			
+			int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(H);
+			int Baux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, Q);
+			
+			ArrayList<Integer> listaPosiciones=new ArrayList<>();
+			
+			for(int z=0; z<Baux.length;z++){
+				if(Baux[z][0]!=0){
+					listaPosiciones.add(z);
+				}
+			}
+			
+			for(int i=0;i<B.length;i++){
+				for(int j=0;j<B[0].length;j++){
+					if(B[i][j]!=0){ 
+						if(!listaPosiciones.contains(i)){
+							assertEquals(B[i][j],0);
+						}
+						
+					}
+				}
+			}
+		
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+			
+	
+	}
+	
 }
