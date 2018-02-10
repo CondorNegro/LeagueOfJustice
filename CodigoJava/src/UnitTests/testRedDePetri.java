@@ -59,7 +59,7 @@ public class testRedDePetri {
 			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
 			this.redExcel3="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestInvariantes1\\testExcelRed2Invariantes.xls";
 			this.redExcel4="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestInvariantes2\\testExcelRed2Invariantes2.xls";
-			
+			this.redExcel5="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\redTemporal\\testExcel.xls"; //Path para Linux.
 		}
 		transicionesSensibilizadasTest=new int[5];
 		transicionesSensibilizadasTest[0]=1;
@@ -240,7 +240,7 @@ public class testRedDePetri {
 	 * Test method for {@link Monitor.RedDePetri#setTransicionesInmediatas}.
 	 */
 	@Test
-	public void testsetTransicionesInmediatas() {
+	public void testSetTransicionesInmediatas() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel1);
