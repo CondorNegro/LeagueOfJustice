@@ -28,8 +28,8 @@ import Monitor.RedDePetri;
 public class testMonitor {
 	private Monitor monitor1=Monitor.getInstance();
 	private Monitor monitor2=Monitor.getInstance();
-	ArrayList<Integer> list1Test = new ArrayList<>();
-	ArrayList<Integer> list2Test = new ArrayList<>();
+	int[] list1Test;
+	int[] list2Test;
 	
 	private HiloDelay hiloDelay;
 	private HiloResume hiloResume;
@@ -59,15 +59,16 @@ public class testMonitor {
 	public void setUp() throws Exception {
 		
 		
-		
-		this.list1Test.add(1);
-		this.list1Test.add(0);
-		this.list1Test.add(0);
-		this.list1Test.add(1);
-		this.list2Test.add(1);
-		this.list2Test.add(0);
-		this.list2Test.add(0);
-		this.list2Test.add(1);
+		this.list1Test=new int[4];
+		this.list2Test=new int[4];
+		this.list1Test[0]=1;
+		this.list1Test[1]=0;
+		this.list1Test[2]=0;
+		this.list1Test[3]=1;
+		this.list2Test[0]=1;
+		this.list2Test[1]=0;
+		this.list2Test[2]=0;
+		this.list2Test[3]=1;
 		if((System.getProperty("os.name")).equals("Windows 10")){
 			this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
 			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
@@ -177,13 +178,13 @@ public class testMonitor {
 			catch(InterruptedException e){
 				fail("Se gener� error por interrupci�n de thread");
 			}
-			List<Integer> Lista1 = (List<Integer>) quienesEstanEnColas.invoke(monitor1);
-			assertEquals((int)Lista1.get(0),1);
+			int[] Lista1 = (int[]) quienesEstanEnColas.invoke(monitor1);
+			assertEquals((int)Lista1[0],1);
 			
 			threadResume.start();
 			threadResume.join();
-			List<Integer> Lista2 = (List<Integer>) quienesEstanEnColas.invoke(monitor1);
-			assertEquals((int)Lista2.get(0),0);
+			int[] Lista2 = (int[]) quienesEstanEnColas.invoke(monitor1);
+			assertEquals((int)Lista2[0],0);
 			
 			} 
 		catch (Exception e){

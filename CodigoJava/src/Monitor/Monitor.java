@@ -114,14 +114,14 @@ public class Monitor {
 	 * Metodo quienesEstanEnColas.
 	 * @return List<Integer> lista con enteros 1 y 0, indicando si las transiciones correspondientes poseen hilos esperando en sus colas o no, respectivamente.
 	 */
-	private List<Integer> quienesEstanEnColas() {
-		ArrayList<Integer> Vc = new ArrayList<>();
+	private int[] quienesEstanEnColas() {
+		int[] Vc = new int[this.getNumeroTransiciones()];
         for(int i=0;i<this.getNumeroTransiciones();i++){
         	if (colas[i].isEmpty()==true) {
-        		Vc.add(0);
+        		Vc[i]=0;
         	}
         	else {
-        		Vc.add(1);
+        		Vc[i]=1;
         	}
         }
 		return Vc;
@@ -139,7 +139,7 @@ public class Monitor {
 	
 	
 	public void dispararTransicion(int transicion) {
-		List<Integer> m;
+		int[] m;
 		try{
 			mutex.acquire(); //Adquiero acceso al monitor.
 		}
@@ -152,8 +152,8 @@ public class Monitor {
 		while(k){
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
 			if(k){ //K=true verifica el estado de la red.
-				List<Integer> Vs=rdp.getSensibilizadas(); //get transiciones sensibilizadas
-				List<Integer> Vc=quienesEstanEnColas(); //get Quienes estan en colas
+				int[] Vs=rdp.getSensibilizadas(); //get transiciones sensibilizadas
+				int[] Vc=quienesEstanEnColas(); //get Quienes estan en colas
 				try{
 					m= OperacionesMatricesListas.andVector(Vs, Vc); //Obtengo listaM
 				}

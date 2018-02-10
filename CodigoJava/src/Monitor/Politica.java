@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Politica { 
 	//Vector indicando la prioridad de las transiciones.
-	//{2,5,4} -> indica que la transición 2 es la de mayor prioridad. La t4 es la de menor prioridad.
+	//{2,5,4} -> indica que la transiciï¿½n 2 es la de mayor prioridad. La t4 es la de menor prioridad.
 	private static final int[] transicionesPrioritariasSubida={1,2,3,4}; //Corregir
 	private static final int[] transicionesPrioritariasBajada={1,2,3,4}; //Corregir
 	
@@ -35,18 +35,18 @@ public class Politica {
 	}
 	
 	/**
-	 * Método politicaAleatoria. Implementa la decision de cual disparar en base a la aleatoriedad.
+	 * Mï¿½todo politicaAleatoria. Implementa la decision de cual disparar en base a la aleatoriedad.
 	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 */
-	private int politicaAleatoria(List<Integer> listaM){
+	private int politicaAleatoria(int[] listaM){
 	
 			int indice=0;
 			boolean flag=true;
 			while(flag){
 				int numeroAleatorio = (int) (Math.random()*100);
-				indice=numeroAleatorio % listaM.size(); //Defino una posicion aleatoria.
-				if(listaM.get(indice)!=0){ //Verifico si el numero aleatorio no coincide con una transicion que no se puede disparar
+				indice=numeroAleatorio % listaM.length; //Defino una posicion aleatoria.
+				if(listaM[indice]!=0){ //Verifico si el numero aleatorio no coincide con una transicion que no se puede disparar
 					flag=false;
 				}
 			}
@@ -55,37 +55,37 @@ public class Politica {
 	}
 	
 	/**
-	 * Método politicaPrimeroSuben. Implementa la decision de cual disparar en base a darle mayor prioridad a la gente que tiene que subir al ferrocarril.
+	 * Mï¿½todo politicaPrimeroSuben. Implementa la decision de cual disparar en base a darle mayor prioridad a la gente que tiene que subir al ferrocarril.
 	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 */
-	private int politicaPrimeroSuben(List<Integer> listaM){
+	private int politicaPrimeroSuben(int[] listaM){
 		
 			
 			for(int i=0;i<transicionesPrioritariasSubida.length;i++){
-		         if(listaM.get(transicionesPrioritariasSubida[i])==1){ //El 1 indica que se puede disparar
+		         if(listaM[transicionesPrioritariasSubida[i]]==1){ //El 1 indica que se puede disparar
 		             return transicionesPrioritariasSubida[i];
 		         }
 		     }
-		     return this.politicaAleatoria(listaM); //Si no está definida la prioridad, se utiliza la aleatoriedad.
+		     return this.politicaAleatoria(listaM); //Si no estï¿½ definida la prioridad, se utiliza la aleatoriedad.
 			
 	
 	}
 	
 	/**
-	 * Método politicaPrimeroBajan. Implementa la decision de cual disparar en base a darle mayor prioridad a la gente que tiene que bajar del ferrocarril.
+	 * Mï¿½todo politicaPrimeroBajan. Implementa la decision de cual disparar en base a darle mayor prioridad a la gente que tiene que bajar del ferrocarril.
 	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 */
-	private int politicaPrimeroBajan(List<Integer> listaM){
+	private int politicaPrimeroBajan(int[] listaM){
 		
 			
 			for(int i=0;i<transicionesPrioritariasBajada.length;i++){
-		         if(listaM.get(transicionesPrioritariasBajada[i])==1){ //El 1 indica que se puede disparar
+		         if(listaM[transicionesPrioritariasBajada[i]]==1){ //El 1 indica que se puede disparar
 		             return transicionesPrioritariasBajada[i];
 		         }
 		     }
-		     return this.politicaAleatoria(listaM); //Si no está definida la prioridad, se utiliza la aleatoriedad.
+		     return this.politicaAleatoria(listaM); //Si no estï¿½ definida la prioridad, se utiliza la aleatoriedad.
 			
 	
 	}
@@ -98,15 +98,15 @@ public class Politica {
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 * @throws IndexOutOfBoundsException en caso de que listaM sea una lista vacia.
 	 */
-	public int cualDisparar(List<Integer> listaM) throws IndexOutOfBoundsException{
-		if(listaM.size()>0){
+	public int cualDisparar(int[] listaM) throws IndexOutOfBoundsException{
+		if(listaM.length>0){
 			if(this.modoPolitica==0){ //Politica aleatoria.
 				return politicaAleatoria(listaM);
 			}
-			else if(this.modoPolitica==1){ //Política primero suben.
+			else if(this.modoPolitica==1){ //Polï¿½tica primero suben.
 				return politicaPrimeroSuben(listaM);
 			}
-			else if(this.modoPolitica==2){ //Política primero bajan.
+			else if(this.modoPolitica==2){ //Polï¿½tica primero bajan.
 				return politicaPrimeroBajan(listaM);
 			}
 			else{
@@ -114,7 +114,7 @@ public class Politica {
 			}
 		}
 		else{
-			throw new IndexOutOfBoundsException("Lista M vacía.");
+			throw new IndexOutOfBoundsException("Lista M vacï¿½a.");
 		}
 		
 		

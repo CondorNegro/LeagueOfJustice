@@ -17,8 +17,8 @@ import Monitor.OperacionesMatricesListas;
 
 
 public class testOperacionesMatricesListas {
-	ArrayList<Integer> list1Test = new ArrayList<>();
-	ArrayList<Integer> list2Test = new ArrayList<>();
+	int[] list1Test=new int[4];
+	int[] list2Test=new int[4];
 	int[][] a = { { 1, 2, -3 }, { 4, 0, -2 } };
     int[][] b = { { 2, 2, 3 }, { 1, -1, -6 } };
     
@@ -43,14 +43,15 @@ public class testOperacionesMatricesListas {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		list1Test.add(1);
-		list1Test.add(0);
-		list1Test.add(0);
-		list1Test.add(1);
-		list2Test.add(1);
-		list2Test.add(0);
-		list2Test.add(0);
-		list2Test.add(1);
+		list1Test[0]=1;
+		list1Test[1]=0;
+		list1Test[2]=0;
+		list1Test[3]=1;
+		
+		list2Test[0]=1;
+		list2Test[1]=0;
+		list2Test[2]=0;
+		list2Test[3]=1;
 
 	}
 
@@ -68,19 +69,20 @@ public class testOperacionesMatricesListas {
 	 */
 	@Test
 	public void testAndVector() {
-		//assertTrue(list1Test==list2Test);
-		assertEquals(OperacionesMatricesListas.andVector(list1Test, list2Test), list1Test); //compruebo que 1001 and 1001 da 1001 
-		list2Test.set(0, 0); //seteo un 0 en la posicion 0, quedando 0001
-		assertEquals(OperacionesMatricesListas.andVector(list1Test, list2Test),list2Test); //compruebo que 1001 and 0001 da 0001
-		list2Test.set(3, 0); //seteo un 0 en la posicion 0, quedando 0000
-		list1Test.set(1, 0); //seteo un 1 en la posicion 1, quedando 1101
-		list1Test.set(2, 0); //seteo un 1 en la posicion 1, quedando 1111
-		assertEquals(OperacionesMatricesListas.andVector(list1Test, list2Test),list2Test); //compruebo que 1111 and 0000 da 0000
-	}
+		for(int i=0;i<4;i++){
+			assertEquals(OperacionesMatricesListas.andVector(list1Test, list1Test)[i],list1Test[i]); //compruebo que 1001 and 1001 da 1001 
+			list2Test[0]=0; //seteo un 0 en la posicion 0, quedando 0001
+			assertEquals(OperacionesMatricesListas.andVector(list1Test, list2Test)[i],list2Test[i]); //compruebo que 1001 and 0001 da 0001
+			list2Test[3]=0; //seteo un 0 en la posicion 0, quedando 0000
+			list1Test[0]=1; //seteo un 1 en la posicion 1, quedando 1101
+			list1Test[2]=0; //seteo un 1 en la posicion 1, quedando 1111
+			assertEquals(OperacionesMatricesListas.andVector(list1Test, list2Test)[i],list2Test[i]); //compruebo que 1111 and 0000 da 0000
 	
+		}
+	}	
 	
 	@Test (expected=IndexOutOfBoundsException.class) public void testAndVectorException() {
-		list1Test.add(1);
+		int[] list1Test=new int[5];
 		assertEquals(OperacionesMatricesListas.andVector(list1Test, list2Test),list2Test); // deberia arrojar IndexOutOfBoundsException
 																	      //porque list1Test tiene un elemento de mas
 	}
@@ -91,12 +93,12 @@ public class testOperacionesMatricesListas {
 	@Test
 	public void testIsNotAllZeros() {
 		assertEquals(OperacionesMatricesListas.isNotAllZeros(list1Test), true); // pruebo que no todos los elementos de list1Test sean 0
-		ArrayList<Integer> list3Test = new ArrayList<>();
-		list3Test.add(0);
-		list3Test.add(0);
-		list3Test.add(0);
+		int[] list3Test = new int[4];
+		list3Test[0]=0;
+		list3Test[1]=0;
+		list3Test[2]=0;
 		assertTrue(OperacionesMatricesListas.isNotAllZeros(list3Test)==false); //en list3Test, todos los elementos son 0, debe dar false
-		list3Test.add(1);
+		list3Test[3]=1;
 		assertTrue(OperacionesMatricesListas.isNotAllZeros(list3Test)==true); //ahora debe dar true
 	}
 

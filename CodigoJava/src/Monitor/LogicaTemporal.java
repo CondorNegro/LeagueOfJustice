@@ -87,24 +87,33 @@ public class LogicaTemporal {
 	/**
 	 * Metodo updateTimeStamp
 	 */
-	public void updateTimeStamp(ArrayList<Integer> tSensibilizadasAntesDisparar, ArrayList<Integer> tSensibilizadasDespuesDisparar, int transicionDisparar){
+	public void updateTimeStamp(int[] tSensibilizadasAntesDisparar, int[] tSensibilizadasDespuesDisparar, int transicionDisparar){
+		
+		if(transicionDisparar==-1) { //inicio de red, no se dispara ninguna t
+			for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
+				if(tSensibilizadasAntesDisparar[transicion]==1) {
+					this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
+				}
+
+			}
+		}
 		
 		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
 			
-			if(tSensibilizadasAntesDisparar.get(transicion)==1 && tSensibilizadasDespuesDisparar.get(transicion)==1) {
+			if(tSensibilizadasAntesDisparar[transicion]==1 && tSensibilizadasDespuesDisparar[transicion]==1) {
 				if(transicion==transicionDisparar) {
 					this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
 				}
 			}
-			else if(tSensibilizadasAntesDisparar.get(transicion)==1 && tSensibilizadasDespuesDisparar.get(transicion)==0) {
+			else if(tSensibilizadasAntesDisparar[transicion]==1 && tSensibilizadasDespuesDisparar[transicion]==0) {
 				this.vectorDeTimeStamps[transicion].resetearContador();
 			}
 			
-			else if(tSensibilizadasAntesDisparar.get(transicion)==0 && tSensibilizadasDespuesDisparar.get(transicion)==1) {
+			else if(tSensibilizadasAntesDisparar[transicion]==0 && tSensibilizadasDespuesDisparar[transicion]==1) {
 				this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
 			}
 			
-			else if(tSensibilizadasAntesDisparar.get(transicion)==0 && tSensibilizadasDespuesDisparar.get(transicion)==0) {
+			else if(tSensibilizadasAntesDisparar[transicion]==0 && tSensibilizadasDespuesDisparar[transicion]==0) {
 				this.vectorDeTimeStamps[transicion].resetearContador();
 			}
 		
@@ -157,11 +166,10 @@ public class LogicaTemporal {
 			throw new IllegalArgumentException("Transicion invalida");	
 		}
 		
-		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()>=(long)vectorDeIntervalos[0][transicion];
-		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()<=(long)vectorDeIntervalos[1][transicion];
-		boolean comparacion3=(long)vectorDeIntervalos[1][transicion]==(long)-1;
-		
-		if(comparacion1&&(comparacion2||comparacion3)) {
+		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()>=(long)vectorDeIntervalos[transicion][0]*1000;
+		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()<=(long)vectorDeIntervalos[transicion][1]*1000;
+		boolean comparacion3=(long)vectorDeIntervalos[transicion][1]==(long)-1;
+		if((comparacion1&&(comparacion2||comparacion3))||construirVectorTransicionesInmediatas()[transicion]==1) {
 			return true;
 		}
 		else {
@@ -172,14 +180,14 @@ public class LogicaTemporal {
 	
 	
 	
-	public int[][] construirVectorTransicionesInmediatas(){
-		int aux[][]=new int[this.getCantTransiciones()][1];
+	public int[] construirVectorTransicionesInmediatas(){
+		int aux[]=new int[this.getCantTransiciones()];
 		for(int i=0; i< this.getCantTransiciones();i++){
 			if(this.vectorDeIntervalos[i][0]==0 & this.vectorDeIntervalos[i][1]==-1){
-				aux[i][0]=1;
+				aux[i]=1;
 			}
 			else{
-				aux[i][0]=0;
+				aux[i]=0;
 			}
 				
 		}

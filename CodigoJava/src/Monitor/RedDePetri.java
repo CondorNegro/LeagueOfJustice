@@ -25,7 +25,7 @@ public class RedDePetri{
 	private int[][] B; //Matriz B. B= H * Q
 	private int[][] Q;
 	private LogicaTemporal logicaTemporal;
-	private int[][] transicionesInmediatas; //Un uno indica que la transicion es inmediata.
+	private int[] transicionesInmediatas; //Un uno indica que la transicion es inmediata.
 	
 	
 	
@@ -39,7 +39,7 @@ public class RedDePetri{
 
 	}
 	
-	private int[][] getVectorTransicionesInmediatas(){
+	private int[] getVectorTransicionesInmediatas(){
 		return this.transicionesInmediatas;
 	}
 	
@@ -93,16 +93,16 @@ public class RedDePetri{
 	 * Metodo getSensibilizadas(). Permite obtener el vector de transiciones sensibilizadas.
 	 * @return ArrayList<Integer> lista con enteros 1 y 0 indicando transiciones sensibilizadas o no, respectivamente.
 	 */
-	public ArrayList<Integer> getSensibilizadas() {
-		ArrayList<Integer> transicionesSensibilizadas = new ArrayList<>();
+	public int[] getSensibilizadas() {
+		int[] transicionesSensibilizadas = new int[getCantTransiciones()];
 		
 	    for (int transicion = 0; transicion < getCantTransiciones(); transicion++) {
 	            try {
 	                if (esDisparoValido(getMarcadoSiguiente(transicion))) {
-	                	  transicionesSensibilizadas.add(1);
+	                	  transicionesSensibilizadas[transicion]=1;
 	                }
 	                else{
-	                	 transicionesSensibilizadas.add(0);
+	                	transicionesSensibilizadas[transicion]=0;
 	                }
 	            } 
 	            catch (IllegalArgumentException e) {
@@ -132,7 +132,9 @@ public class RedDePetri{
 	public boolean disparar(int transicion){
 		int[][] marcado_siguiente = this.getMarcadoSiguiente(transicion);
         if (esDisparoValido(marcado_siguiente)) {
+        		int[] transSensAntesDisparo=this.getSensibilizadas();
                 M = marcado_siguiente;
+                this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getSensibilizadas(), transicion);
                 try{
                 	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
                 }
@@ -351,6 +353,10 @@ public class RedDePetri{
     
     private int[][] getTinvariant() {
         return this.Tinvariantes;
+    }
+    
+    public LogicaTemporal getlogicaTemporal() {
+        return this.logicaTemporal;
     }
     
 	

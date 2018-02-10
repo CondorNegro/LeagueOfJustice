@@ -19,14 +19,12 @@ public class OperacionesMatricesListas {
 	  * @return List<Integer> Conteniendo el resultado de aplicar la operacion AND elemento a elemento entre lista1 y lista2
 	  * @throws IndexOutOfBoundsException En caso de tener listas de diferentes tama�os
 	  */
-	 public static synchronized  List<Integer> andVector(List<Integer> lista1, List<Integer> lista2) throws IndexOutOfBoundsException{
-			if (lista1.size()==lista2.size()) {
-				ArrayList<Integer> resultado = new ArrayList<>();
-				Iterator<Integer> iterador1=lista1.iterator();
-				Iterator<Integer> iterador2=lista2.iterator();
+	 public static synchronized  int[] andVector(int[] lista1, int[] lista2) throws IndexOutOfBoundsException{
+			if (lista1.length==lista2.length) {
+				int[] resultado = new int[lista1.length];
 	
-				while(iterador1.hasNext()&iterador2.hasNext()) {
-		    		resultado.add(new Integer(iterador1.next().intValue()&iterador2.next().intValue()));
+				for(int i = 0; i < lista1.length; i++) {
+					resultado[i]=lista1[i]&lista2[i];
 				}   
 	
 				return resultado;
@@ -44,11 +42,10 @@ public class OperacionesMatricesListas {
 		 * @param lista Lista a evaluar
 		 * @return boolean true si al menos un elemento de la lista es distinto de cero
 		 */
-		public static synchronized boolean isNotAllZeros(List<Integer> lista){
-			Iterator<Integer> iterador=lista.iterator();
+		public static synchronized boolean isNotAllZeros(int[] lista){
 			boolean var=false;
-			while(iterador.hasNext()) {
-				if(iterador.next().intValue()!=0) {
+			 for (int i = 0; i < lista.length; i++) {
+				if(lista[i]!=0) {
 					var=true;
 				}
 			} 

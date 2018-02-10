@@ -8,8 +8,7 @@ import static org.junit.Assert.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-
+import java.util.concurrent.TimeUnit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -19,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Monitor.LogicaTemporal;
 import Monitor.Monitor;
 import Monitor.OperacionesMatricesListas;
 import Monitor.RedDePetri;
@@ -27,7 +27,7 @@ import Monitor.RedDePetri;
 public class testRedDePetri {
 	private RedDePetri redTest;
 	private OperacionesMatricesListas operaciones;
-	private ArrayList<Integer> transicionesSensibilizadasTest = new ArrayList<>();
+	private int[] transicionesSensibilizadasTest;
 	private String redExcel1="./RedesParaTest/RedTest1/testExcel.xls"; //Path para Linux.
 	private String redExcel2="./RedesParaTest/RedTest2/testExcel5.xls"; //Path para Linux.
 	private String redExcel3="./RedesParaTest/TestInvariantes1/testExcelRed2Invariantes.xls"; //Path para Linux.
@@ -61,10 +61,12 @@ public class testRedDePetri {
 			this.redExcel4="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestInvariantes2\\testExcelRed2Invariantes2.xls";
 			
 		}
-		transicionesSensibilizadasTest.add(1);
-		transicionesSensibilizadasTest.add(0);
-		transicionesSensibilizadasTest.add(0);
-		transicionesSensibilizadasTest.add(0);
+		transicionesSensibilizadasTest=new int[5];
+		transicionesSensibilizadasTest[0]=1;
+		transicionesSensibilizadasTest[1]=0;
+		transicionesSensibilizadasTest[2]=0;
+		transicionesSensibilizadasTest[3]=0;
+		transicionesSensibilizadasTest[4]=0;
 	}
 
 	/**
@@ -101,7 +103,10 @@ public class testRedDePetri {
 	@Test
 	public void testGetSensibilizadas() {
 		redTest= new RedDePetri(this.redExcel1);
-		assertEquals(redTest.getSensibilizadas(), transicionesSensibilizadasTest);
+		assertEquals(redTest.getSensibilizadas()[0], transicionesSensibilizadasTest[0]);
+		assertEquals(redTest.getSensibilizadas()[1], transicionesSensibilizadasTest[1]);
+		assertEquals(redTest.getSensibilizadas()[2], transicionesSensibilizadasTest[2]);
+		assertEquals(redTest.getSensibilizadas()[3], transicionesSensibilizadasTest[3]);
 	}
 
 	/**
@@ -111,11 +116,17 @@ public class testRedDePetri {
 	public void testDisparar() {
 		redTest= new RedDePetri(this.redExcel1);
 		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
-		assertEquals(redTest.getSensibilizadas(),transicionesSensibilizadasTest);
+		assertEquals(redTest.getSensibilizadas()[0],transicionesSensibilizadasTest[0]);
+		assertEquals(redTest.getSensibilizadas()[1],transicionesSensibilizadasTest[1]);
+		assertEquals(redTest.getSensibilizadas()[2],transicionesSensibilizadasTest[2]);
+		assertEquals(redTest.getSensibilizadas()[3],transicionesSensibilizadasTest[3]);
 		redTest.disparar(0);
-		transicionesSensibilizadasTest.set(0, 0);
-		transicionesSensibilizadasTest.set(1, 1);
-		assertEquals(redTest.getSensibilizadas(),transicionesSensibilizadasTest);
+		transicionesSensibilizadasTest[0]=0;
+		transicionesSensibilizadasTest[1]=1;
+		assertEquals(redTest.getSensibilizadas()[0],transicionesSensibilizadasTest[0]);
+		assertEquals(redTest.getSensibilizadas()[1],transicionesSensibilizadasTest[1]);
+		assertEquals(redTest.getSensibilizadas()[2],transicionesSensibilizadasTest[2]);
+		assertEquals(redTest.getSensibilizadas()[3],transicionesSensibilizadasTest[3]);
 	}
 
 	/**
@@ -232,28 +243,28 @@ public class testRedDePetri {
 	 * Test method for {@link Monitor.RedDePetri#setTransicionesInmediatas}.
 	 */
 	@Test
-	public void testSetTransicionesInmediatas() {
+	public void testsetTransicionesInmediatas() {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel1);
 		
 			Method getVectorTransicionesInmediatas  = RedDePetri.class.getDeclaredMethod("getVectorTransicionesInmediatas", null);
 			getVectorTransicionesInmediatas.setAccessible(true);
-			int T[][] =(int[][]) getVectorTransicionesInmediatas.invoke(redTest);
+			int T[] =(int[]) getVectorTransicionesInmediatas.invoke(redTest);
 			for(int i=0; i<redTest.getCantTransiciones(); i++){
 				
 				if(i!=0){
-					if(T[i][0] != 0){
+					if(T[i] != 0){
 						
 						
-						assertEquals(T[i][0], 0);
+						assertEquals(T[i], 0);
 					}
 					
 				}
 				else{
-					if(T[i][0]!= 1){
+					if(T[i]!= 1){
 						
-						assertEquals(T[i][0], 1);
+						assertEquals(T[i], 1);
 					}
 					
 				}
@@ -265,5 +276,88 @@ public class testRedDePetri {
 		
 		
 	}
+	
+	
+	
+	
 
+	/**
+	 * Test method for getCantTransiciones - temporal
+	 */
+	@Test
+	public void TemporalgetCantTransiciones() {
+		
+		try{
+			redTest= new RedDePetri(this.redExcel5);
+			Method getCantTransiciones  = LogicaTemporal.class.getDeclaredMethod("getCantTransiciones", null);
+			getCantTransiciones.setAccessible(true);
+			int cantidadT=(int)getCantTransiciones.invoke(redTest.getlogicaTemporal());
+			assertEquals(cantidadT,5);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			fail("Fallo por excepcion");
+		}
+	}
+	
+	
+	/**
+	 * Test method for getVectorDeIntervalos - temporal
+	 */
+	@Test
+	public void TemporalgetVectorDeIntervalos() {
+		
+		try{
+			redTest= new RedDePetri(this.redExcel5);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][0],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],2);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][1],-1);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			fail("Fallo por excepcion");
+		}
+	}
+	
+	
+	/**
+	 * Test method for getVectorDeIntervalos - temporal
+	 */
+	@Test
+	public void TemporalupdateTimeStamp() {
+		
+		try{
+			redTest= new RedDePetri(this.redExcel5);
+			int[] transTemporales= new int[redTest.getCantTransiciones()];
+			transTemporales=OperacionesMatricesListas.andVector(redTest.getSensibilizadas(), redTest.getlogicaTemporal().construirVectorTransicionesInmediatas());
+			redTest.getlogicaTemporal().updateTimeStamp(transTemporales, transTemporales, -1);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][0],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],2);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][1],-1);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+			redTest.disparar(0);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+			TimeUnit.SECONDS.sleep(3);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),true);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			fail("Fallo por excepcion");
+		}
+	}
+	
 }
