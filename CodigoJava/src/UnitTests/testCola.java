@@ -66,7 +66,7 @@ public class testCola {
 			Thread.sleep(3);
 		}
 		catch(InterruptedException e){
-			fail("Se generó error por interrupción de thread");
+			fail("Se generï¿½ error por interrupciï¿½n de thread");
 		}
 		assert(!cola.isEmpty());
 		assert(!hiloDelay.getFlag());
@@ -78,7 +78,7 @@ public class testCola {
 			threadDelay.join();
 		}
 		catch(InterruptedException e){
-			fail("Se generó error por interrupción de thread");
+			fail("Se generï¿½ error por interrupciï¿½n de thread");
 		}
 		
 		assert(hiloDelay.getFlag());
