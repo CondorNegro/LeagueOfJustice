@@ -13,7 +13,7 @@ public class LogicaTemporal {
 	private int cantTransiciones;
 	private IDVector vectorID;
 	private int[][] vectorDeIntervalos;
-	private int[][] vectorDeEstado;
+	private int[] vectorDeEstado;
 	private Cronometro vectorDeTimeStamps[];
 	private int [] vectorZ; //Contiene un uno si el contador esta entre alfa y beta. De lo contrario un cero.
 	
@@ -134,21 +134,27 @@ public class LogicaTemporal {
 			}
 		}
 	}
+	/**
+	 * Metodo getVectorZ
+	 */
+	public int[] getVectorZ(){
+		return this.vectorZ;
+	}
 	
 	
 	/**
 	 * Metodo getVectorEstados
 	 * 
-	 * @return ArrayList<Integer> vector de transiciones sensibilizadas y dentro de su ventana temporal.
+	 * @return int[] vector de transiciones sensibilizadas y dentro de su ventana temporal.
 	 */
-	public ArrayList<Integer> getVectorEstados(ArrayList<Integer> transicionesSensibilizadas) {
-		ArrayList<Integer> tSensAndWindowsTime = new ArrayList<>();
+	public int[] getVectorEstados(int[] transicionesSensibilizadas) {
+		int[] tSensAndWindowsTime = new int[this.cantTransiciones];
 		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
-			if((transicionesSensibilizadas.get(transicion)==1)&&isInWindowsTime(transicion)) {
-				tSensAndWindowsTime.add(1);
+			if((transicionesSensibilizadas[transicion]==1)&&isInWindowsTime(transicion)) {
+				tSensAndWindowsTime[transicion]=1;
 			}
 			else {
-				tSensAndWindowsTime.add(0);
+				tSensAndWindowsTime[transicion]=0;
 			}
 		}
 		return tSensAndWindowsTime;
