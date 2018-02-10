@@ -277,7 +277,7 @@ public class testRedDePetri {
 			Method getCantTransiciones  = LogicaTemporal.class.getDeclaredMethod("getCantTransiciones", null);
 			getCantTransiciones.setAccessible(true);
 			int cantidadT=(int)getCantTransiciones.invoke(redTest.getlogicaTemporal());
-			assertEquals(cantidadT,5);
+			assertEquals(cantidadT,6);
 		}
 		catch(Exception e){
 			e.printStackTrace();
