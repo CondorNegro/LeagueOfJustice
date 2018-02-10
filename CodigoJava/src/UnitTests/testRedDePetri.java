@@ -191,7 +191,7 @@ public class testRedDePetri {
 		int[][] primerMarcado=redTest.getMatrizM();	//Obtengo el marcado actual de la red configurada y lo guardo en la variable local "marcaActual" 
 		
 		for(int j = 0; j<tinvariant.length; j++){ 	//Recorro todas las filas del vector tinvariant
-			while(operaciones.isNotAllZerosInt(tinvariant[j])){ //Si hay un elemento distinto de cero en esa fila del tinvariant, repetir
+			while(operaciones.isNotAllZeros(tinvariant[j])){ //Si hay un elemento distinto de cero en esa fila del tinvariant, repetir
 		        for(int i = 0; i<tinvariant[j].length; i++){	//Recorro las columnas de esa fila de tinvariant
 		        	if(redTest.esDisparoValido(redTest.getMarcadoSiguiente(i))&&(tinvariant[j][i]!=0)&&redTest.getlogicaTemporal().isInWindowsTime(i)){ //Si la transicion i se encuentra sensibilizada y ademas pertenece al vector tinvariant, disparar la transicion
 		        		redTest.disparar(i);

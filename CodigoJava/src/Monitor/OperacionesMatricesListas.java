@@ -37,7 +37,7 @@ public class OperacionesMatricesListas {
 		}
 	 
 	 
-		/**
+	 	/**
 		 * Metodo isNotAllZeros. Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
 		 * @param lista Lista a evaluar
 		 * @return boolean true si al menos un elemento de la lista es distinto de cero
@@ -52,22 +52,7 @@ public class OperacionesMatricesListas {
 			return var;
 		}
 		
-		/**
-		 * Metodo isNotAllZeros. Devuelve true si al menos un elemento de la lista es distinto de cero, de lo contrario devuelve false
-		 * @param lista Lista a evaluar
-		 * @return boolean true si al menos un elemento de la lista es distinto de cero
-		 */
-		public static synchronized boolean isNotAllZerosInt(int[] lista){
-			boolean var=false;
-			for (int i = 0; i<lista.length; i++) {
-				if(lista[i]!=0) {
-					var=true;
-				}
-			}
-			
-			return var;
-		}
-	 
+		
 	/**
 	 * Metodo productoMatrices. Realiza el producto entre dos matrices (a x b) de datos tipo int.
 	 * @param a Primer matriz
@@ -77,7 +62,8 @@ public class OperacionesMatricesListas {
 		    
 	 */
 	 public static synchronized int[][] productoMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
-		    int[][] c = new int[a.length][b[0].length]; //inicializo c
+		    
+		 int[][] c = new int[a.length][b[0].length]; //inicializo c
 		    //se comprueba si las matrices se pueden multiplicar
 		    if (a[0].length == b.length) {
 		        for (int i = 0; i < a.length; i++) {
@@ -90,7 +76,11 @@ public class OperacionesMatricesListas {
 		        }
 		    }
 		    else { 
-		    	 throw new IllegalArgumentException("Las matrices no cumplen con las condiciones para poder efectuar la multiplicacion"); //si no se cumple la condici�n tira IllegalArgumentException
+		    	 System.out.print("Columas de matriz 1: \n");
+		    	 System.out.println(a[0].length);
+		    	 System.out.print("Filas de matriz 2: \n");
+		    	 System.out.println(b.length);
+		    	 throw new IllegalArgumentException("Las matrices no cumplen con las condiciones para poder efectuar la multiplicacion"); //si no se cumple la condicion tira IllegalArgumentException
 		    }
 		    return c;
 	 }
@@ -117,6 +107,24 @@ public class OperacionesMatricesListas {
     	}
     	return c;
     }
+    
+    /**
+	 * Metodo transpuesta. Realiza la transpuesta de una matriz de datos tipo int.
+	 * @param a Matriz a transponer
+	 * @return int[][] Matriz transpuesta
+	 */
+    public static synchronized int[][] transpuesta(int[][] a){
+    	int[][] c = new int[a[0].length][a.length]; 
+    	for(int fila=0; fila<a.length;fila++){
+    		for(int columna=0; columna<a[0].length;columna++){
+    			c[columna][fila]=a[fila][columna];
+    		}
+    	}
+	
+    	return c;
+    }
+    
+    
     
    
 	 

@@ -120,5 +120,15 @@ public class testOperacionesMatricesListas {
 		int[][] c = { { 10,-6 }, { 14,-6 } };
 		assertEquals(OperacionesMatricesListas.productoMatrices(x, z),c);
 	}
+	
+	/**
+	 * Test method for {@link Monitor.OperacionesMatricesListas#transpuesta(int[][])}.
+	 */
+	@Test
+	public void testTranspuesta() {
+		int[][] c = { { 1,4},{2, 0 }, {-3,-2 } };
+		assertEquals(OperacionesMatricesListas.transpuesta(a),c);
+		
+	}
 
 }

@@ -37,7 +37,7 @@ public class RedDePetri{
 		this.logicaTemporal.setVectorIntervalosFromExcel(this.path); 
 		setTransicionesInmediatas();
 		this.logicaTemporal.updateTimeStamp(this.getSensibilizadas(), this.getSensibilizadas(), -1);
-
+		this.B=getMatrizB();
 	}
 	
 	private int[] getVectorTransicionesInmediatas(){
@@ -232,7 +232,7 @@ public class RedDePetri{
                
             }
             
-            //this.B=getMatrizB();
+           
             
 
             Sheet paginaExcelM= archivoExcelMatrices.getSheet(4);
@@ -284,21 +284,32 @@ public class RedDePetri{
     }
     
     
-    
+    /**
+     * Metodo getMatrizB. 
+     * Matriz B= Matriz H * Vector Q.
+     * @return int[][] Matriz B. Utilizada en la ecuación de estado.
+     */
     private int[][] getMatrizB(){
     	this.Q=getVectorQ();
-    	int aux[][]=OperacionesMatricesListas.productoMatrices(this.H, this.Q);
+    	int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(this.H);
+    	int aux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, this.Q);
     	return aux;
     }
     
+    /**
+     * Metodo getVectorQ. 
+     * El vector Q contiene un uno si la marca de la plaza es cero. 
+     * De lo contrario posee un cero en esa posicion. 
+     * @return int[][] Vector Q. 
+     */
     private int[][] getVectorQ(){
     	int aux[][]=new int[this.M.length][1];
     	for(int i=0;i<this.M.length;i++){
-    		if(M[i][1]!=0){
-    			aux[i][1]=0;
+    		if(M[i][0]!=0){
+    			aux[i][0]=0;
     		}
     		else{
-    			aux[i][1]=1;
+    			aux[i][0]=1;
     		}
     	}
     	return aux;
