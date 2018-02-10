@@ -36,6 +36,7 @@ public class RedDePetri{
 		logicaTemporal=new LogicaTemporal(this.getCantTransiciones());
 		this.logicaTemporal.setVectorIntervalosFromExcel(this.path); 
 		setTransicionesInmediatas();
+		this.logicaTemporal.updateTimeStamp(this.getSensibilizadas(), this.getSensibilizadas(), -1);
 
 	}
 	
@@ -131,7 +132,7 @@ public class RedDePetri{
 	 */
 	public boolean disparar(int transicion){
 		int[][] marcado_siguiente = this.getMarcadoSiguiente(transicion);
-        if (esDisparoValido(marcado_siguiente)) {
+        if (esDisparoValido(marcado_siguiente)&&this.logicaTemporal.isInWindowsTime(transicion)) {
         		int[] transSensAntesDisparo=this.getSensibilizadas();
                 M = marcado_siguiente;
                 this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getSensibilizadas(), transicion);
@@ -147,7 +148,7 @@ public class RedDePetri{
          
         }
 
-
+        //System.out.println(transicion);
 	    return false;
  }
 

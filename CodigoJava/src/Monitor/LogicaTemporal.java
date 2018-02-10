@@ -166,10 +166,11 @@ public class LogicaTemporal {
 			throw new IllegalArgumentException("Transicion invalida");	
 		}
 		
-		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()>=(long)vectorDeIntervalos[transicion][0]*1000;
-		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()<=(long)vectorDeIntervalos[transicion][1]*1000;
+		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()/1000>=(long)vectorDeIntervalos[transicion][0];
+		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()/1000<=(long)vectorDeIntervalos[transicion][1];
 		boolean comparacion3=(long)vectorDeIntervalos[transicion][1]==(long)-1;
-		if((comparacion1&&(comparacion2||comparacion3))||construirVectorTransicionesInmediatas()[transicion]==1) {
+		boolean comparacion4=(long)vectorDeIntervalos[transicion][0]==0;
+		if((comparacion1&&(comparacion2||comparacion3))||construirVectorTransicionesInmediatas()[transicion]==1||comparacion4) {
 			return true;
 		}
 		else {
