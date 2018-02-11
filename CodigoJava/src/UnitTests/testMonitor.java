@@ -116,12 +116,12 @@ public class testMonitor {
 	@Test
 	public void testConfigRdp() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		this.monitor1.configRdp(this.redExcel1);
-		Method getNumeroTransiciones = Monitor.class.getDeclaredMethod("getNumeroTransiciones", null);
-		getNumeroTransiciones.setAccessible(true);
+		Method getRDP = Monitor.class.getDeclaredMethod("getRDP", null);
+		getRDP.setAccessible(true);
 		//Object[] parameters = new Object[1];
 		//parameters[0] = "A String parameter";
-		Object cantidadTransiciones = getNumeroTransiciones.invoke(monitor1);
-		assertEquals(cantidadTransiciones, 4); //monitor1 y monitor2 en realidad
+		RedDePetri cantidadTransiciones = (RedDePetri) getRDP.invoke(monitor1);
+		assertEquals(cantidadTransiciones.getCantTransiciones(), 4); //monitor1 y monitor2 en realidad
 	}
 
 	/**
