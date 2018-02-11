@@ -190,7 +190,7 @@ public class Monitor {
 				}
 			}
 			else{
-				
+				mutex.release();
 				try{
 					colas[transicion].delay(); //Se encola en una cola de condicion.
 				}
@@ -198,7 +198,7 @@ public class Monitor {
 				catch(Exception e){ //Puede haber mas de un tipo de excepcion. (Por interrupcion o por exceder los limites).
 					e.printStackTrace();
 				}
-				mutex.release();
+				
                 return;
 			}
 		}
@@ -264,7 +264,7 @@ public class Monitor {
 				}
 			}
 			else{
-				
+				mutex.release();
 				try{
 					//colas[transicion].delay(); //Se encola en una cola de condicion.
 				}
@@ -272,7 +272,7 @@ public class Monitor {
 				catch(Exception e){ //Puede haber mas de un tipo de excepcion. (Por interrupcion o por exceder los limites).
 					e.printStackTrace();
 				}
-				mutex.release();
+				
                 return;
 			}
 		}
