@@ -45,6 +45,8 @@ public class Monitor {
 		return this.politica.getModo();
 	}
 	
+	
+	
 	/**
 	 * Metodo getColaCero. Utilizado para testing. 
 	 * @return Cola Elemento 0 del atributo colas[] .
@@ -60,6 +62,8 @@ public class Monitor {
 		return colas[0];
 	}
 	
+	
+	
 	/**
 	 * Metodo getRDP.
 	 * @return RedDePetri Devuelve la red de petri con la que se configuro este monitor.
@@ -74,6 +78,8 @@ public class Monitor {
 		mutex.release();
 		return this.rdp;
 	}
+	
+	
 	
 	/**
 	 * Metodo configRdp. 
@@ -98,6 +104,8 @@ public class Monitor {
 		mutex.release();
 	}
 	
+	
+	
 	/**
 	 * Metodo setPolitica. Permite setear la politica del monitor.
 	 * @param Modo modo de la politica
@@ -113,6 +121,8 @@ public class Monitor {
 		this.politica=new Politica(Modo, this.rdp.getVectorTransicionesInmediatas());
 		mutex.release();
 	}
+	
+	
 	
 	/**
 	 * Metodo quienesEstanEnColas.
@@ -131,8 +141,6 @@ public class Monitor {
 		return Vc;
 	}
 	
-
-
 
 	
 	/**
