@@ -106,7 +106,7 @@ public class Monitor {
 			e.printStackTrace();
 			return;
 		}
-		this.politica=new Politica(Modo);
+		this.politica=new Politica(Modo, this.rdp.getVectorTransicionesInmediatas());
 		mutex.release();
 	}
 	

@@ -139,7 +139,7 @@ public class LogicaTemporal {
 	/**
 	 * Metodo getVectorZ
 	 */
-	public int[] getVectorZ(int[] q){
+	public int[] getVectorZ_Actualizado(int[] q){
 		this.updateVectorZ(q);
 		return this.vectorZ;
 	}

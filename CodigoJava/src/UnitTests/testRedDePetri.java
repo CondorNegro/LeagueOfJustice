@@ -245,10 +245,7 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel1);
-		
-			Method getVectorTransicionesInmediatas  = RedDePetri.class.getDeclaredMethod("getVectorTransicionesInmediatas", null);
-			getVectorTransicionesInmediatas.setAccessible(true);
-			int T[] =(int[]) getVectorTransicionesInmediatas.invoke(redTest);
+			int T[] =redTest.getVectorTransicionesInmediatas();
 			for(int i=0; i<redTest.getCantTransiciones(); i++){
 				if(T[i] != 0){
 					//System.out.println(T[i]);
@@ -315,11 +312,11 @@ public class testRedDePetri {
 		try{
 			redTest= new RedDePetri(this.redExcel5);
 			redTest.getlogicaTemporal().updateVectorZ(redTest.getConjuncionEAndB());
-			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[0],1);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[1],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[2],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[3],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ(redTest.getConjuncionEAndB())[4],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[0],1);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[1],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[2],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[3],0);
+			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[4],0);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -425,9 +422,9 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel1);
-			Method getVectorQ  = RedDePetri.class.getDeclaredMethod("getVectorQ", null);
-			getVectorQ.setAccessible(true);
-			int Q[][]=(int[][])getVectorQ.invoke(redTest);
+			Method getVectorQ_Actualizado  = RedDePetri.class.getDeclaredMethod("getVectorQ_Actualizado", null);
+			getVectorQ_Actualizado.setAccessible(true);
+			int Q[][]=(int[][])getVectorQ_Actualizado.invoke(redTest);
 			assertEquals(Q[0][0],0);
 			assertEquals(Q[1][0],1);
 			assertEquals(Q[2][0],1);
@@ -450,9 +447,9 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel1);
-			Method getMatrizB  = RedDePetri.class.getDeclaredMethod("getMatrizB", null);
-			getMatrizB.setAccessible(true);
-			int B[][]=(int[][])getMatrizB.invoke(redTest);
+			Method getMatrizB_Actualizada  = RedDePetri.class.getDeclaredMethod("getMatrizB_Actualizada", null);
+			getMatrizB_Actualizada.setAccessible(true);
+			int B[][]=(int[][])getMatrizB_Actualizada.invoke(redTest);
 			for(int i=0;i<B.length;i++){
 				for(int j=0;j<B[0].length;j++){
 					if(B[i][j]!=1){ //Matriz H es cero
@@ -462,17 +459,17 @@ public class testRedDePetri {
 			}
 			
 			redTest= new RedDePetri(this.redExcel5);
-			getMatrizB = RedDePetri.class.getDeclaredMethod("getMatrizB", null);
-			getMatrizB.setAccessible(true);
-			B=(int[][])getMatrizB.invoke(redTest);
+			getMatrizB_Actualizada = RedDePetri.class.getDeclaredMethod("getMatrizB_Actualizada", null);
+			getMatrizB_Actualizada.setAccessible(true);
+			B=(int[][])getMatrizB_Actualizada.invoke(redTest);
 			
 			Method getMatrizH  = RedDePetri.class.getDeclaredMethod("getMatrizH", null);
 			getMatrizH.setAccessible(true);
 			int H[][]=(int[][])getMatrizH.invoke(redTest);
 			
-			Method getVectorQ  = RedDePetri.class.getDeclaredMethod("getVectorQ", null);
-			getVectorQ.setAccessible(true);
-			int Q[][]=(int[][])getVectorQ.invoke(redTest);
+			Method getVectorQ_Actualizado  = RedDePetri.class.getDeclaredMethod("getVectorQ_Actualizado", null);
+			getVectorQ_Actualizado.setAccessible(true);
+			int Q[][]=(int[][])getVectorQ_Actualizado.invoke(redTest);
 			
 			int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(H);
 			int Baux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, Q);

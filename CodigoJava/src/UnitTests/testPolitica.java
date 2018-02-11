@@ -16,6 +16,7 @@ import org.junit.Test;
 public class testPolitica {
 	private int[] listaTest;
 	private Monitor.Politica politica;
+	private int[] transicionesInmediatas;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -37,7 +38,11 @@ public class testPolitica {
 	@Before
 	public void setUp() throws Exception {
 		listaTest=new int[5];
-		politica=new Monitor.Politica(1);
+		transicionesInmediatas=new int[5];
+		for(int i=0; i<5;i++){
+			transicionesInmediatas[i]=1;
+		}
+		politica=new Monitor.Politica(1, this.transicionesInmediatas);
 		listaTest[0]=1;
 		listaTest[1]=0;
 		listaTest[2]=0;
@@ -80,12 +85,12 @@ public class testPolitica {
 			try{
 				  int indice= politica.cualDisparar(listaTest);
 				  if(indice!=0){
-					  fail("�ndice distinto de cero");
+					  fail("Indice distinto de cero");
 				  }
 				  
 			}
 			catch(IndexOutOfBoundsException e){
-				fail("Gener� error");
+				fail("Genero error");
 			}
 		}
 		assertEquals(politica.cualDisparar(listaTest),0);
@@ -103,18 +108,18 @@ public class testPolitica {
 			try{
 				  indice = politica.cualDisparar(listaTest);
 				  if(indice!=0 & indice != 4){
-					  fail("�ndice distinto de cero o cuatro");
+					  fail("Indice distinto de cero o cuatro");
 				  }
 				  
 			}
 			catch(IndexOutOfBoundsException e){
-				fail("Gener� error");
+				fail("Genero error");
 			}
 		}
 		if(indice==0){ 
 			assertEquals(indice,0);
 		}
-		if(indice==4){
+		else if(indice==4){
 		    assertEquals(indice,4);
 		}
 		else{
@@ -134,12 +139,12 @@ public class testPolitica {
 			try{
 				  indice = politica.cualDisparar(listaTest);
 				  if(indice != 4){
-					  fail("�ndice distinto de cuatro");
+					  fail("Indice distinto de cuatro");
 				  }
 				  
 			}
 			catch(IndexOutOfBoundsException e){
-				fail("Gener� error");
+				fail("Genero error");
 			}
 		}
 	
@@ -159,12 +164,12 @@ public class testPolitica {
 			try{
 				  indice = politica.cualDisparar(listaTest);
 				  if(indice != 4){
-					  fail("�ndice distinto de cuatro");
+					  fail("Indice distinto de cuatro");
 				  }
 				  
 			}
 			catch(IndexOutOfBoundsException e){
-				fail("Gener� error");
+				fail("Genero error");
 			}
 		}
 	
@@ -193,12 +198,12 @@ public class testPolitica {
 			try{
 				  indice = politica.cualDisparar(listaTest);
 				  if(indice != 0){
-					  fail("�ndice distinto de cuatro");
+					  fail("Indice distinto de cuatro");
 				  }
 				  
 			}
 			catch(IndexOutOfBoundsException e){
-				fail("Gener� error");
+				fail("Genero error");
 			}
 		}
 	

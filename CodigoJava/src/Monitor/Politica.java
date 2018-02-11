@@ -13,8 +13,12 @@ public class Politica {
     //Modo 1: primero los que suben.
     //Modo 2: primero los que bajan.
 	
-	public Politica(int modo){
+	private int[] transicionesInmediatas; //Contiene un uno si es inmediata.
+	
+	public Politica(int modo, int[] transicionesInmediatas){
 		setModo(modo);
+		this.transicionesInmediatas=transicionesInmediatas;
+		
 	}
 	
 	

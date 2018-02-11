@@ -36,12 +36,12 @@ public class RedDePetri{
 		logicaTemporal=new LogicaTemporal(this.getCantTransiciones());
 		this.logicaTemporal.setVectorIntervalosFromExcel(this.path); 
 		setTransicionesInmediatas();
-		this.B=getMatrizB();
+		this.B=getMatrizB_Actualizada();
 		this.logicaTemporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
 		
 	}
 	
-	private int[] getVectorTransicionesInmediatas(){
+	public int[] getVectorTransicionesInmediatas(){
 		return this.transicionesInmediatas;
 	}
 	
@@ -290,12 +290,12 @@ public class RedDePetri{
     
     
     /**
-     * Metodo getMatrizB. 
+     * Metodo getMatrizB_Actualizada. 
      * Matriz B= Matriz H * Vector Q.
      * @return int[][] Matriz B. Utilizada en la ecuación de estado.
      */
-    private int[][] getMatrizB(){
-    	this.Q=getVectorQ();
+    private int[][] getMatrizB_Actualizada(){
+    	this.Q=getVectorQ_Actualizado();
     	int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(this.H);
     	int aux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, this.Q);
     	for(int i=0; i<aux.length;i++){
@@ -311,12 +311,12 @@ public class RedDePetri{
     }
     
     /**
-     * Metodo getVectorQ. 
+     * Metodo getVectorQ_Actualizado. 
      * El vector Q contiene un uno si la marca de la plaza es cero. 
      * De lo contrario posee un cero en esa posicion. 
      * @return int[][] Vector Q. 
      */
-    private int[][] getVectorQ(){
+    private int[][] getVectorQ_Actualizado(){
     	int aux[][]=new int[this.M.length][1];
     	for(int i=0;i<this.M.length;i++){
     		if(M[i][0]!=0){
@@ -389,14 +389,14 @@ public class RedDePetri{
     	int Ex[];
     	int E[]= this.getSensibilizadas();
     
-    	int B[][]=this.getMatrizB();
+    	int B[][]=this.getMatrizB_Actualizada();
     	
     	
     	int Baux[]=new int[B.length];
     	for(int i=0; i<B.length;i++){
     		Baux[i]=B[i][0];
     	}
-    	int Z[]= logicaTemporal.getVectorZ(this.getConjuncionEAndB());
+    	int Z[]= logicaTemporal.getVectorZ_Actualizado(this.getConjuncionEAndB());
     	
     	Ex=OperacionesMatricesListas.andVector(OperacionesMatricesListas.andVector(E, Z),Baux);
     	
@@ -407,7 +407,7 @@ public class RedDePetri{
     public int[] getConjuncionEAndB(){
     	int E[]= this.getSensibilizadas();
         
-    	int B[][]=this.getMatrizB();
+    	int B[][]=this.getMatrizB_Actualizada();
     	
     	int Baux[]=new int[B.length];
     	for(int i=0; i<B.length;i++){
