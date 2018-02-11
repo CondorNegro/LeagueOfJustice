@@ -83,7 +83,7 @@ public class testPolitica {
 		politica.setModo(0);
 		for(int i=0;i<10000;i++){
 			try{
-				  int indice= politica.cualDisparar(listaTest);
+				  int indice= politica.cualDisparar(listaTest, true);
 				  if(indice!=0){
 					  fail("Indice distinto de cero");
 				  }
@@ -93,7 +93,7 @@ public class testPolitica {
 				fail("Genero error");
 			}
 		}
-		assertEquals(politica.cualDisparar(listaTest),0);
+		assertEquals(politica.cualDisparar(listaTest, true),0);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<5000000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest);
+				  indice = politica.cualDisparar(listaTest, true);
 				  if(indice!=0 & indice != 4){
 					  fail("Indice distinto de cero o cuatro");
 				  }
@@ -137,7 +137,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<100000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest);
+				  indice = politica.cualDisparar(listaTest, true);
 				  if(indice != 4){
 					  fail("Indice distinto de cuatro");
 				  }
@@ -162,7 +162,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<100000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest);
+				  indice = politica.cualDisparar(listaTest, true);
 				  if(indice != 4){
 					  fail("Indice distinto de cuatro");
 				  }
@@ -196,7 +196,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<100000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest);
+				  indice = politica.cualDisparar(listaTest, true);
 				  if(indice != 0){
 					  fail("Indice distinto de cuatro");
 				  }
@@ -208,6 +208,24 @@ public class testPolitica {
 		}
 	
 		    assertEquals(indice,0);
+		
+	}
+	
+	/**
+	 * Test method for {@link Monitor.Politica#isThereTransicionInmediataSensibilizada(java.util.List)}.
+	 */
+	@Test
+	public void testIsThereTransicionInmediataSensibilizada() {
+		
+		assertEquals(listaTest.length,5);
+		boolean flagTest= politica.isThereTransicionInmediataSensibilizada(listaTest); 
+		assertEquals(flagTest,true);
+		this.transicionesInmediatas[0]=0;
+		this.transicionesInmediatas[4]=0;
+		politica=new Monitor.Politica(1, this.transicionesInmediatas);
+		flagTest= politica.isThereTransicionInmediataSensibilizada(listaTest); 
+		assertEquals(flagTest,false);
+		
 		
 	}
 

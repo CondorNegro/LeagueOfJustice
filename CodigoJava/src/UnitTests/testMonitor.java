@@ -174,7 +174,7 @@ public class testMonitor {
 			
 			threadDelay.start();
 			try{
-				TimeUnit.MILLISECONDS.sleep(10);
+				TimeUnit.MILLISECONDS.sleep(20);
 			}
 			catch(InterruptedException e){
 				fail("Se genero error por interrupcion de thread");
@@ -185,7 +185,7 @@ public class testMonitor {
 			threadResume.start();
 			threadResume.join();
 			try{
-				TimeUnit.MILLISECONDS.sleep(10);
+				TimeUnit.MILLISECONDS.sleep(20);
 			}
 			catch(InterruptedException e){
 				fail("Se genero error por interrupcion de thread");

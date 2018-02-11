@@ -163,7 +163,7 @@ public class Monitor {
 				}	
 				if(OperacionesMatricesListas.isNotAllZeros(m)){ //Hay posibilidad de disparar una transicion.
 					try{
-						int transicionADisparar=politica.cualDisparar(m);
+						int transicionADisparar=politica.cualDisparar(m, true); //Corregir
 						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
 						//Despierta un hilo que estaba bloqueado en la cola correspondiente
 					}
