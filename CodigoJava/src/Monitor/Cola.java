@@ -24,7 +24,7 @@ public class Cola {
 	 * Ejecuta metodo notify()
 	 */
 	public synchronized void resume(){
-		notify(); //El hilo sale de la cola
+		super.notify(); //El hilo sale de la cola
 	}
 	
 	
@@ -34,7 +34,9 @@ public class Cola {
 	 */
 	public synchronized void delay() throws InterruptedException{
 		this.cantHilosEnCola++;
-		super.wait(); //El hilo entra a la cola, sumando la cantidad de hilos en cola
+		try{
+			super.wait(); //El hilo entra a la cola, sumando la cantidad de hilos en cola
+		}catch(InterruptedException e){}
 		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
 	}
 	
