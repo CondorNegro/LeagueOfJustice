@@ -173,6 +173,7 @@ public class Monitor {
 		while(k){
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
 			//System.out.println(k);
+			//System.out.println(transicion);
 			if(k){ //K=true verifica el estado de la red.
 				int[] Vs=rdp.getSensibilizadasExtendido(); //get transiciones sensibilizadas
 				int[] Vc=quienesEstanEnColas(); //get Quienes estan en colas
@@ -260,7 +261,9 @@ public class Monitor {
 		
 		while(k){
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
-			System.out.println("Comenzando el thread"+ Thread.currentThread().getName()+" a usar el recurso tiene el lock"); 
+			//System.out.println("Comenzando el thread"+ Thread.currentThread().getName()+" a usar el recurso tiene el lock"); 
+			//System.out.println(k);
+			//System.out.println(transicion);
 			if(k){ //K=true verifica el estado de la red.
 				int[] Vs=rdp.getSensibilizadasExtendido(); //get transiciones sensibilizadas
 				int[] Vc=quienesEstanEnColas(); //get Quienes estan en colas

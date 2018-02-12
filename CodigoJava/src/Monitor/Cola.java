@@ -37,7 +37,7 @@ public class Cola {
 		try{
 			super.wait(); //El hilo entra a la cola, sumando la cantidad de hilos en cola
 		}catch(InterruptedException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
 	}
@@ -61,7 +61,7 @@ public class Cola {
 			
 		 }
 		 catch(InterruptedException e){
-			e.printStackTrace();
+			
 		 }
 		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
 	}

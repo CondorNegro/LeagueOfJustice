@@ -18,6 +18,7 @@ public class testMonitorCompleto {
 			this.redExcel5="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\redTemporal\\testExcel.xls"; //Path para Linux.
 		}
         monitor.configRdp(redExcel5);
+        monitor.setPolitica(0);
     }
 
     @org.junit.After
@@ -38,13 +39,19 @@ public class testMonitorCompleto {
         hilo2.start();
         hilo3.start();
         hilo4.start();
-        while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
+        //while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
 
-        }
+       // }
         hilo1.join();
-        hilo2.join();
-        hilo3.join();
-        hilo4.join();
+        try{
+        	Thread.sleep(1000);
+        }
+        catch(InterruptedException e){
+        	e.printStackTrace();
+        }
+        hilo2.interrupt();
+        hilo3.interrupt();
+        hilo4.interrupt();
 
     }
 
@@ -56,11 +63,18 @@ public class testMonitorCompleto {
          hilo1.start();
          hilo2.start();
          hilo3.start();
-         while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
-                     }
+         //while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
+                     //}
          hilo1.join();
-         hilo2.join();
-         hilo3.join();
+         try{
+         	Thread.sleep(1000);
+         }
+         catch(InterruptedException e){
+         	e.printStackTrace();
+         }
+         hilo2.interrupt();
+         hilo3.interrupt();
+         
      }
 
 
@@ -71,15 +85,32 @@ public class testMonitorCompleto {
         @Override
         public void run() {
             for(int i=0;i<20;i++){
-                	//System.out.println(0);
+                try{
+                	Thread.sleep(2000);
+           
+                }
+                catch(InterruptedException e){
+                	e.printStackTrace();
+                }
+            	 //System.out.println("Dispara t2");
                    monitor.intentardispararTransicion(2);
                   
+                  // System.out.println("Dispara t3");
                    monitor.intentardispararTransicion(3);
                   
+                   //System.out.println("Dispara t0");
                    monitor.intentardispararTransicion(0);
-                   
+                  
+
                    monitor.intentardispararTransicion(1);
-                   
+                  // System.out.println("Dispara t1");
+                  /** int M[][]=monitor.getMarcado();
+                   for(int z=0; z<M.length;z++){
+                	   for(int j=0; j<M[0].length; j++){
+                		   System.out.println(M[z][j]);
+                	   }
+                   }**/
+
 
             }
         }
@@ -89,10 +120,10 @@ public class testMonitorCompleto {
 
         @Override
         public void run() {
-            for(int i=0;i<20;i++){
-
-            	monitor.intentardispararTransicion(4);
-            	
+            for(int i=0;i<3;i++){
+            	//System.out.println("Dispara t4");
+            	monitor.dispararTransicion(4);
+            	//System.out.println("Dispara t4");
 
             }
         }
@@ -102,7 +133,9 @@ public class testMonitorCompleto {
         @Override
         public void run() {
             for (int i=0;i<3;i++) {
-            	monitor.intentardispararTransicion(5);
+            	//System.out.println("Dispara t5");
+            	monitor.dispararTransicion(5);
+            	
             	
             }
         }
