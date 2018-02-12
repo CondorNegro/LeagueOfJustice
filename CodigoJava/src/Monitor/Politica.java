@@ -5,8 +5,8 @@ import java.util.List;
 public class Politica { 
 	//Vector indicando la prioridad de las transiciones.
 	//{2,5,4} -> indica que la transicion 2 es la de mayor prioridad. La t4 es la de menor prioridad.
-	private static final int[] transicionesPrioritariasSubida={1,2,3,4}; //Corregir
-	private static final int[] transicionesPrioritariasBajada={1,2,3,4}; //Corregir
+	private int[] transicionesPrioritariasSubida; //Corregir
+	private int[] transicionesPrioritariasBajada; //Corregir
 	
 	
 	private int modoPolitica;
@@ -21,6 +21,10 @@ public class Politica {
 			
 	}
 	
+	public void setPrioridades(int[] subida, int[] bajada){
+		this.transicionesPrioritariasBajada=bajada;
+		this.transicionesPrioritariasSubida=subida;
+	}
 	
 	/**
 	 * Metodo getModo.

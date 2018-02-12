@@ -16,6 +16,8 @@ import org.junit.Test;
 public class testPolitica {
 	private int[] listaTest;
 	private Monitor.Politica politica;
+	private int[] prioridadesBajada={1,2,3,4};
+	private int[] prioridadesSubida={1,2,3,4};
 	
 	
 	/**
@@ -45,6 +47,7 @@ public class testPolitica {
 		listaTest[2]=0;
 		listaTest[3]=0;
 		listaTest[4]=1;
+		politica.setPrioridades(prioridadesSubida, prioridadesBajada);
 	}
 
 	/**

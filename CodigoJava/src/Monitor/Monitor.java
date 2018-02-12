@@ -1,6 +1,11 @@
 package Monitor;
 
 import java.util.concurrent.Semaphore;
+
+import jxl.Sheet;
+import jxl.Workbook;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -13,6 +18,7 @@ public class Monitor {
     private Cola colas[];
     private RedDePetri rdp;
     private Semaphore mutex;
+    
    
     
     
@@ -101,6 +107,8 @@ public class Monitor {
         for(int i=0;i<this.cantTransiciones;i++){ 
             colas[i]=new Cola(); //Inicialización de colas.
         }
+        
+        
 		mutex.release();
 	}
 	
@@ -119,6 +127,7 @@ public class Monitor {
 			return;
 		}
 		this.politica=new Politica(Modo);
+		this.politica.setPrioridades(rdp.getPrioridadesSubida(), rdp.getPrioridadesBajada());
 		mutex.release();
 	}
 	

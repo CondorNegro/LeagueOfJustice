@@ -26,7 +26,8 @@ public class RedDePetri{
 	private int[][] Q;
 	private LogicaTemporal logicaTemporal;
 	private int[] transicionesInmediatas; //Un uno indica que la transicion es inmediata.
-	
+	private int[] prioridadesSubida; 
+	private int[] prioridadesBajada;
 	
 	
 	public RedDePetri(String path){
@@ -40,6 +41,16 @@ public class RedDePetri{
 		this.logicaTemporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
 		
 	}
+	
+	
+	public int[] getPrioridadesSubida(){
+		return this.prioridadesSubida.clone();
+	}
+	
+	public int[] getPrioridadesBajada(){
+		return this.prioridadesBajada.clone();
+	}
+	
 	
 	public int[] getVectorTransicionesInmediatas(){
 		return this.transicionesInmediatas;
@@ -249,24 +260,24 @@ public class RedDePetri{
             
             
             
-            paginaExcelM = archivoExcelMatrices.getSheet(5);//carga los T-invariantes
-            columnas = paginaExcelM.getColumns();
-            filas = paginaExcelM.getRows();
+            Sheet paginaExcelTInv = archivoExcelMatrices.getSheet(5);//carga los T-invariantes
+            columnas = paginaExcelTInv.getColumns();
+            filas = paginaExcelTInv.getRows();
             Tinvariantes = new int[filas-1][columnas];
             for (int i = 1; i < filas-1; i++) {
                 for (int j = 0; j < columnas; j++) {
-                	Tinvariantes[i - 1][j] = Integer.parseInt(paginaExcelM.getCell(j,i).getContents());
+                	Tinvariantes[i - 1][j] = Integer.parseInt(paginaExcelTInv.getCell(j,i).getContents());
                 }
             }
             
             
-            paginaExcelM = archivoExcelMatrices.getSheet(6);//carga los P-invariantes
-            columnas = paginaExcelM.getColumns();
-            filas = paginaExcelM.getRows();
+            Sheet paginaExcelPInv = archivoExcelMatrices.getSheet(6);//carga los P-invariantes
+            columnas = paginaExcelPInv.getColumns();
+            filas = paginaExcelPInv.getRows();
             Pinvariantes = new int[filas-1][columnas];
             for (int i = 1; i < filas-1; i++) {
                 for (int j = 0; j < columnas; j++) {
-                	Pinvariantes[i - 1][j] = Integer.parseInt(paginaExcelM.getCell(j,i).getContents());
+                	Pinvariantes[i - 1][j] = Integer.parseInt(paginaExcelPInv.getCell(j,i).getContents());
                 }
             }
             
@@ -276,6 +287,28 @@ public class RedDePetri{
             this.constantePinvariante=marcadoPinvariante(); //Obtiene el resultado de las ecuaciones del P-invariante
             //System.out.println(constantePinvariante.length);
             
+            
+            Sheet paginaExcel = archivoExcelMatrices.getSheet(8);//Prioridades subida
+            columnas = paginaExcel.getColumns();
+            filas = paginaExcel.getRows();
+            this.prioridadesSubida = new int[columnas];
+            for (int i = 1; i < filas-1; i++) {
+                for (int j = 0; j < columnas; j++) {
+                	 this.prioridadesSubida[j] = Integer.parseInt(paginaExcel.getCell(j,i).getContents());
+                }
+            }
+            
+            paginaExcel = archivoExcelMatrices.getSheet(9);//Prioridades bajada
+            columnas = paginaExcel.getColumns();
+            filas = paginaExcel.getRows();
+            this.prioridadesBajada = new int[columnas];
+            for (int i = 1; i < filas-1; i++) {
+                for (int j = 0; j < columnas; j++) {
+                	 this.prioridadesBajada[j] = Integer.parseInt(paginaExcel.getCell(j,i).getContents());
+                }
+            }
+            
+           
             
             
         } 
