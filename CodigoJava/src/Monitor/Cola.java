@@ -36,10 +36,35 @@ public class Cola {
 		this.cantHilosEnCola++;
 		try{
 			super.wait(); //El hilo entra a la cola, sumando la cantidad de hilos en cola
-		}catch(InterruptedException e){}
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
 		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
 	}
 	
+	
+	/**
+	 * Metodo delay. El hilo se bloquea y entra a la cola.
+	 * @throws InterruptedException
+	 */
+	public synchronized void delay(long timeout) throws InterruptedException{
+		this.cantHilosEnCola++;
+		 try{
+			if(timeout>0){ //Si esta vacía es el primer hilo
+		            super.wait(timeout);
+		     }
+		     else{
+		      
+		            super.wait();
+		     }
+			
+			
+		 }
+		 catch(InterruptedException e){
+			e.printStackTrace();
+		 }
+		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
+	}
 	
 	/**
 	 * Metodo isEmpty. 

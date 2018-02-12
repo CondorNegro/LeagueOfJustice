@@ -243,7 +243,7 @@ public class testMonitor {
 				Thread.sleep(3);
 			}
 			catch(InterruptedException e){
-				fail("Se gener� error por interrupci�n de thread");
+				fail("Se genero error por interrupcion de thread");
 			}
 			
 			

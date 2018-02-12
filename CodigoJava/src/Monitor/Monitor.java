@@ -185,7 +185,7 @@ public class Monitor {
 				}	
 				if(OperacionesMatricesListas.isNotAllZeros(m)){ //Hay posibilidad de disparar una transicion.
 					try{
-						int transicionADisparar=politica.cualDisparar(m); //Corregir
+						int transicionADisparar=politica.cualDisparar(m); 
 						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
 						//Despierta un hilo que estaba bloqueado en la cola correspondiente
 					}
@@ -196,12 +196,26 @@ public class Monitor {
 				}
 				else{ //No hay posibilidad de disparar una transicion.
 					k=false;
+					//System.out.println("ListaM cero");
 				}
 			}
 			else{
 				mutex.release();
 				try{
-					colas[transicion].delay(); //Se encola en una cola de condicion.
+					if(this.rdp.getVectorTransicionesInmediatas()[transicion]==1 ){
+						colas[transicion].delay(); //Se encola en una cola de condicion. 
+					}
+					else{ //No es transicion inmediata
+						if(!colas[transicion].isEmpty()){ //No es el primer hilo
+							colas[transicion].delay();
+						}
+						else{ //Es el primer hilo
+							long timeout=this.rdp.getlogicaTemporal().getTiempoFaltanteParaAlfa(transicion);
+							colas[transicion].delay(timeout);
+						}
+						
+					}
+					
 				}
 				
 				catch(Exception e){ //Puede haber mas de un tipo de excepcion. (Por interrupcion o por exceder los limites).

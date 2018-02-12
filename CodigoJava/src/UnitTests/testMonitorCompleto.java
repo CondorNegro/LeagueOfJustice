@@ -79,12 +79,7 @@ public class testMonitorCompleto {
                    monitor.intentardispararTransicion(0);
                    
                    monitor.intentardispararTransicion(1);
-                   try {
-					Thread.sleep(3);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                   
 
             }
         }
@@ -97,12 +92,7 @@ public class testMonitorCompleto {
             for(int i=0;i<20;i++){
 
             	monitor.intentardispararTransicion(4);
-            	try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+            	
 
             }
         }
@@ -111,14 +101,9 @@ public class testMonitorCompleto {
     class HiloTres implements Runnable{
         @Override
         public void run() {
-            for (int i=0;i<20;i++) {
+            for (int i=0;i<3;i++) {
             	monitor.intentardispararTransicion(5);
-            	try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+            	
             }
         }
     }

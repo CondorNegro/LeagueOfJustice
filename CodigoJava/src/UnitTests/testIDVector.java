@@ -47,7 +47,7 @@ public class testIDVector {
 	 */
 	@Test
 	public void testIDVector() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }

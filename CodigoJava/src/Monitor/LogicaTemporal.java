@@ -203,5 +203,31 @@ public class LogicaTemporal {
 		}
 		return aux;
 	}
+	
+	
+	/**
+	 * Metodo isInWindowsTime
+	 * 
+	 * @return boolean true si se encuentra dentro de la ventana, de lo contrario false.
+	 */
+	public long getTiempoFaltanteParaAlfa(int transicion) throws IllegalArgumentException{
+		
+		if(transicion>this.cantTransiciones) {
+			throw new IllegalArgumentException("Transicion invalida");	
+		}
+		
+		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()/1000>=(long)vectorDeIntervalos[transicion][0];
+		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()/1000<=(long)vectorDeIntervalos[transicion][1];
+		boolean comparacion3=(long)vectorDeIntervalos[transicion][1]==(long)-1;
+		boolean comparacion4=(long)vectorDeIntervalos[transicion][0]==0;
+		if((comparacion1&&(comparacion2||comparacion3))||construirVectorTransicionesInmediatas()[transicion]==1||comparacion4) {
+			return 0;
+		}
+		else {
+			return (this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis());
+		}
+	
+	}
+	
 
 }
