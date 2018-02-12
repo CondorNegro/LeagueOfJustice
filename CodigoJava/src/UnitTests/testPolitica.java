@@ -16,7 +16,7 @@ import org.junit.Test;
 public class testPolitica {
 	private int[] listaTest;
 	private Monitor.Politica politica;
-	private int[] transicionesInmediatas;
+	
 	
 	/**
 	 * @throws java.lang.Exception
@@ -38,11 +38,8 @@ public class testPolitica {
 	@Before
 	public void setUp() throws Exception {
 		listaTest=new int[5];
-		transicionesInmediatas=new int[5];
-		for(int i=0; i<5;i++){
-			transicionesInmediatas[i]=1;
-		}
-		politica=new Monitor.Politica(1, this.transicionesInmediatas);
+		
+		politica=new Monitor.Politica(1);
 		listaTest[0]=1;
 		listaTest[1]=0;
 		listaTest[2]=0;
@@ -83,7 +80,7 @@ public class testPolitica {
 		politica.setModo(0);
 		for(int i=0;i<10000;i++){
 			try{
-				  int indice= politica.cualDisparar(listaTest, true);
+				  int indice= politica.cualDisparar(listaTest);
 				  if(indice!=0){
 					  fail("Indice distinto de cero");
 				  }
@@ -93,7 +90,7 @@ public class testPolitica {
 				fail("Genero error");
 			}
 		}
-		assertEquals(politica.cualDisparar(listaTest, true),0);
+		assertEquals(politica.cualDisparar(listaTest),0);
 	}
 
 	/**
@@ -106,7 +103,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<5000000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest, true);
+				  indice = politica.cualDisparar(listaTest);
 				  if(indice!=0 & indice != 4){
 					  fail("Indice distinto de cero o cuatro");
 				  }
@@ -137,7 +134,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<100000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest, true);
+				  indice = politica.cualDisparar(listaTest);
 				  if(indice != 4){
 					  fail("Indice distinto de cuatro");
 				  }
@@ -162,7 +159,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<100000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest, true);
+				  indice = politica.cualDisparar(listaTest);
 				  if(indice != 4){
 					  fail("Indice distinto de cuatro");
 				  }
@@ -196,7 +193,7 @@ public class testPolitica {
 		int indice=0;
 		for(int i=0;i<100000;i++){
 			try{
-				  indice = politica.cualDisparar(listaTest, true);
+				  indice = politica.cualDisparar(listaTest);
 				  if(indice != 0){
 					  fail("Indice distinto de cuatro");
 				  }
@@ -214,7 +211,7 @@ public class testPolitica {
 	/**
 	 * Test method for {@link Monitor.Politica#isThereTransicionInmediataSensibilizada(java.util.List)}.
 	 */
-	@Test
+	/**@Test
 	public void testIsThereTransicionInmediataSensibilizada() {
 		
 		assertEquals(listaTest.length,5);
@@ -227,6 +224,6 @@ public class testPolitica {
 		assertEquals(flagTest,false);
 		
 		
-	}
+	}**/
 
 }

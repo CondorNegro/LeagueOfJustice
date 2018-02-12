@@ -7,15 +7,16 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Tincho on 13/10/2017.
- */
+
 public class testMonitorCompleto {
     Monitor monitor = Monitor.getInstance();
     private String redExcel5="./RedesParaTest/redTemporal/testExcel.xls"; //Path para Linux.
     
     @org.junit.Before
     public void setUp() throws Exception {
+    	if((System.getProperty("os.name")).equals("Windows 10")){	
+			this.redExcel5="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\redTemporal\\testExcel.xls"; //Path para Linux.
+		}
         monitor.configRdp(redExcel5);
     }
 
@@ -72,11 +73,14 @@ public class testMonitorCompleto {
             for(int i=0;i<20;i++){
                 	//System.out.println(0);
                    monitor.intentardispararTransicion(2);
+                  
                    monitor.intentardispararTransicion(3);
+                  
                    monitor.intentardispararTransicion(0);
+                   
                    monitor.intentardispararTransicion(1);
                    try {
-					Thread.sleep(2000);
+					Thread.sleep(3);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

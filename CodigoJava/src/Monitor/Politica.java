@@ -5,22 +5,20 @@ import java.util.List;
 public class Politica { 
 	//Vector indicando la prioridad de las transiciones.
 	//{2,5,4} -> indica que la transicion 2 es la de mayor prioridad. La t4 es la de menor prioridad.
-	private static final int[] transicionesPrioritariasSubidaInmediatas={1,2,3,4}; //Corregir
-	private static final int[] transicionesPrioritariasBajadaInmediatas={1,2,3,4}; //Corregir
-	private static final int[] transicionesPrioritariasSubidaTemporal={5,6}; //Corregir
-	private static final int[] transicionesPrioritariasBajadaTemporal={5,6};
+	private static final int[] transicionesPrioritariasSubida={1,2,3,4}; //Corregir
+	private static final int[] transicionesPrioritariasBajada={1,2,3,4}; //Corregir
+	
 	
 	private int modoPolitica;
 	//Modo 0: aleatoria.
     //Modo 1: primero los que suben.
     //Modo 2: primero los que bajan.
 	
-	private int[] transicionesInmediatas; //Contiene un uno si es inmediata.
 	
-	public Politica(int modo, int[] transicionesInmediatas){
+	
+	public Politica(int modo){
 		setModo(modo);
-		this.transicionesInmediatas=transicionesInmediatas;
-		
+			
 	}
 	
 	
@@ -46,7 +44,7 @@ public class Politica {
 	 * @param flagInmediatas boolean que indica si existen transiciones inmediatas con posibilidad de dispararse. 
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 */
-	private int politicaAleatoria(int[] listaM, boolean flagInmediatas){
+	private int politicaAleatoria(int[] listaM){
 	
 			int indice=0;
 			boolean flag=true;
@@ -55,14 +53,9 @@ public class Politica {
 				indice=numeroAleatorio % listaM.length; //Defino una posicion aleatoria.
 				
 				if(listaM[indice]!=0){ //Verifico si el numero aleatorio no coincide con una transicion que no se puede disparar
-					if(!flagInmediatas){
+					
 						flag=false;
-					}
-					else{
-						if(listaM[indice]==1 & this.transicionesInmediatas[indice]==1){
-							flag=false;
-						}
-					}
+					
 				}
 				
 			}
@@ -75,24 +68,17 @@ public class Politica {
 	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 */
-	private int politicaPrimeroSuben(int[] listaM, boolean flagInmediatas){
+	private int politicaPrimeroSuben(int[] listaM){
 		
-			if(flagInmediatas){
-				for(int i=0;i<transicionesPrioritariasSubidaInmediatas.length;i++){
-			         if(listaM[transicionesPrioritariasSubidaInmediatas[i]]==1){ //El 1 indica que se puede disparar
-			             return transicionesPrioritariasSubidaInmediatas[i];
-			         }
-			     }
-			}
-			else{
-				for(int i=0;i<transicionesPrioritariasSubidaTemporal.length;i++){
-			         if(listaM[transicionesPrioritariasSubidaTemporal[i]]==1){ //El 1 indica que se puede disparar
-			             return transicionesPrioritariasSubidaTemporal[i];
-			         }
-			     }
-			}
 			
-		     return this.politicaAleatoria(listaM, flagInmediatas); //Si no esta definida la prioridad, se utiliza la aleatoriedad.
+			for(int i=0;i<transicionesPrioritariasSubida.length;i++){
+		         if(listaM[transicionesPrioritariasSubida[i]]==1){ //El 1 indica que se puede disparar
+		             return transicionesPrioritariasSubida[i];
+		         }
+		     }
+
+			
+		     return this.politicaAleatoria(listaM); //Si no esta definida la prioridad, se utiliza la aleatoriedad.
 			
 	
 	}
@@ -102,24 +88,16 @@ public class Politica {
 	 * @param listaM lista que contiene los enteros 1 y 0, representando con el 1 las transiciones que se pueden disparar.
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 */
-	private int politicaPrimeroBajan(int[] listaM, boolean flagInmediatas){
+	private int politicaPrimeroBajan(int[] listaM){
 		
 			
-			if(flagInmediatas){
-				for(int i=0;i<transicionesPrioritariasBajadaInmediatas.length;i++){
-			         if(listaM[transicionesPrioritariasBajadaInmediatas[i]]==1){ //El 1 indica que se puede disparar
-			             return transicionesPrioritariasBajadaInmediatas[i];
+				for(int i=0;i<transicionesPrioritariasBajada.length;i++){
+			         if(listaM[transicionesPrioritariasBajada[i]]==1){ //El 1 indica que se puede disparar
+			             return transicionesPrioritariasBajada[i];
 			         }
 			     }
-			}
-			else{
-				for(int i=0;i<transicionesPrioritariasBajadaTemporal.length;i++){
-			         if(listaM[transicionesPrioritariasBajadaTemporal[i]]==1){ //El 1 indica que se puede disparar
-			             return transicionesPrioritariasBajadaTemporal[i];
-			         }
-			     }
-			}
-		     return this.politicaAleatoria(listaM, flagInmediatas); //Si no esta definida la prioridad, se utiliza la aleatoriedad.
+			
+		     return this.politicaAleatoria(listaM); //Si no esta definida la prioridad, se utiliza la aleatoriedad.
 			
 	
 	}
@@ -132,16 +110,16 @@ public class Politica {
 	 * @return int indice que representa a la transicion a disparar del vector de transiciones
 	 * @throws IndexOutOfBoundsException en caso de que listaM sea una lista vacia.
 	 */
-	public int cualDisparar(int[] listaM, boolean flagInmediatas) throws IndexOutOfBoundsException{
+	public int cualDisparar(int[] listaM) throws IndexOutOfBoundsException{
 		if(listaM.length>0){
 			if(this.modoPolitica==0){ //Politica aleatoria.
-				return politicaAleatoria(listaM, flagInmediatas);
+				return politicaAleatoria(listaM);
 			}
 			else if(this.modoPolitica==1){ //Politica primero suben.
-				return politicaPrimeroSuben(listaM, flagInmediatas);
+				return politicaPrimeroSuben(listaM);
 			}
 			else if(this.modoPolitica==2){ //Politica primero bajan.
-				return politicaPrimeroBajan(listaM, flagInmediatas);
+				return politicaPrimeroBajan(listaM);
 			}
 			else{
 				return 0;
@@ -156,7 +134,7 @@ public class Politica {
 	}
 	
 	
-	
+	/**
 	public boolean isThereTransicionInmediataSensibilizada(int[] listaM) throws IndexOutOfBoundsException{
 		if(listaM.length>0){
 			boolean flag=false;
@@ -170,7 +148,7 @@ public class Politica {
 		else{
 			throw new IndexOutOfBoundsException("Lista M vacia.");
 		}
-	}
+	}**/
 	
 	
 	

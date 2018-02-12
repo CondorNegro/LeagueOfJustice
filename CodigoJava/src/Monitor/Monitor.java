@@ -118,7 +118,7 @@ public class Monitor {
 			e.printStackTrace();
 			return;
 		}
-		this.politica=new Politica(Modo, this.rdp.getVectorTransicionesInmediatas());
+		this.politica=new Politica(Modo);
 		mutex.release();
 	}
 	
@@ -176,7 +176,7 @@ public class Monitor {
 				}	
 				if(OperacionesMatricesListas.isNotAllZeros(m)){ //Hay posibilidad de disparar una transicion.
 					try{
-						int transicionADisparar=politica.cualDisparar(m, true); //Corregir
+						int transicionADisparar=politica.cualDisparar(m); //Corregir
 						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
 						//Despierta un hilo que estaba bloqueado en la cola correspondiente
 					}
@@ -237,7 +237,7 @@ public class Monitor {
 		
 		while(k){
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
-			System.out.println("Comenzando el thread"+ Thread.currentThread().getName()+" a usar el recursotiene el lock"); 
+			System.out.println("Comenzando el thread"+ Thread.currentThread().getName()+" a usar el recurso tiene el lock"); 
 			if(k){ //K=true verifica el estado de la red.
 				int[] Vs=rdp.getSensibilizadasExtendido(); //get transiciones sensibilizadas
 				int[] Vc=quienesEstanEnColas(); //get Quienes estan en colas
@@ -250,8 +250,8 @@ public class Monitor {
 				}	
 				if(OperacionesMatricesListas.isNotAllZeros(m)){ //Hay posibilidad de disparar una transicion.
 					try{
-						int transicionADisparar=politica.cualDisparar(m, true); //Corregir
-						//colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
+						int transicionADisparar=politica.cualDisparar(m); //Corregir
+						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
 						//Despierta un hilo que estaba bloqueado en la cola correspondiente
 					}
 					catch(IndexOutOfBoundsException e){e.printStackTrace();}
