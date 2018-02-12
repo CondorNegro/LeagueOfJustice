@@ -74,15 +74,25 @@ public class Politica {
 	 */
 	private int politicaPrimeroSuben(int[] listaM){
 		
-			
+			int listaAux[]=new int[listaM.length];
+			boolean flagHayPrioritarias=false;
+			for(int i=0;i<listaM.length;i++){
+				listaAux[i]=0;
+			}
 			for(int i=0;i<transicionesPrioritariasSubida.length;i++){
 		         if(listaM[transicionesPrioritariasSubida[i]]==1){ //El 1 indica que se puede disparar
-		             return transicionesPrioritariasSubida[i];
+		             listaAux[transicionesPrioritariasSubida[i]]=1;
+		             flagHayPrioritarias=true;
 		         }
+		         
 		     }
+			
+			if(flagHayPrioritarias){
+				 return this.politicaAleatoria(listaAux);
+			}
 
 			
-		     return this.politicaAleatoria(listaM); //Si no esta definida la prioridad, se utiliza la aleatoriedad.
+		    return this.politicaAleatoria(listaM); //Si no esta definida la prioridad, se utiliza la aleatoriedad.
 			
 	
 	}
@@ -94,12 +104,23 @@ public class Politica {
 	 */
 	private int politicaPrimeroBajan(int[] listaM){
 		
-			
-				for(int i=0;i<transicionesPrioritariasBajada.length;i++){
-			         if(listaM[transicionesPrioritariasBajada[i]]==1){ //El 1 indica que se puede disparar
-			             return transicionesPrioritariasBajada[i];
-			         }
-			     }
+		int listaAux[]=new int[listaM.length];
+		boolean flagHayPrioritarias=false;
+		for(int i=0;i<listaM.length;i++){
+			listaAux[i]=0;
+		}
+		for(int i=0;i<transicionesPrioritariasBajada.length;i++){
+	         if(listaM[transicionesPrioritariasBajada[i]]==1){ //El 1 indica que se puede disparar
+	             listaAux[transicionesPrioritariasBajada[i]]=1;
+	             flagHayPrioritarias=true;
+	         }
+	         
+	     }
+		
+		if(flagHayPrioritarias){
+			 return this.politicaAleatoria(listaAux);
+		}
+
 			
 		     return this.politicaAleatoria(listaM); //Si no esta definida la prioridad, se utiliza la aleatoriedad.
 			
