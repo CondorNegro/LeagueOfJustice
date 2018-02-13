@@ -10,39 +10,41 @@ import static org.junit.Assert.*;
 
 public class testMonitorCompleto {
     Monitor monitor = Monitor.getInstance();
-    private String redExcel5="./RedesParaTest/redTemporal/testExcel.xls"; //Path para Linux.
+    private String redExcel="./RedesParaTest/lectorEscritor/lectorEscritor.xls"; //Path para Linux.
     
     @org.junit.Before
     public void setUp() throws Exception {
     	if((System.getProperty("os.name")).equals("Windows 10")){	
-			this.redExcel5="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\redTemporal\\testExcel.xls"; //Path para Linux.
+			this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls"; //Path para Windows.
 		}
-        monitor.configRdp(redExcel5);
-        monitor.setPolitica(0);
+        monitor.configRdp(redExcel);
+        monitor.setPolitica(0); //modo aleatorio
+        
     }
 
     @org.junit.After
     public void tearDown() throws Exception {
         int[][] m= monitor.getMarcado();
         System.out.println("");
-        assert (m[0][0]==1||m[1][0]==1||m[2][0]==1);  //control del marcado final
+        //assert (m[0][0]==1||m[1][0]==1||m[2][0]==1);  //control del marcado final
 
     }
 
     @org.junit.Test
     public void dispararTransicionTest() throws Exception {
-        Thread hilo1 = new Thread(new HiloUno());
-        Thread hilo2= new Thread(new HiloDos());
-        Thread hilo3 = new Thread(new HiloTres());
-        Thread hilo4 = new Thread(new HiloTres());
+        Thread hilo1 = new Thread(new HiloGenerador());
+        Thread hilo2= new Thread(new HiloEscritor());
+        Thread hilo3 = new Thread(new HiloLector());
+       
         hilo1.start();
         hilo2.start();
         hilo3.start();
-        hilo4.start();
+        
         //while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
 
        // }
         hilo1.join();
+        hilo2.join();
         try{
         	Thread.sleep(1000);
         }
@@ -51,20 +53,19 @@ public class testMonitorCompleto {
         }
         hilo2.interrupt();
         hilo3.interrupt();
-        hilo4.interrupt();
-
+        
     }
 
+    /*
      @org.junit.Test
      public void intentarDispararTransicion() throws Exception {
-    	 Thread hilo1 = new Thread(new HiloUno());
-         Thread hilo2= new Thread(new HiloDos());
-         Thread hilo3 = new Thread(new HiloTres());
+    	 Thread hilo1 = new Thread(new HiloGenerador());
+         Thread hilo2= new Thread(new HiloEscritor());
+         Thread hilo3 = new Thread(new HiloLector());
          hilo1.start();
          hilo2.start();
          hilo3.start();
-         //while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
-                     //}
+
          hilo1.join();
          try{
          	Thread.sleep(1000);
@@ -75,59 +76,70 @@ public class testMonitorCompleto {
          hilo2.interrupt();
          hilo3.interrupt();
          
-     }
+     }*/
 
 
 
 
-    class HiloUno implements Runnable{
+    class HiloGenerador implements Runnable{
 
         @Override
         public void run() {
-            for(int i=0;i<20;i++){
-                try{
-                	Thread.sleep(2000);
-           
-                }
-                catch(InterruptedException e){
-                	e.printStackTrace();
-                }
-            	 //System.out.println("Dispara t2");
-                   monitor.intentardispararTransicion(2);
+        	monitor.dispararTransicion(3);
+        	try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	monitor.dispararTransicion(3);
+            for(int i=0;i<50;i++){
+                
+            	   
+                   //monitor.dispararTransicion(3);
+                  // System.out.println("Genero un escritor");
+                   int[][] marca=monitor.getMarcado();
+                   if(marca[1][0]>0) {
+                       assert (marca[0][0]==0);  //control de inhibidores
+                       assert (marca[1][0]<6); //nunca mas de 5 lectores
+                       System.out.println("jode");
+                   }
+                   
+                   if(marca[0][0]>0) {
+                       assert (marca[1][0]==0);  //control de inhibidores
+                       assert (marca[0][0]==1); //siempre solo 1 escritor
+                   }
                   
-                  // System.out.println("Dispara t3");
-                   monitor.intentardispararTransicion(3);
-                  
-                   //System.out.println("Dispara t0");
-                   monitor.intentardispararTransicion(0);
-                  
-
-                   monitor.intentardispararTransicion(1);
                  
 
             }
         }
     }
 
-    class HiloDos implements Runnable{
+    class HiloEscritor implements Runnable{
 
         @Override
         public void run() {
-            for(int i=0;i<3;i++){
-            	//System.out.println("Dispara t4");
-            	monitor.dispararTransicion(4);
-            	//System.out.println("Dispara t4");
+            for(int i=0;i<50;i++){
+            	
+            	//monitor.dispararTransicion(0);
+            	//System.out.println("Escribiennnnnnnnnnnnnnnnnnnnnnnndo");
+            	//monitor.dispararTransicion(4);
+            	//System.out.println("Dejo de escribir");
 
             }
         }
     }
 
-    class HiloTres implements Runnable{
+    class HiloLector implements Runnable{
         @Override
         public void run() {
-            for (int i=0;i<3;i++) {
-            	//System.out.println("Dispara t5");
-            	monitor.dispararTransicion(5);
+            for (int i=0;i<50;i++) {
+            	//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            	//monitor.dispararTransicion(2);
+            	//System.out.println("Leyennnnnnnnnnnnnnnnnnnnnnnnnnndo");
+            	//monitor.dispararTransicion(1);
+            	//System.out.println("Dejo de leer");
             	
             	
             }

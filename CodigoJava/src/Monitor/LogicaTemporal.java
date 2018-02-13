@@ -226,7 +226,12 @@ public class LogicaTemporal {
 		else {
 			//System.out.println("hola");
 			//System.out.println(this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis());
-			return (this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis());
+			if((this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis())<=0) {
+				return (long)0;
+			}
+			else {
+				return (this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis());
+			}
 		}
 	
 	}
