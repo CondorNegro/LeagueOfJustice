@@ -103,14 +103,7 @@ public class testMonitorCompleto {
                   
 
                    monitor.intentardispararTransicion(1);
-                  // System.out.println("Dispara t1");
-                  /** int M[][]=monitor.getMarcado();
-                   for(int z=0; z<M.length;z++){
-                	   for(int j=0; j<M[0].length; j++){
-                		   System.out.println(M[z][j]);
-                	   }
-                   }**/
-
+                 
 
             }
         }
