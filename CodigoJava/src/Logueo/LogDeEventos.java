@@ -1,34 +1,42 @@
 
 package Logueo;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class LogDeEventos {
-	private PrintStream[] printLogs; //Logueo de eventos
+	
+	
+
 	private String[] nameFiles;
 	private String[] messages;
 	
-	public LogDeEventos(){
-		for(int i=0; i<7;i++){
-			  messages[i]="";
-			  		   
-		    	if((System.getProperty("os.name")).equals("Windows 10")){	
-					this.nameFiles[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFile"+ i +".txt"; 
-				}
-		    	else{
-		    		this.nameFiles[i]="./Logueo/logFile"+ i +".txt"; //Path para Linux.
-				    
-		    	}
-			  try {
-		            printLogs[i]=new PrintStream(new File(this.nameFiles[i]));
-		        }
-		        catch(FileNotFoundException e){
-		        	e.printStackTrace();
-		        	return;
-		        }
+	public LogDeEventos(int numberOfLogs){
+		if(numberOfLogs<1){
+			numberOfLogs=1;
 		}
+		if(numberOfLogs>15){
+			numberOfLogs=15;
+		}
+		
+	
+	
+		nameFiles=new String[numberOfLogs];
+		messages=new String[numberOfLogs];
+		for(int i=0; i<numberOfLogs;i++){
+				   messages[i]=new String("");
+				  		   
+			    	if((System.getProperty("os.name")).equals("Windows 10")){	
+						this.nameFiles[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
+					}
+			    	else{
+			    		this.nameFiles[i]="./Logueo/logFile"+ this.getLetraAbecedario(i) +".txt"; //Path para Linux.
+					    
+			    	}
+				 
+			}
 	}
 	
 	/**
@@ -38,6 +46,7 @@ public class LogDeEventos {
 	 */
 	public synchronized void createMessage(String message, int indice){
 		this.messages[indice]=message;
+		
 	}
 	
 	/**
@@ -50,14 +59,6 @@ public class LogDeEventos {
 	}
 	
 	
-	/**
-	 * Metodo getPrintStream.
-	 * @param indice ID del PrintStream
-	 * @return PrintStream Objeto de la clase PrintStream representado por el ID pasado como parametro
-	 */
-	public PrintStream getPrintStream(int indice) {
-		return printLogs[indice];
-	}
 	
 	/**
 	 * Metodo getMessage.
@@ -72,7 +73,32 @@ public class LogDeEventos {
 	 * Metodo flushBufferToFile. Permite imprimir el contenido del buffer en el archivo de logueo.
 	 * @param indice Indice del PrintStream utilizado como buffer de logueo.
 	 */
-	public void flushBufferToFile(int indice){
-		this.printLogs[indice].println();
+	public synchronized void flushBufferToFile(int indice){
+		
+		//this.getPrintWriter(indice).print(this.messages[indice]);
+		try{
+			
+			//this.getBufferedWriter(indice).write(new String(this.messages[indice]));
+		
+			//this.getBufferedWriter(indice).flush();
+			FileWriter fw=new FileWriter(this.nameFiles[indice]);
+			BufferedWriter wr=new BufferedWriter(fw);
+			wr.write(new String(this.messages[indice]));
+			wr.flush();
+			wr.close();
+			fw.close();
+			//this.getBufferedWriter(indice).close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	public char getLetraAbecedario(int indice) {
+		char letra;
+		return (char) ('A' + indice ); 
 	}
 }
