@@ -1,15 +1,15 @@
 package clasesPrincipales;
 
-import java.io.PrintStream;
+
 import Monitor.Monitor;
 
 public class AutosDriver implements Runnable{
 	private Monitor monitor;
-	private PrintStream printLog;
+	private int indiceLog;
 	
-	public AutosDriver(Monitor monitor, PrintStream printstream){
+	public AutosDriver(Monitor monitor, int indiceLog){
 		this.monitor=monitor;
-		printLog=printstream;
+		this.indiceLog=indiceLog;
 	}
 	public void run(){
 		//Realizar disparos.

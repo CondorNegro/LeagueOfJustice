@@ -1,19 +1,20 @@
 package clasesPrincipales;
 
-import java.io.PrintStream;
+
 import Monitor.Monitor;
 
 public class GeneradorAutos implements Runnable{
 
 	private Monitor monitor;
-	private PrintStream printLog;
+	private int indiceLog;
 	
-	public GeneradorAutos(Monitor monitor, PrintStream printstream){
+	public GeneradorAutos(Monitor monitor, int indiceLog){
 		this.monitor=monitor;
-		printLog=printstream;
+		this.indiceLog=indiceLog;
 	}
 	public void run(){
 		//Realizar disparos.
 	}
+	
 
 }

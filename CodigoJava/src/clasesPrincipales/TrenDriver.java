@@ -1,19 +1,20 @@
 package clasesPrincipales;
 
-import java.io.PrintStream;
+
 import Monitor.Monitor;
 
 
 public class TrenDriver implements Runnable {
 	private Monitor monitor;
-	private PrintStream printLog;
+	private int indiceLog;
 	
-	public TrenDriver(Monitor monitor, PrintStream printstream){
+	public TrenDriver(Monitor monitor, int indiceLog){
 		this.monitor=monitor;
-		printLog=printstream;
+		this.indiceLog=indiceLog;
 	}
 	public void run(){
 		//Realizar disparos.
 	}
+	
 
 }

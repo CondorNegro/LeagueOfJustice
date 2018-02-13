@@ -1,20 +1,20 @@
 package clasesPrincipales;
 
-import java.io.PrintStream;
+
 import Monitor.Monitor;
 
 public class SubeBajaMaquina implements Runnable{
 
 	private Monitor monitor;
-	private PrintStream printLog;
+	private int indiceLog;
 	
-	public SubeBajaMaquina(Monitor monitor, PrintStream printstream){
+	public SubeBajaMaquina(Monitor monitor, int indiceLog){
 		this.monitor=monitor;
-		printLog=printstream;
+		this.indiceLog=indiceLog;
 	}
 	public void run(){
 		//Realizar disparos.
 	}
-
+	
 }
  
