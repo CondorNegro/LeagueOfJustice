@@ -188,6 +188,7 @@ public class Monitor {
 				if(OperacionesMatricesListas.isNotAllZeros(m)){ //Hay posibilidad de disparar una transicion.
 					try{
 						int transicionADisparar=politica.cualDisparar(m); 
+						System.out.println("transicion"+transicionADisparar);
 						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
 						//Despierta un hilo que estaba bloqueado en la cola correspondiente
 					}
@@ -198,7 +199,7 @@ public class Monitor {
 				}
 				else{ //No hay posibilidad de disparar una transicion.
 					k=false;
-					//System.out.println("ListaM cero");
+										
 				}
 			}
 			else{

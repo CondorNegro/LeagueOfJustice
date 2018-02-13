@@ -41,10 +41,15 @@ public class testMonitorCompleto {
         Thread hilo1 = new Thread(new HiloGenerador());
         Thread hilo2= new Thread(new HiloEscritor());
         Thread hilo3 = new Thread(new HiloLector());
+        Thread hilo4= new Thread(new HiloAcumuladorEscritores());
+        Thread hilo5= new Thread(new HiloRetiradorLectores());
        
+        hilo3.start();
+        hilo4.start();
         hilo1.start();
         hilo2.start();
-        hilo3.start();
+        hilo5.start();
+       
         
         //while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
 
@@ -55,6 +60,7 @@ public class testMonitorCompleto {
         	Thread.sleep(1000);
         	hilo2.interrupt();
             hilo3.interrupt();
+            hilo4.interrupt();
            
         }
         catch(InterruptedException e){
@@ -93,7 +99,25 @@ public class testMonitorCompleto {
      }*/
 
 
+    class HiloAcumuladorEscritores implements Runnable{
+    	@Override
+        public void run() {
+        	
+        	
+            for(int i=0;i<50;i++){
+            		
+            	System.out.print("Escritor:");
+          	    System.out.println(i);
+            	
+            	
+                 monitor.dispararTransicion(1);
+                   
+                              
 
+            }
+        }
+    }
+    
 
     class HiloGenerador implements Runnable{
 
@@ -142,10 +166,9 @@ public class testMonitorCompleto {
             	if(i==49){
         			flagEscritor=true;
         		}
-            	System.out.print("Escritor:");
-          	    System.out.println(i);
-            	monitor.dispararTransicion(1);
-            	System.out.println("Escribiendo");
+            	
+            	System.out.println("Escribiendo: " + i);
+            	
             	monitor.dispararTransicion(2);
             	System.out.println("Dejo de escribir");
 
@@ -164,6 +187,21 @@ public class testMonitorCompleto {
           	    System.out.println(i);
             	monitor.dispararTransicion(4);
             	System.out.println("Leyendo");
+            	monitor.dispararTransicion(3);
+            	System.out.println("Dejo de leer");
+            	
+            	
+            }
+        }
+    }
+    
+    class HiloRetiradorLectores implements Runnable{
+    	@Override
+        public void run() {
+            for (int i=0;i<50;i++) {
+            	
+            
+            	System.out.println("Leyendo: "+ i);
             	monitor.dispararTransicion(3);
             	System.out.println("Dejo de leer");
             	
