@@ -47,12 +47,13 @@ public class testMonitorCompleto {
         
         try{
         	Thread.sleep(1000);
+        	hilo2.interrupt();
+            hilo3.interrupt();
         }
         catch(InterruptedException e){
         	e.printStackTrace();
         }
-        hilo2.interrupt();
-        hilo3.interrupt();
+        
         
     }
 
@@ -90,11 +91,20 @@ public class testMonitorCompleto {
             for(int i=0;i<50;i++){
                 
             	   
-                   monitor.dispararTransicion(0);
+                   monitor.intentardispararTransicion(0);
+                   
                    System.out.println("Genero un escritor");
                    int[][] marca=monitor.getMarcado();
                    if(marca[0][0]>0) {
-                	   if(marca[3][0]!=0);  //control de inhibidores) {
+                	   assertEquals(marca[3][0],0);
+                	   if(marca[3][0]!=0){  //control de inhibidores) {
+                	   		for(int j=0; j<marca.length;j++){
+                	   			System.out.print("j=");
+                	   			System.out.println(j);
+                	   			System.out.println(marca[j][0]);
+                	   			
+                	   		}
+                	   		
                 		   fail("En P2 hay un token y en P6 tambien");
                 	   }
                 	   if(marca[1][0]!=0) {
@@ -111,6 +121,7 @@ public class testMonitorCompleto {
             }
         }
     }
+   }
 
     class HiloEscritor implements Runnable{
 
@@ -141,5 +152,5 @@ public class testMonitorCompleto {
             }
         }
     }
-
 }
+
