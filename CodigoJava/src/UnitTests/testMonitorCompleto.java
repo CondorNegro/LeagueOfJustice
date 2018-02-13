@@ -2,7 +2,7 @@ package UnitTests;
 
 
 import Monitor.Monitor;
-import org.junit.Test;
+
 
 
 import static org.junit.Assert.*;
@@ -11,6 +11,9 @@ import static org.junit.Assert.*;
 public class testMonitorCompleto {
     Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/lectorEscritor/lectorEscritor.xls"; //Path para Linux.
+    private boolean flagGeneracion;
+    private boolean flagLector;
+    private boolean flagEscritor;
     
     @org.junit.Before
     public void setUp() throws Exception {
@@ -19,6 +22,9 @@ public class testMonitorCompleto {
 		}
         monitor.configRdp(redExcel);
         monitor.setPolitica(0); //modo aleatorio
+        flagEscritor=false;
+        flagLector=false;
+        flagGeneracion=false;
         
     }
 
@@ -49,10 +55,17 @@ public class testMonitorCompleto {
         	Thread.sleep(1000);
         	hilo2.interrupt();
             hilo3.interrupt();
+           
         }
         catch(InterruptedException e){
         	e.printStackTrace();
         }
+        finally{
+        	assert(flagGeneracion);
+            assert(flagLector);
+            assert(flagEscritor);
+        }
+        
         
         
     }
@@ -89,22 +102,20 @@ public class testMonitorCompleto {
         	
         	
             for(int i=0;i<50;i++){
-                
-            	   
-                   monitor.intentardispararTransicion(0);
+            		if(i==49){
+            			flagGeneracion=true;
+            		}
+            	   System.out.print("Generador:");
+            	   System.out.println(i);
+                   monitor.dispararTransicion(0);
                    
                    System.out.println("Genero un escritor");
                    int[][] marca=monitor.getMarcado();
+                   
                    if(marca[0][0]>0) {
                 	   assertEquals(marca[3][0],0);
                 	   if(marca[3][0]!=0){  //control de inhibidores) {
-                	   		for(int j=0; j<marca.length;j++){
-                	   			System.out.print("j=");
-                	   			System.out.println(j);
-                	   			System.out.println(marca[j][0]);
-                	   			
-                	   		}
-                	   		
+                	   		                	   		
                 		   fail("En P2 hay un token y en P6 tambien");
                 	   }
                 	   if(marca[1][0]!=0) {
@@ -128,7 +139,11 @@ public class testMonitorCompleto {
         @Override
         public void run() {
             for(int i=0;i<50;i++){
-            	
+            	if(i==49){
+        			flagEscritor=true;
+        		}
+            	System.out.print("Escritor:");
+          	    System.out.println(i);
             	monitor.dispararTransicion(1);
             	System.out.println("Escribiendo");
             	monitor.dispararTransicion(2);
@@ -142,7 +157,11 @@ public class testMonitorCompleto {
         @Override
         public void run() {
             for (int i=0;i<50;i++) {
-            	
+            	if(i==49){
+        			flagLector=true;
+        		}
+            	System.out.print("Lector:");
+          	    System.out.println(i);
             	monitor.dispararTransicion(4);
             	System.out.println("Leyendo");
             	monitor.dispararTransicion(3);

@@ -97,7 +97,7 @@ public class LogDeEventos {
 	
 	
 	
-	private char getLetraAbecedario(int indice) {
+	private synchronized char getLetraAbecedario(int indice) {
 		char letra;
 		return (char) ('A' + indice ); 
 	}

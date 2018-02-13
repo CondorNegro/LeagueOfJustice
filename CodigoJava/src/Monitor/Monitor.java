@@ -213,7 +213,7 @@ public class Monitor {
 						}
 						else{
 							long timeout=this.rdp.getlogicaTemporal().getTiempoFaltanteParaAlfa(transicion);
-							colas[transicion].delay((timeout*1000));
+							colas[transicion].delay((timeout*1000)+2000); //Por problemas de redondeo.
 						}
 											
 						
