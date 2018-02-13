@@ -10,3 +10,8 @@
 /testCronometro.class
 /testIDVector.class
 /testLogicaTemporal.class
+/testLogDeEventos.class
+/testMonitorCompleto$HiloEscritor.class
+/testMonitorCompleto$HiloGenerador.class
+/testMonitorCompleto$HiloLector.class
+/testMonitorCompleto.class

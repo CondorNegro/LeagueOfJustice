@@ -169,6 +169,7 @@ public class Monitor {
 			return;
 		}
 		boolean k=true; //Variable booleana de control.  
+		int[] Vsss=rdp.getSensibilizadasExtendido();
 		
 		while(k){
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
@@ -207,13 +208,11 @@ public class Monitor {
 						colas[transicion].delay(); //Se encola en una cola de condicion. 
 					}
 					else{ //No es transicion inmediata
-						if(!colas[transicion].isEmpty()){ //No es el primer hilo
-							colas[transicion].delay();
-						}
-						else{ //Es el primer hilo
-							long timeout=this.rdp.getlogicaTemporal().getTiempoFaltanteParaAlfa(transicion);
-							colas[transicion].delay(timeout);
-						}
+						
+						long timeout=this.rdp.getlogicaTemporal().getTiempoFaltanteParaAlfa(transicion);
+						//System.out.println(timeout);
+						colas[transicion].delay((timeout*1000)+2000);
+						
 						
 					}
 					

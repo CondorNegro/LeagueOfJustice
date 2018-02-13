@@ -44,7 +44,7 @@ public class testMonitorCompleto {
 
        // }
         hilo1.join();
-        hilo2.join();
+        
         try{
         	Thread.sleep(1000);
         }
@@ -85,25 +85,21 @@ public class testMonitorCompleto {
 
         @Override
         public void run() {
-        	monitor.dispararTransicion(3);
-        	try {
-				Thread.sleep(4000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	monitor.dispararTransicion(3);
+        	
+        	
             for(int i=0;i<50;i++){
                 
             	   
-                   //monitor.dispararTransicion(3);
-                  // System.out.println("Genero un escritor");
+                   monitor.dispararTransicion(0);
+                   System.out.println("Genero un escritor");
                    int[][] marca=monitor.getMarcado();
-                   if(marca[1][0]>0) {
-                       assert (marca[0][0]==0);  //control de inhibidores
-                       assert (marca[1][0]<6); //nunca mas de 5 lectores
-                       System.out.println("jode");
-                   }
+                   if(marca[0][0]>0) {
+                	   if(marca[3][0]!=0);  //control de inhibidores) {
+                		   fail("En P2 hay un token y en P6 tambien");
+                	   }
+                	   if(marca[1][0]!=0) {
+                		   fail("En P2 hay un token y en P3 tambien");
+                	   }
                    
                    if(marca[0][0]>0) {
                        assert (marca[1][0]==0);  //control de inhibidores
@@ -122,10 +118,10 @@ public class testMonitorCompleto {
         public void run() {
             for(int i=0;i<50;i++){
             	
-            	//monitor.dispararTransicion(0);
-            	//System.out.println("Escribiennnnnnnnnnnnnnnnnnnnnnnndo");
-            	//monitor.dispararTransicion(4);
-            	//System.out.println("Dejo de escribir");
+            	monitor.dispararTransicion(1);
+            	System.out.println("Escribiendo");
+            	monitor.dispararTransicion(2);
+            	System.out.println("Dejo de escribir");
 
             }
         }
@@ -135,11 +131,11 @@ public class testMonitorCompleto {
         @Override
         public void run() {
             for (int i=0;i<50;i++) {
-            	//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            	//monitor.dispararTransicion(2);
-            	//System.out.println("Leyennnnnnnnnnnnnnnnnnnnnnnnnnndo");
-            	//monitor.dispararTransicion(1);
-            	//System.out.println("Dejo de leer");
+            	
+            	monitor.dispararTransicion(4);
+            	System.out.println("Leyendo");
+            	monitor.dispararTransicion(3);
+            	System.out.println("Dejo de leer");
             	
             	
             }

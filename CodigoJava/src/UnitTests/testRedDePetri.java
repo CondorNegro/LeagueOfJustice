@@ -425,10 +425,10 @@ public class testRedDePetri {
 			Method getVectorQ_Actualizado  = RedDePetri.class.getDeclaredMethod("getVectorQ_Actualizado", null);
 			getVectorQ_Actualizado.setAccessible(true);
 			int Q[][]=(int[][])getVectorQ_Actualizado.invoke(redTest);
-			assertEquals(Q[0][0],0);
-			assertEquals(Q[1][0],1);
-			assertEquals(Q[2][0],1);
-			assertEquals(Q[3][0],1);
+			assertEquals(Q[0][0],1);
+			assertEquals(Q[1][0],0);
+			assertEquals(Q[2][0],0);
+			assertEquals(Q[3][0],0);
 		
 			
 		}

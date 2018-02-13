@@ -325,12 +325,18 @@ public class RedDePetri{
     /**
      * Metodo getMatrizB_Actualizada. 
      * Matriz B= Matriz H * Vector Q.
-     * @return int[][] Matriz B. Utilizada en la ecuación de estado.
+     * @return int[][] Matriz B. Utilizada en la ecuaciï¿½n de estado.
      */
     private int[][] getMatrizB_Actualizada(){
     	this.Q=getVectorQ_Actualizado();
     	int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(this.H);
     	int aux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, this.Q);
+    	/*
+    	System.out.println("H: "+aux[0][0]);
+    	System.out.println("H: "+aux[1][0]);
+    	System.out.println("H: "+aux[2][0]);
+    	System.out.println("H: "+aux[3][0]);
+    	System.out.println("H: "+aux[4][0]);*/
     	for(int i=0; i<aux.length;i++){
     		if(aux[i][0]==0){
     			aux[i][0]=1;
@@ -339,6 +345,7 @@ public class RedDePetri{
     			aux[i][0]=0;
     		}
     	}
+    	
     	this.B=aux;
     	return this.B.clone();
     }
@@ -353,10 +360,10 @@ public class RedDePetri{
     	int aux[][]=new int[this.M.length][1];
     	for(int i=0;i<this.M.length;i++){
     		if(M[i][0]!=0){
-    			aux[i][0]=0;
+    			aux[i][0]=1;
     		}
     		else{
-    			aux[i][0]=1;
+    			aux[i][0]=0;
     		}
     	}
     	return aux;
@@ -449,6 +456,7 @@ public class RedDePetri{
     	
     	
     	int q[]=OperacionesMatricesListas.andVector(Baux,E);
+
     	return q;
     }
     
