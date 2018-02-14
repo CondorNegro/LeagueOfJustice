@@ -11,9 +11,10 @@ import static org.junit.Assert.*;
 public class testMonitorCompleto {
     Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/lectorEscritor/lectorEscritor.xls"; //Path para Linux.
-    private boolean flagGeneracion;
-    private boolean flagLector;
-    private boolean flagEscritor;
+    private boolean flagEscritoresFull; //Indica que los 50 escritores leyeron.
+    private int contadorLectoresLeyeron;
+    
+   
     
     @org.junit.Before
     public void setUp() throws Exception {
@@ -22,9 +23,8 @@ public class testMonitorCompleto {
 		}
         monitor.configRdp(redExcel);
         monitor.setPolitica(0); //modo aleatorio
-        flagEscritor=false;
-        flagLector=false;
-        flagGeneracion=false;
+        flagEscritoresFull=false;
+        contadorLectoresLeyeron=0;
         
     }
 
@@ -67,9 +67,11 @@ public class testMonitorCompleto {
         	e.printStackTrace();
         }
         finally{
-        	assert(flagGeneracion);
-            assert(flagLector);
-            assert(flagEscritor);
+        	assert(flagEscritoresFull); //Se lleno plaza 9
+        	assert(monitor.getMarcado()[4][0]==0); //Se generaron todos los escritores
+            if(contadorLectoresLeyeron<50){
+            	fail("No han leido los lectores.");
+            }
         }
         
         
@@ -99,24 +101,7 @@ public class testMonitorCompleto {
      }*/
 
 
-    class HiloAcumuladorEscritores implements Runnable{
-    	@Override
-        public void run() {
-        	
-        	
-            for(int i=0;i<50;i++){
-            		
-            	System.out.print("Escritor:");
-          	    System.out.println(i);
-            	
-            	
-                 monitor.dispararTransicion(1);
-                   
-                              
-
-            }
-        }
-    }
+    
     
 
     class HiloGenerador implements Runnable{
@@ -124,13 +109,11 @@ public class testMonitorCompleto {
         @Override
         public void run() {
         	
-        	
-            for(int i=0;i<50;i++){
-            		if(i==49){
-            			flagGeneracion=true;
-            		}
+        	int contador4=0;
+           while(monitor.getMarcado()[6][0]<50){
+            		contador4++;
             	   System.out.print("Generador:");
-            	   System.out.println(i);
+            	   System.out.println(contador4);
                    monitor.dispararTransicion(0);
                    
                    System.out.println("Genero un escritor");
@@ -158,19 +141,37 @@ public class testMonitorCompleto {
     }
    }
 
+    
+    class HiloAcumuladorEscritores implements Runnable{
+    	@Override
+        public void run() {
+        	
+        	int contador3=0;
+    		while(monitor.getMarcado()[6][0]<50){
+            		contador3++;
+            	System.out.print("Escritor:");
+          	    System.out.println(contador3);
+            	
+            	
+                 monitor.dispararTransicion(1);
+                   
+                              
+
+            }
+        }
+    }
     class HiloEscritor implements Runnable{
 
         @Override
         public void run() {
-            for(int i=0;i<50;i++){
-            	if(i==49){
-        			flagEscritor=true;
-        		}
+        	int contador=0;
+        	while(monitor.getMarcado()[6][0]<50){
             	
-            	System.out.println("Escribiendo: " + i);
+            	contador++;
+            	System.out.println("Escribiendo: " + contador);
             	
             	monitor.dispararTransicion(2);
-            	System.out.println("Dejo de escribir");
+            	System.out.println("Dejo de escribir: "+ contador);
 
             }
         }
@@ -179,12 +180,14 @@ public class testMonitorCompleto {
     class HiloLector implements Runnable{
         @Override
         public void run() {
-            for (int i=0;i<50;i++) {
-            	if(i==49){
-        			flagLector=true;
-        		}
+        	int contador1=0;
+        	while(monitor.getMarcado()[6][0]<50){
+            	contador1++;
+            	if(monitor.getMarcado()[2][0]<5){
+            		contadorLectoresLeyeron++;
+            	}
             	System.out.print("Lector:");
-          	    System.out.println(i);
+          	    System.out.println(contador1);
             	monitor.dispararTransicion(4);
             	
             	
@@ -196,10 +199,11 @@ public class testMonitorCompleto {
     class HiloRetiradorLectores implements Runnable{
     	@Override
         public void run() {
-            for (int i=0;i<50;i++) {
-            	
+    		int contador2=0;
+    		while(monitor.getMarcado()[6][0]<50) {
+            	contador2++;
             
-            	System.out.println("Leyendo: "+ i);
+            	System.out.println("Leyendo: "+ contador2);
             	monitor.dispararTransicion(3);
             	System.out.println("Dejo de leer");
             	
