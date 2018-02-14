@@ -111,9 +111,18 @@ public class testMonitorCompleto {
         	
         	int contador4=0;
            while(monitor.getMarcado()[6][0]<50){
+        	   int m[][]=monitor.getMarcado();
+        	   System.out.println("M");
+         	  System.out.println(m[0][0]);
+         	  System.out.println(m[1][0]);
+         	  System.out.println(m[2][0]);
+         	  System.out.println(m[3][0]);
+         	  System.out.println(m[4][0]);
+         	  System.out.println(m[5][0]);
+         	  System.out.println(m[6][0]);
             		contador4++;
-            	   System.out.print("Generador:");
-            	   System.out.println(contador4);
+            	
+             	   System.out.print("Generador:");
                    monitor.dispararTransicion(0);
                    
                    System.out.println("Genero un escritor");
@@ -161,10 +170,13 @@ public class testMonitorCompleto {
         }
     }
     class HiloEscritor implements Runnable{
-
+    	 
+   	  
         @Override
         public void run() {
         	int contador=0;
+        	//int[][] m= monitor.getMarcado();
+      	  
         	while(monitor.getMarcado()[6][0]<50){
             	
             	contador++;
@@ -181,10 +193,13 @@ public class testMonitorCompleto {
         @Override
         public void run() {
         	int contador1=0;
+         
         	while(monitor.getMarcado()[6][0]<50){
+        		
             	contador1++;
             	if(monitor.getMarcado()[2][0]<5){
             		contadorLectoresLeyeron++;
+            		System.out.println("ContadorLectores: " + contadorLectoresLeyeron);
             	}
             	System.out.print("Lector:");
           	    System.out.println(contador1);
