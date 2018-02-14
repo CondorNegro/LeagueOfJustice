@@ -19,7 +19,7 @@ public class testMonitorCompleto2 {
     @org.junit.Before
     public void setUp() throws Exception {
     	if((System.getProperty("os.name")).equals("Windows 10")){	
-			this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls"; //Path para Windows.
+			this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedPrioridades\\lectorEscritor.xls"; //Path para Windows.
 		}
         monitor.configRdp(redExcel);
         

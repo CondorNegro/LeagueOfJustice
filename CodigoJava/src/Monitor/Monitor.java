@@ -200,7 +200,7 @@ public class Monitor {
 				}
 				else{ //No hay posibilidad de disparar una transicion.
 					k=false;
-					System.out.println("K false");
+					//System.out.println("K false");
 					mutex.release();
 					return;
 				}

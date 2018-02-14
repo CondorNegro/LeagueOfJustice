@@ -7,12 +7,15 @@ import Monitor.Monitor;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Method;
+import Monitor.RedDePetri;
+
 
 public class testMonitorCompleto {
     Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/lectorEscritor/lectorEscritor.xls"; //Path para Linux.
-    private boolean flagEscritoresFull; //Indica que los 50 escritores leyeron.
-    private int contadorLectoresLeyeron;
+    private static boolean flagEscritoresFull; //Indica que los 50 escritores leyeron.
+    private static boolean flagLectorFull;
     
    
     
@@ -24,7 +27,7 @@ public class testMonitorCompleto {
         monitor.configRdp(redExcel);
         monitor.setPolitica(0); //modo aleatorio
         flagEscritoresFull=false;
-        contadorLectoresLeyeron=0;
+        this.flagLectorFull=false;
         
     }
 
@@ -38,18 +41,14 @@ public class testMonitorCompleto {
 
     @org.junit.Test
     public void dispararTransicionTest() throws Exception {
-        Thread hilo1 = new Thread(new HiloGenerador());
-        Thread hilo2= new Thread(new HiloEscritor());
-        Thread hilo3 = new Thread(new HiloLector());
-        Thread hilo4= new Thread(new HiloAcumuladorEscritores());
-        Thread hilo5= new Thread(new HiloRetiradorLectores());
+        Thread hilo1= new Thread(new HiloEscritor());
+        Thread hilo2 = new Thread(new HiloLector());
+     
        
-        hilo3.start();
-        hilo4.start();
         hilo1.start();
-        hilo2.start();
-        hilo5.start();
        
+        hilo2.start();
+     
         
         //while(hilo1.getState()!= Thread.State.TERMINATED && hilo2.getState()!= Thread.State.TERMINATED && hilo3.getState()!= Thread.State.TERMINATED) {
 
@@ -59,8 +58,7 @@ public class testMonitorCompleto {
         try{
         	Thread.sleep(1000);
         	hilo2.interrupt();
-            hilo3.interrupt();
-            hilo4.interrupt();
+          
            
         }
         catch(InterruptedException e){
@@ -68,107 +66,27 @@ public class testMonitorCompleto {
         }
         finally{
         	assert(flagEscritoresFull); //Se lleno plaza 9
-        	assert(monitor.getMarcado()[4][0]==0); //Se generaron todos los escritores
-            if(contadorLectoresLeyeron<50){
-            	fail("No han leido los lectores.");
-            }
+        	assert(flagLectorFull);
+            
         }
         
         
         
     }
-
-    /*
-     @org.junit.Test
-     public void intentarDispararTransicion() throws Exception {
-    	 Thread hilo1 = new Thread(new HiloGenerador());
-         Thread hilo2= new Thread(new HiloEscritor());
-         Thread hilo3 = new Thread(new HiloLector());
-         hilo1.start();
-         hilo2.start();
-         hilo3.start();
-
-         hilo1.join();
-         try{
-         	Thread.sleep(1000);
-         }
-         catch(InterruptedException e){
-         	e.printStackTrace();
-         }
-         hilo2.interrupt();
-         hilo3.interrupt();
-         
-     }*/
-
-
     
-    
-
-    class HiloGenerador implements Runnable{
-
-        @Override
-        public void run() {
-        	
-        	int contador4=0;
-           while(monitor.getMarcado()[6][0]<50){
-        	   int m[][]=monitor.getMarcado();
-        	   System.out.println("M");
-         	  System.out.println(m[0][0]);
-         	  System.out.println(m[1][0]);
-         	  System.out.println(m[2][0]);
-         	  System.out.println(m[3][0]);
-         	  System.out.println(m[4][0]);
-         	  System.out.println(m[5][0]);
-         	  System.out.println(m[6][0]);
-            		contador4++;
-            	
-             	   System.out.print("Generador:");
-                   monitor.dispararTransicion(0);
-                   
-                   System.out.println("Genero un escritor");
-                   int[][] marca=monitor.getMarcado();
-                   
-                   if(marca[0][0]>0) {
-                	   assertEquals(marca[3][0],0);
-                	   if(marca[3][0]!=0){  //control de inhibidores) {
-                	   		                	   		
-                		   fail("En P2 hay un token y en P6 tambien");
-                	   }
-                	   if(marca[1][0]!=0) {
-                		   fail("En P2 hay un token y en P3 tambien");
-                	   }
-                   
-                   if(marca[0][0]>0) {
-                       assert (marca[1][0]==0);  //control de inhibidores
-                       assert (marca[0][0]==1); //siempre solo 1 escritor
-                   }
-                  
-                 
-
-            }
-        }
+    public static synchronized void setBoolean(){
+    	flagEscritoresFull=true;
+    	flagLectorFull=true;
     }
-   }
+
+   
 
     
-    class HiloAcumuladorEscritores implements Runnable{
-    	@Override
-        public void run() {
-        	
-        	int contador3=0;
-    		while(monitor.getMarcado()[6][0]<50){
-            		contador3++;
-            	System.out.print("Escritor:");
-          	    System.out.println(contador3);
-            	
-            	
-                 monitor.dispararTransicion(1);
-                   
-                              
+    
 
-            }
-        }
-    }
+    
+
+   
     class HiloEscritor implements Runnable{
     	 
    	  
@@ -177,15 +95,31 @@ public class testMonitorCompleto {
         	int contador=0;
         	//int[][] m= monitor.getMarcado();
       	  
-        	while(monitor.getMarcado()[6][0]<50){
+        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){
             	
             	contador++;
             	System.out.println("Escribiendo: " + contador);
             	
+            	monitor.dispararTransicion(4);
+            	if(monitor.getMarcado()[2][0]!=0){
+            		Method getRDP;
+            		try{
+            			getRDP = Monitor.class.getDeclaredMethod("getRDP", null);
+                		getRDP.setAccessible(true);
+            			RedDePetri RDP = (RedDePetri) getRDP.invoke(monitor);
+            			assert(RDP.getSensibilizadasExtendido()[0]==0);
+            		}
+            		catch(Exception e){
+            			e.printStackTrace();
+            		}
+            		
+            	}
+            	monitor.dispararTransicion(1);
             	monitor.dispararTransicion(2);
             	System.out.println("Dejo de escribir: "+ contador);
 
             }
+        	setBoolean();
         }
     }
 
@@ -193,38 +127,25 @@ public class testMonitorCompleto {
         @Override
         public void run() {
         	int contador1=0;
-         
-        	while(monitor.getMarcado()[6][0]<50){
-        		
+          
+        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){
+        	
+               
             	contador1++;
-            	if(monitor.getMarcado()[2][0]<5){
-            		contadorLectoresLeyeron++;
-            		System.out.println("ContadorLectores: " + contadorLectoresLeyeron);
-            	}
+            	
             	System.out.print("Lector:");
           	    System.out.println(contador1);
-            	monitor.dispararTransicion(4);
-            	
-            	
-            	
-            }
-        }
-    }
-    
-    class HiloRetiradorLectores implements Runnable{
-    	@Override
-        public void run() {
-    		int contador2=0;
-    		while(monitor.getMarcado()[6][0]<50) {
-            	contador2++;
-            
-            	System.out.println("Leyendo: "+ contador2);
+            	monitor.dispararTransicion(0);
             	monitor.dispararTransicion(3);
-            	System.out.println("Dejo de leer");
+            	
             	
             	
             }
+        	setBoolean();
+        	
         }
     }
 }
+
+  
 
