@@ -186,9 +186,7 @@ public class testMonitorCompleto {
             	System.out.print("Lector:");
           	    System.out.println(i);
             	monitor.dispararTransicion(4);
-            	System.out.println("Leyendo");
-            	monitor.dispararTransicion(3);
-            	System.out.println("Dejo de leer");
+            	
             	
             	
             }

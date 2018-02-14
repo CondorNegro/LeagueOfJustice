@@ -290,23 +290,22 @@ public class RedDePetri{
             
             Sheet paginaExcel = archivoExcelMatrices.getSheet(8);//Prioridades subida
             columnas = paginaExcel.getColumns();
-            filas = paginaExcel.getRows();
+           // filas = paginaExcel.getRows();
             this.prioridadesSubida = new int[columnas];
-            for (int i = 1; i < filas-1; i++) {
+           
                 for (int j = 0; j < columnas; j++) {
-                	 this.prioridadesSubida[j] = Integer.parseInt(paginaExcel.getCell(j,i).getContents());
+                	 this.prioridadesSubida[j] = Integer.parseInt(paginaExcel.getCell(j,1).getContents());
                 }
-            }
+            
             
             paginaExcel = archivoExcelMatrices.getSheet(9);//Prioridades bajada
             columnas = paginaExcel.getColumns();
-            filas = paginaExcel.getRows();
+            //filas = paginaExcel.getRows();
             this.prioridadesBajada = new int[columnas];
-            for (int i = 1; i < filas-1; i++) {
-                for (int j = 0; j < columnas; j++) {
-                	 this.prioridadesBajada[j] = Integer.parseInt(paginaExcel.getCell(j,i).getContents());
-                }
+            for (int j = 0; j < columnas; j++) {
+                	 this.prioridadesBajada[j] = Integer.parseInt(paginaExcel.getCell(j,1).getContents());
             }
+            
             
            
             
