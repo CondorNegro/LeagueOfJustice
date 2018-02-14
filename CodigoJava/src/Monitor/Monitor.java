@@ -161,17 +161,18 @@ public class Monitor {
 	
 	public void dispararTransicion(int transicion) {
 		int[] m;
-		try{
-			mutex.acquire(); //Adquiero acceso al monitor.
-		}
-		catch(InterruptedException e){
-			e.printStackTrace();
-			return;
-		}
-		boolean k=true; //Variable booleana de control.  
+		while(true){
+			try{
+				mutex.acquire(); //Adquiero acceso al monitor.
+			}
+			catch(InterruptedException e){
+				e.printStackTrace();
+				return;
+			}
+			boolean k=true; //Variable booleana de control.  
 		
 		
-		while(k){
+		
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
 			//System.out.println(k);
 			//System.out.println(transicion);
@@ -199,7 +200,9 @@ public class Monitor {
 				}
 				else{ //No hay posibilidad de disparar una transicion.
 					k=false;
-										
+					System.out.println("K false");
+					mutex.release();
+					return;
 				}
 			}
 			else{
@@ -226,12 +229,13 @@ public class Monitor {
 					e.printStackTrace();
 				}
 				
-                return;
+                //return;
 			}
-		}
 		
-		mutex.release(); //Libero al monitor.
-		return;
+		
+			//mutex.release(); //Libero al monitor.
+			//return;
+		}
 	}
 	
     public int[][] getMarcado(){
@@ -244,73 +248,7 @@ public class Monitor {
     }
     
     
-	/**
-	 * Metodo dispararTransicion. Permite indicarle al monitor que el hilo desea disparar una determinada transicion. 
-	 * (Ver diagrama de secuencia).
-	 * @param transicion Transicion a disparar
-	 */
 	
-	
-	public void intentardispararTransicion(int transicion) {
-		int[] m;
-		try{
-			mutex.acquire(); //Adquiero acceso al monitor.
-		}
-		catch(InterruptedException e){
-			e.printStackTrace();
-			return;
-		}
-		boolean k=true; //Variable booleana de control.  
-		
-		while(k){
-			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
-			//System.out.println("Comenzando el thread"+ Thread.currentThread().getName()+" a usar el recurso tiene el lock"); 
-			//System.out.println(k);
-			//System.out.println(transicion);
-			if(k){ //K=true verifica el estado de la red.
-				int[] Vs=rdp.getSensibilizadasExtendido(); //get transiciones sensibilizadas
-				int[] Vc=quienesEstanEnColas(); //get Quienes estan en colas
-				try{
-					m= OperacionesMatricesListas.andVector(Vs, Vc); //Obtengo listaM
-				}
-				catch(IndexOutOfBoundsException e){
-					e.printStackTrace();
-					return;
-				}	
-				if(OperacionesMatricesListas.isNotAllZeros(m)){ //Hay posibilidad de disparar una transicion.
-					try{
-						int transicionADisparar=politica.cualDisparar(m); //Corregir
-						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
-						//Despierta un hilo que estaba bloqueado en la cola correspondiente
-					}
-					catch(IndexOutOfBoundsException e){
-						e.printStackTrace();
-					}
-					
-					mutex.release();
-	                return;
-				}
-				else{ //No hay posibilidad de disparar una transicion.
-					k=false;
-				}
-			}
-			else{
-				mutex.release();
-				try{
-					//colas[transicion].delay(); //Se encola en una cola de condicion.
-				}
-				
-				catch(Exception e){ //Puede haber mas de un tipo de excepcion. (Por interrupcion o por exceder los limites).
-					e.printStackTrace();
-				}
-				
-                return;
-			}
-		}
-		
-		mutex.release(); //Libero al monitor.
-		return;
-	}
 
 	
 }

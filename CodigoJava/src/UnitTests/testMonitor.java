@@ -249,6 +249,7 @@ public class testMonitor {
 			
 			
 			assertEquals(rdp.getMatrizM(),m0);
+			
 			threadTCero.start();
 			threadTCero.join();
 			assertEquals(rdp.getMatrizM(),m1);
@@ -258,7 +259,7 @@ public class testMonitor {
 				Thread.sleep(3);
 			}
 			catch(InterruptedException e){
-				fail("Se gener� error por interrupci�n de thread");
+				fail("Se genero error por interrupcion de thread");
 			}
 			RedDePetri rdp1 = (RedDePetri) getRDP.invoke(monitor1);	
 			assertEquals(rdp1.getMatrizM(),m2);
