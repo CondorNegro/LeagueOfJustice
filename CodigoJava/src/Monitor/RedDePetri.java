@@ -29,6 +29,8 @@ public class RedDePetri{
 	private int[] prioridadesSubida; 
 	private int[] prioridadesBajada;
 	
+	private List<Integer> transicionesDisparadas;
+	
 	
 	public RedDePetri(String path){
 		this.path=path;
@@ -39,9 +41,14 @@ public class RedDePetri{
 		setTransicionesInmediatas();
 		this.B=getMatrizB_Actualizada();
 		this.logicaTemporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
+		this.transicionesDisparadas=new ArrayList<Integer>();
 		
 	}
 	
+	
+	public List<Integer> getTransicionesDisparadas(){
+		return this.transicionesDisparadas;
+	}
 	
 	public int[] getPrioridadesSubida(){
 		return this.prioridadesSubida.clone();
@@ -152,6 +159,7 @@ public class RedDePetri{
                 this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getConjuncionEAndB(),  transicion);
                 try{
                 	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
+                	this.transicionesDisparadas.add(transicion);
                 }
                 catch(Exception e){
                 	e.printStackTrace();
