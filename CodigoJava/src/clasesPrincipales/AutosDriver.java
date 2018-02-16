@@ -1,46 +1,31 @@
 package clasesPrincipales;
 
-
-import java.util.HashMap;
-
-import Logueo.LogDeEventos;
 import Monitor.Monitor;
-import Logueo.LogDeEventos;
 
 
 public class AutosDriver implements Runnable {
-	private Monitor monitor;
-	private int indiceLog;
-	private LogDeEventos log;
-	
-	public AutosDriver(Monitor monitor, LogDeEventos log, int indiceLog){
-		this.monitor=monitor;
-		this.indiceLog=indiceLog;
-		this.log=log;
-	}
-	
-	
-	
-	/**
-     * Autos que cruzan la barrera.
+    private int transicion_autos_cruzando;
+    private Monitor monitor;
+   
+
+    /**
+     *
+     * @param transicion_autos_cruzando transicion que hace cruzar la barrera a los autos cuando el
+     * tren se encuentra a una distancia superior a los 30 metros
      */
-	public void run(){
-		HashMap<String, String> tablaLogueo=new HashMap<String, String>();
-		tablaLogueo.put("arriboA", "0");
-		tablaLogueo.put("salgoA", "1");
-		tablaLogueo.put("arriboB", "2");
-		tablaLogueo.put("salgoB", "3");
-		tablaLogueo.put("arriboC", "4");
-		tablaLogueo.put("salgoC", "5");
-		tablaLogueo.put("arriboD", "6");
-		tablaLogueo.put("salgoD", "7");
-		
-		
-		while(true){
-			
-		}
-	}
-	
+    public AutosDriver(int transicion_autos_cruzando, Monitor monitor) {
+        this.transicion_autos_cruzando = transicion_autos_cruzando;
+        this.monitor = monitor;
+        
+    }
+
+    @Override
+    public void run() {
+        
+    	while(true){
+    		monitor.dispararTransicion(transicion_autos_cruzando);
+    	}
+    }
 
 }
 
