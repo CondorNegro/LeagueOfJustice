@@ -7,6 +7,10 @@ import Monitor.Monitor;
 
 import static org.junit.Assert.*;
 
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 
 public class testMonitorCompleto2 {
     Monitor monitor = Monitor.getInstance();
@@ -14,7 +18,8 @@ public class testMonitorCompleto2 {
     int flagPolitica=1;
     int cuentas1=0;
     int cuentas2=0;
-   
+    Logger logger = Logger.getLogger("MyLog");  
+    FileHandler fh;  
     
     @org.junit.Before
     public void setUp() throws Exception {
@@ -26,7 +31,10 @@ public class testMonitorCompleto2 {
         monitor.setPolitica(flagPolitica);	 // 0-modo aleatorio
 							     // 1-prioridad al proceso 1
 							     // 2-prioridad al proceso 2
-        
+        this.fh=new FileHandler("./MyLogFile.log");  
+        logger.addHandler(fh);
+        SimpleFormatter formatter = new SimpleFormatter();  
+        fh.setFormatter(formatter);  
         
     }
 
@@ -94,7 +102,14 @@ public class testMonitorCompleto2 {
         	int cuentas=0;
         	while(monitor.getMarcado()[6][0]<24){
         		monitor.dispararTransicion(0);
-        		System.out.println("Genere un recurso, cuenta: "+ cuentas);
+        		//System.out.println("Genere un recurso, cuenta: "+ cuentas);
+        		
+        		logger.info(""
+        				+"\n	**********************************************************************"
+        				+"\n 	Finalizando Proceso 2, cuenta: "+ cuentas
+        				+"\n	**********************************************************************"+
+        				monitor.getMarcado()[0]);
+
         		cuentas=cuentas+1;
         	}
         }
