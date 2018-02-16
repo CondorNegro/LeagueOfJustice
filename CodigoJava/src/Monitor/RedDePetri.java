@@ -218,10 +218,7 @@ public class RedDePetri{
 	
 	private void verificarTInvariantes() throws IllegalStateException{
 		 
-		  int[][] sumaDisparosTransicionesNoTInvariantes=new int[this.getCantTransiciones()][1];//Sumatoria de disparos de transiciones que no estan en T-Inv o no lo completan. 
-		  for(int i=0; i<sumaDisparosTransicionesNoTInvariantes.length;i++){ //Reseteo vectores.
-			  sumaDisparosTransicionesNoTInvariantes[i][0]=0;
-		  }
+		  
 		  for(int indice=0; indice<this.transicionesDisparadas.size();indice++){ //Realizo la suma de disparos por cada transicion
 			  sumaDisparosTransiciones[transicionesDisparadas.get(indice)][0]++;
 		  }
@@ -232,8 +229,8 @@ public class RedDePetri{
 		  
 		
 		  boolean flagPrimero=true;
-		
-		  for(int fila=0; fila<this.Tinvariantes.length;fila++){ //Chequeo el numero de T-Invariantes completos.
+		//Determino el numero de T-invariantes completos por cada fila de la matriz T-Invariantes.
+		  for(int fila=0; fila<this.Tinvariantes.length;fila++){ 
 			  minimo[fila]=0;
 			  flagPrimero=true;
 			 
@@ -258,26 +255,22 @@ public class RedDePetri{
 				  if(Tinvariantes[fila][columna]==1){
 					  //Resto el minimo. 
 					  sumaDisparosTransiciones[columna][0]=sumaDisparosTransiciones[columna][0]-minimo[fila];
+					  if(sumaDisparosTransiciones[columna][0]<0){
+						  throw new IllegalStateException("Suma de disparos negativa");	
+					  }
 				  }
 				 
 			  }
 			  
 		  }
 		  
-		  for(int i=0; i<sumaDisparosTransicionesNoTInvariantes.length;i++){ //Asigno transiciones que no pertenecen a TInv
-			  if(sumaDisparosTransiciones[i][0]<0){
-				  throw new IllegalStateException("Suma de disparos negativa");	
-			  }
-			  else if(sumaDisparosTransiciones[i][0]>0){
-				  sumaDisparosTransicionesNoTInvariantes[i][0]=sumaDisparosTransiciones[i][0]; 
-				   //Agrego el excedente de disparo de los T-Invariantes y la cantidad de disparos de transiciones que 
-				  //no pertenecen a T-Invariantes.
-			  }
-		  }
-			
+		//sumaDisparosTransiciones en este punto ya contiene el excedente de disparo de los T-Invariantes y la cantidad de disparos de transiciones que 
+		  //no pertenecen a T-Invariantes.
+		  
+		
 		  
 		  //Verificacion de TInv
-		  int[][] Maux = OperacionesMatricesListas.restaMatrices(this.getMatrizM(),OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransicionesNoTInvariantes));
+		  int[][] Maux = OperacionesMatricesListas.restaMatrices(this.getMatrizM(),OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransiciones));
 		  for(int plaza=0; plaza<Maux.length; plaza++){
 			  if(Maux[plaza][0] != this.getMarcadoInicial()[plaza][0]){
 				  throw new IllegalStateException("Error en los Tinvariantes");
