@@ -91,7 +91,7 @@ public class OperacionesMatricesListas {
 		 * @param a Primer matriz
 		 * @param b Segunda matriz
 		 * @return int[][] resultado de la suma
-		 * @throws IllegalArgumentException En caso de tener matrices de diferentes tama�os
+		 * @throws IllegalArgumentException En caso de tener matrices de diferentes tamanios
 		 */
     public static synchronized int[][] sumaMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
     	int[][] c = new int[a.length][a[0].length]; //inicializo c con mismos tamanios
@@ -103,10 +103,33 @@ public class OperacionesMatricesListas {
 		    }
     	}
     	else {
-    		throw new IllegalArgumentException("Matrices de diferentes tamanios"); //si no se cumple la condici�n tira IllegalArgumentException
+    		throw new IllegalArgumentException("Matrices de diferentes tamanios"); //si no se cumple la condicion tira IllegalArgumentException
     	}
     	return c;
     }
+    
+    
+    /**
+	 * Metodo restaMatrices. Realiza la resta entre dos matrices (a - b) de datos tipo int.
+	 * @param a Matriz minuendo
+	 * @param b Matriz sustraendo
+	 * @return int[][] resultado de la resta
+	 * @throws IllegalArgumentException En caso de tener matrices de diferentes tamanios
+	 */
+    public static synchronized int[][] restaMatrices(int[][] a, int[][] b) throws IllegalArgumentException {
+		int[][] c = new int[a.length][a[0].length]; //inicializo c con mismos tamanios
+		if ((a[0].length == b[0].length)&&(a.length == b.length)) { //compruebo que a y b sean del mismo tamanio
+		    for (int x=0; x < a.length; x++) { //recorro en un for y sumo los elementos de las matrices
+		        for (int y=0; y < a[x].length; y++) {				
+		          c[x][y]=a[x][y]-b[x][y];								
+		        }
+		    }
+		}
+		else {
+			throw new IllegalArgumentException("Matrices de diferentes tamanios"); //si no se cumple la condicion tira IllegalArgumentException
+		}
+		return c;
+	}
     
     /**
 	 * Metodo transpuesta. Realiza la transpuesta de una matriz de datos tipo int.

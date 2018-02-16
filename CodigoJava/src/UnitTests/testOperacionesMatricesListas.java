@@ -111,7 +111,18 @@ public class testOperacionesMatricesListas {
 		assertEquals(OperacionesMatricesListas.sumaMatrices(a, b),c);
 		assertEquals(OperacionesMatricesListas.sumaMatrices(b, a),c);
 	}
+	
+	/**
+	 * Test method for {@link Monitor.OperacionesMatricesListas#sumaMatrices(int[][], int[][])}.
+	 */
+	@Test
+	public void testRestaMatrices() {
+		int[][] c = { { -1,0,-6 }, { 3,1,4 } };
+		assertEquals(OperacionesMatricesListas.restaMatrices(a, b),c);
+		assertNotEquals(OperacionesMatricesListas.restaMatrices(b, a),c);
+	}
 
+	
 	/**
 	 * Test method for {@link Monitor.OperacionesMatricesListas#productoMatrices(int[][], int[][])}.
 	 */

@@ -33,11 +33,11 @@ public class Main {
 		
 		//Creación de hilos. (Falta ponerle objetos Runnables).
 	 	Thread manejoTren = new Thread(new TrenDriver(monitor,log,0));
-        Thread manejoAutos1 = new Thread(new AutosDriver(monitor,log, 1));
-        Thread manejoAutos2 = new Thread(new AutosDriver(monitor,log, 2));
+        //Thread manejoAutos1 = new Thread(new AutosDriver(monitor,log, 1));
+        //Thread manejoAutos2 = new Thread(new AutosDriver(monitor,log, 2));
 
-        Thread generadorPersonas = new Thread(new GeneradorPersonas(monitor,log, 3));
-        Thread generadorAutos = new Thread(new GeneradorAutos(monitor,log,4));
+       // Thread generadorPersonas = new Thread(new GeneradorPersonas(monitor,log, 3));
+        //Thread generadorAutos = new Thread(new GeneradorAutos(monitor,log,4));
        
         Thread handlerVagon=new Thread(new SubeBajaVagon(monitor,log,5));
         Thread handlerMaquina=new Thread(new SubeBajaMaquina(monitor,log,6));
@@ -46,10 +46,10 @@ public class Main {
 		//Start hilos.
         
         manejoTren.start();
-        manejoAutos1.start();
-        manejoAutos2.start();
-        generadorPersonas.start();
-        generadorAutos.start();
+      //  manejoAutos1.start();
+        //manejoAutos2.start();
+        //generadorPersonas.start();
+       // generadorAutos.start();
         handlerVagon.start();
         handlerMaquina.start();
         

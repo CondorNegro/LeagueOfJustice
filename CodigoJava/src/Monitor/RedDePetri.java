@@ -29,7 +29,13 @@ public class RedDePetri{
 	private int[] prioridadesSubida; 
 	private int[] prioridadesBajada;
 	
-	private List<Integer> transicionesDisparadas;
+	
+	//Verificacion T-Invariantes
+	private List<Integer> transicionesDisparadas; //Vector con todos los disparos efectuados
+	private int[][] M0; //Marcado inicial
+	private int[][] sumaDisparosTransiciones;
+	private int contadorTransicionesDisparadas;
+	
 	
 	
 	public RedDePetri(String path){
@@ -42,12 +48,22 @@ public class RedDePetri{
 		this.B=getMatrizB_Actualizada();
 		this.logicaTemporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
 		this.transicionesDisparadas=new ArrayList<Integer>();
-		
+		this.M0=this.M.clone();
+		sumaDisparosTransiciones=new int[this.getCantTransiciones()][1]; //Sumatoria de todos los disparos efectuados por transicion.
+		for(int i=0; i<sumaDisparosTransiciones.length;i++){ //Reseteo vector.
+			  sumaDisparosTransiciones[i][0]=0;
+		  }
+		contadorTransicionesDisparadas=0;
 	}
+	
 	
 	
 	public List<Integer> getTransicionesDisparadas(){
 		return this.transicionesDisparadas;
+	}
+	
+	public int[][] getMarcadoInicial(){
+		return this.M0;
 	}
 	
 	public int[] getPrioridadesSubida(){
@@ -160,6 +176,11 @@ public class RedDePetri{
                 try{
                 	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
                 	this.transicionesDisparadas.add(transicion);
+                	this.contadorTransicionesDisparadas++;
+                	if(contadorTransicionesDisparadas>4){
+                		this.contadorTransicionesDisparadas=0;
+                		this.verificarTInvariantes();
+                	}
                 }
                 catch(Exception e){
                 	e.printStackTrace();
@@ -191,6 +212,82 @@ public class RedDePetri{
 				throw new IllegalStateException("Error en los Pinvariantes");	//en otras palabras, si el marcado en esas plazas resulta diferente, se dispara IllegalStateException
 			}
 		}
+	}
+	
+	
+	
+	private void verificarTInvariantes() throws IllegalStateException{
+		 
+		  int[][] sumaDisparosTransicionesNoTInvariantes=new int[this.getCantTransiciones()][1];//Sumatoria de disparos de transiciones que no estan en T-Inv o no lo completan. 
+		  for(int i=0; i<sumaDisparosTransicionesNoTInvariantes.length;i++){ //Reseteo vectores.
+			  sumaDisparosTransicionesNoTInvariantes[i][0]=0;
+		  }
+		  for(int indice=0; indice<this.transicionesDisparadas.size();indice++){ //Realizo la suma de disparos por cada transicion
+			  sumaDisparosTransiciones[transicionesDisparadas.get(indice)][0]++;
+		  }
+		   
+		 
+		 
+		  int[] minimo=new int[Tinvariantes.length];
+		  
+		
+		  boolean flagPrimero=true;
+		
+		  for(int fila=0; fila<this.Tinvariantes.length;fila++){ //Chequeo el numero de T-Invariantes completos.
+			  minimo[fila]=0;
+			  flagPrimero=true;
+			 
+			  for(int columna=0; columna<this.Tinvariantes[0].length;columna++){
+				  if(flagPrimero & Tinvariantes[fila][columna]==1){
+					  flagPrimero=false;
+					  minimo[fila]=sumaDisparosTransiciones[columna][0];
+				  }
+				  
+				  if(sumaDisparosTransiciones[columna][0]<minimo[fila]){
+					  
+					  minimo[fila]=sumaDisparosTransiciones[columna][0]; 
+					  //Determino el minimo numero de transiciones disparadas por cada fila de la matriz de T-Inv.
+					  
+				  }  
+			  }
+			  
+		  }
+		  for(int fila=0; fila<this.Tinvariantes.length;fila++){ //Chequeo el numero de T-Invariantes completos.
+			  
+			  for(int columna=0; columna<this.Tinvariantes[0].length;columna++){
+				  if(Tinvariantes[fila][columna]==1){
+					  //Resto el minimo. 
+					  sumaDisparosTransiciones[columna][0]=sumaDisparosTransiciones[columna][0]-minimo[fila];
+				  }
+				 
+			  }
+			  
+		  }
+		  
+		  for(int i=0; i<sumaDisparosTransicionesNoTInvariantes.length;i++){ //Asigno transiciones que no pertenecen a TInv
+			  if(sumaDisparosTransiciones[i][0]<0){
+				  throw new IllegalStateException("Suma de disparos negativa");	
+			  }
+			  else if(sumaDisparosTransiciones[i][0]>0){
+				  sumaDisparosTransicionesNoTInvariantes[i][0]=sumaDisparosTransiciones[i][0]; 
+				   //Agrego el excedente de disparo de los T-Invariantes y la cantidad de disparos de transiciones que 
+				  //no pertenecen a T-Invariantes.
+			  }
+		  }
+			
+		  
+		  //Verificacion de TInv
+		  int[][] Maux = OperacionesMatricesListas.restaMatrices(this.getMatrizM(),OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransicionesNoTInvariantes));
+		  for(int plaza=0; plaza<Maux.length; plaza++){
+			  if(Maux[plaza][0] != this.getMarcadoInicial()[plaza][0]){
+				  throw new IllegalStateException("Error en los Tinvariantes");
+			  }
+		  }
+		  
+		//resetear lista
+		  this.transicionesDisparadas.clear();
+		//El contador de disparos de cada transicion de la red queda actualizado.
+				
 	}
 	
 	
