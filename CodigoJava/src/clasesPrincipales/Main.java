@@ -1,8 +1,8 @@
 package clasesPrincipales;
 
 /*
- Trabajo Práctico Integrador Programación Concurrente 2017. (Ferrocarril).
- Autores: Casabella Martín, Kleiner Matías, López Gastón.
+ Trabajo Practico Integrador Programacion Concurrente 2017. (Ferrocarril).
+ Autores: Casabella Martin, Kleiner Matias, Lopez Gaston.
  */
 
 
@@ -19,9 +19,9 @@ public class Main {
 		Monitor monitor=Monitor.getInstance(); //Patron Singleton
 		monitor.configRdp(""); //Configuro la red de petri para el monitor segun el path.
 		
-		//Política 0: aleatoria.
-		//Política 1: primero los que suben.
-		//Política 2: primero los que bajan.
+		//Polï¿½tica 0: aleatoria.
+		//Polï¿½tica 1: primero los que suben.
+		//Polï¿½tica 2: primero los que bajan.
 		monitor.setPolitica(0);
 		
 		
@@ -31,7 +31,7 @@ public class Main {
 		
 		
 		
-		//Creación de hilos. (Falta ponerle objetos Runnables).
+		//Creacion de hilos. (Falta ponerle objetos Runnables).
 	 	Thread manejoTren = new Thread(new TrenDriver(monitor,log,0));
         Thread manejoAutos1 = new Thread(new AutosDriver(monitor,log, 1));
         Thread manejoAutos2 = new Thread(new AutosDriver(monitor,log, 2));
