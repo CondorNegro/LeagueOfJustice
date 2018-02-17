@@ -24,14 +24,24 @@ public class testMonitorCompleto2 {
     @org.junit.Before
     public void setUp() throws Exception {
     	if((System.getProperty("os.name")).equals("Windows 10")){	
-			this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedPrioridades\\lectorEscritor.xls"; //Path para Windows.
-		}
+    		if(System.getProperty("user.name").equals("kzAx")){
+				this.redExcel="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedPrioridades\\lectorEscritor.xls";
+				
+			}
+			 else{
+				 this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedPrioridades\\lectorEscritor.xls"; //Path para Windows.
+			 }
+    	}
         monitor.configRdp(redExcel);
         
         monitor.setPolitica(flagPolitica);	 // 0-modo aleatorio
 							     // 1-prioridad al proceso 1
 							     // 2-prioridad al proceso 2
-        this.fh=new FileHandler("./MyLogFile.log");  
+        String nombreArchivo="./MyLogFile.log";
+        if((System.getProperty("os.name")).equals("Windows 10")){	
+        	nombreArchivo=".\\MyLogFile.log";
+        }
+        this.fh=new FileHandler(nombreArchivo);  
         logger.addHandler(fh);
         SimpleFormatter formatter = new SimpleFormatter();  
         fh.setFormatter(formatter);  

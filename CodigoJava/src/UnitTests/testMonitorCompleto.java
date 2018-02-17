@@ -22,8 +22,14 @@ public class testMonitorCompleto {
     @org.junit.Before
     public void setUp() throws Exception {
     	if((System.getProperty("os.name")).equals("Windows 10")){	
-			this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls"; //Path para Windows.
-		}
+    		if(System.getProperty("user.name").equals("kzAx")){
+				this.redExcel="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls";
+				
+			}
+			 else{
+				 this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls"; 
+			 }
+    	}
         monitor.configRdp(redExcel);
         monitor.setPolitica(0); //modo aleatorio
         flagEscritoresFull=false;

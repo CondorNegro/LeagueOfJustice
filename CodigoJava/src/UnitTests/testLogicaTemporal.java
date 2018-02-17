@@ -44,9 +44,14 @@ public class testLogicaTemporal {
 	public void setUp() throws Exception {
 		 time= new LogicaTemporal(10);
 		 if((System.getProperty("os.name")).equals("Windows 10")){
+			 if(System.getProperty("user.name").equals("kzAx")){
+				 this.redExcel1="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTestIntervalosAlfaBeta\\RedTest1.xls";
+				 this.redExcel2="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTestIntervalosAlfaBeta\\RedTest2.xls";
+		     }	
+			 else{
 				this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTestIntervalosAlfaBeta\\RedTest1.xls";
 				this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTestIntervalosAlfaBeta\\RedTest2.xls";
-				
+			 }	
 		}
 		
 		 

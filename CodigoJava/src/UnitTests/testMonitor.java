@@ -71,9 +71,14 @@ public class testMonitor {
 		this.list2Test[2]=0;
 		this.list2Test[3]=1;
 		if((System.getProperty("os.name")).equals("Windows 10")){
-			this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
-			this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
-			
+			if(System.getProperty("user.name").equals("kzAx")){
+				this.redExcel1="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
+				this.redExcel2="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
+			}
+			 else{
+				 this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
+				 this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
+			 }
 		}
 
 	}

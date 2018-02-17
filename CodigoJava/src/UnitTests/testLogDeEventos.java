@@ -21,6 +21,7 @@ import Logueo.LogDeEventos;
 
 public class testLogDeEventos {
 	private LogDeEventos log;
+	private String nameFile;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -41,6 +42,17 @@ public class testLogDeEventos {
 	@Before
 	public void setUp() throws Exception {
 		log=new LogDeEventos(3);
+		nameFile="./Logueo/logFileB.txt";
+		
+		 if((System.getProperty("os.name")).equals("Windows 10")){
+			 if(System.getProperty("user.name").equals("kzAx")){
+				 nameFile="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFileB.txt";
+			 }
+			 else{
+				 nameFile="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFileB.txt";
+					
+			 }
+		}
 		
 	}
 
