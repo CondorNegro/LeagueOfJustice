@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		
 		Monitor monitor=Monitor.getInstance(); //Patron Singleton
-		monitor.configRdp(""); //Configuro la red de petri para el monitor segun el path.
+		monitor.configRdp("./excelTren.xls"); //Configuro la red de petri para el monitor segun el path.
 		
 		//Politica 0: aleatoria.
 		//Politica 1: primero los que suben.
@@ -34,44 +34,52 @@ public class Main {
 		Thread generador_personasB = new Thread(new Generador(1,monitor));
 		Thread generador_personasC = new Thread(new Generador(2,monitor));
 		Thread generador_personasD = new Thread(new Generador(3,monitor));
-		Thread generador_autos1 = new Thread(new Generador(26,monitor));
-		Thread generador_autos2 = new Thread(new Generador(30,monitor));
+		Thread generador_autos1 = new Thread(new Generador(15,monitor));
+		Thread generador_autos2 = new Thread(new Generador(20,monitor));
 		
 		//Creacion de hilo control de bajada - 1 hilos
-		Thread control_bajada = new Thread(new ControlBajadaPasajeros(34,monitor));
+		Thread control_bajada = new Thread(new ControlBajadaPasajeros(24,monitor));
 		
 		//Creacion de hilos circulacion de autos por barrera - 2 hilos
-		Thread autos_driver1 = new Thread(new AutosDriver(28,monitor));
-		Thread autos_driver2 = new Thread(new AutosDriver(32,monitor));
+		Thread autos_driver1 = new Thread(new AutosDriver(22,monitor));
+		Thread autos_driver2 = new Thread(new AutosDriver(17,monitor));
 		
 		//Creacion de hilos pasajeros subiendo al tren/vagon - 8 hilos
-		Thread subiendo_maquina_estacionA = new Thread(new SubidaPasajerosEstacion(21,monitor,"Estacion A","Maquina"));
-		Thread subiendo_vagon_estacionA = new Thread(new SubidaPasajerosEstacion(12,monitor,"Estacion A","Vagon"));
-		Thread subiendo_maquina_estacionB = new Thread(new SubidaPasajerosEstacion(20,monitor,"Estacion A","Maquina"));
-		Thread subiendo_vagon_estacionB = new Thread(new SubidaPasajerosEstacion(24,monitor,"Estacion A","Vagon"));
-		Thread subiendo_maquina_estacionC = new Thread(new SubidaPasajerosEstacion(33,monitor,"Estacion A","Maquina"));
-		Thread subiendo_vagon_estacionC = new Thread(new SubidaPasajerosEstacion(23,monitor,"Estacion A","Vagon"));
-		Thread subiendo_maquina_estacionD = new Thread(new SubidaPasajerosEstacion(11,monitor,"Estacion A","Maquina"));
-		Thread subiendo_vagon_estacionD = new Thread(new SubidaPasajerosEstacion(22,monitor,"Estacion A","Vagon"));
+		Thread subiendo_maquina_estacionA = new Thread(new SubidaPasajerosEstacion(10,monitor,"Estacion A","Maquina"));
+		Thread subiendo_vagon_estacionA = new Thread(new SubidaPasajerosEstacion(17,monitor,"Estacion A","Vagon"));
+		Thread subiendo_maquina_estacionB = new Thread(new SubidaPasajerosEstacion(19,monitor,"Estacion B","Maquina"));
+		Thread subiendo_vagon_estacionB = new Thread(new SubidaPasajerosEstacion(13,monitor,"Estacion B","Vagon"));
+		Thread subiendo_maquina_estacionC = new Thread(new SubidaPasajerosEstacion(23,monitor,"Estacion C","Maquina"));
+		Thread subiendo_vagon_estacionC = new Thread(new SubidaPasajerosEstacion(12,monitor,"Estacion C","Vagon"));
+		Thread subiendo_maquina_estacionD = new Thread(new SubidaPasajerosEstacion(6,monitor,"Estacion D","Maquina"));
+		Thread subiendo_vagon_estacionD = new Thread(new SubidaPasajerosEstacion(11,monitor,"Estacion D","Vagon"));
 		
 		//Creacion de hilos pasajeros bajando al tren/vagon - 8 hilos
-		Thread bajando_maquina_estacionA = new Thread(new BajadaPasajerosEstacion(21,monitor,"Estacion A","Maquina"));
-		Thread bajando_vagon_estacionA = new Thread(new BajadaPasajerosEstacion(12,monitor,"Estacion A","Vagon"));
-		Thread bajando_maquina_estacionB = new Thread(new BajadaPasajerosEstacion(20,monitor,"Estacion A","Maquina"));
-		Thread bajando_vagon_estacionB = new Thread(new BajadaPasajerosEstacion(24,monitor,"Estacion A","Vagon"));
-		Thread bajando_maquina_estacionC = new Thread(new BajadaPasajerosEstacion(33,monitor,"Estacion A","Maquina"));
-		Thread bajando_vagon_estacionC = new Thread(new BajadaPasajerosEstacion(23,monitor,"Estacion A","Vagon"));
-		Thread bajando_maquina_estacionD = new Thread(new BajadaPasajerosEstacion(11,monitor,"Estacion A","Maquina"));
-		Thread bajando_vagon_estacionD = new Thread(new BajadaPasajerosEstacion(22,monitor,"Estacion A","Vagon"));
+		Thread bajando_maquina_estacionA = new Thread(new BajadaPasajerosEstacion(29,monitor,"Estacion A","Maquina"));
+		Thread bajando_vagon_estacionA = new Thread(new BajadaPasajerosEstacion(31,monitor,"Estacion A","Vagon"));
+		Thread bajando_maquina_estacionB = new Thread(new BajadaPasajerosEstacion(32,monitor,"Estacion B","Maquina"));
+		Thread bajando_vagon_estacionB = new Thread(new BajadaPasajerosEstacion(33,monitor,"Estacion B","Vagon"));
+		Thread bajando_maquina_estacionC = new Thread(new BajadaPasajerosEstacion(25,monitor,"Estacion C","Maquina"));
+		Thread bajando_vagon_estacionC = new Thread(new BajadaPasajerosEstacion(26,monitor,"Estacion C","Vagon"));
+		Thread bajando_maquina_estacionD = new Thread(new BajadaPasajerosEstacion(27,monitor,"Estacion D","Maquina"));
+		Thread bajando_vagon_estacionD = new Thread(new BajadaPasajerosEstacion(28,monitor,"Estacion D","Vagon"));
 
 		//Creacion de hilo tren driver - 1 hilos
-		int[] transiciones_tren=new int[5];
-		transiciones_tren[0]=0;
-		transiciones_tren[1]=0;
-		transiciones_tren[2]=0;
-		transiciones_tren[3]=0;
-		transiciones_tren[4]=0;
-		transiciones_tren[5]=0;
+		int[] transiciones_tren=new int[14];
+		transiciones_tren[0]=36;
+		transiciones_tren[1]=35;
+		transiciones_tren[2]=34;
+		transiciones_tren[3]=18;
+		transiciones_tren[4]=21;
+		transiciones_tren[5]=21;
+		transiciones_tren[6]=30;
+		transiciones_tren[7]=19;
+		transiciones_tren[8]=8;
+		transiciones_tren[9]=4;
+		transiciones_tren[10]=14;
+		transiciones_tren[11]=16;
+		transiciones_tren[12]=16;
+		transiciones_tren[13]=5;
 		Thread tren_driver = new Thread(new TrenDriver(transiciones_tren,monitor));
             
 		

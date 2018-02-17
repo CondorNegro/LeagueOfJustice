@@ -29,6 +29,8 @@ public class TrenDriver implements Runnable {
     	for(int vueltas=0; vueltas<500; vueltas++) {
     		for(int i=0; i<this.transiciones_viaje.length; i++) {
     			monitor.dispararTransicion(this.transiciones_viaje[i]);
+    	        System.out.println("El tren se movio, dispare la transicion: "+this.transiciones_viaje[i]+" - Vuelta: "+vueltas);
+
     		}
     	}
     }
