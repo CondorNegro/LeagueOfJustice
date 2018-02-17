@@ -13,8 +13,9 @@ import Monitor.Monitor; //Clase Monitor.
 import Logueo.LogDeEventos;
 
 public class Main {
+	public static boolean ejecutar_hilos=true;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		Monitor monitor=Monitor.getInstance(); //Patron Singleton
 		monitor.configRdp(""); //Configuro la red de petri para el monitor segun el path.
@@ -22,14 +23,10 @@ public class Main {
 		//Politica 0: aleatoria.
 		//Politica 1: primero los que suben.
 		//Politica 2: primero los que bajan.
-		
 		monitor.setPolitica(0);
 		
 		
-		LogDeEventos log=new LogDeEventos(8);
-		
-
-		
+		//LogDeEventos log=new LogDeEventos(8);
 		
 		
 		//Creacion de hilos generadores - 6 hilos
@@ -68,21 +65,54 @@ public class Main {
 		Thread bajando_vagon_estacionD = new Thread(new BajadaPasajerosEstacion(22,monitor,"Estacion A","Vagon"));
 
 		//Creacion de hilo tren driver - 1 hilos
-		Thread tren_driver = new Thread(new TrenDriver(null,monitor));
-		
-		
-        
+		int[] transiciones_tren=new int[5];
+		transiciones_tren[0]=0;
+		transiciones_tren[1]=0;
+		transiciones_tren[2]=0;
+		transiciones_tren[3]=0;
+		transiciones_tren[4]=0;
+		transiciones_tren[5]=0;
+		Thread tren_driver = new Thread(new TrenDriver(transiciones_tren,monitor));
             
 		
 		//Start hilos.
+		generador_personasA.start();
+		generador_personasB.start();
+		generador_personasC.start();
+		generador_personasD.start();
+		generador_autos1.start();
+		generador_autos2.start();
+		
+		control_bajada.start();
+		
+		autos_driver1.start();
+		autos_driver2.start();
+		
+		subiendo_maquina_estacionA.start();
+		subiendo_vagon_estacionA.start();
+		subiendo_maquina_estacionB.start();
+		subiendo_vagon_estacionB.start();
+		subiendo_maquina_estacionC.start();
+		subiendo_vagon_estacionC.start();
+		subiendo_maquina_estacionD.start();
+		subiendo_vagon_estacionD.start();
+		
+		bajando_maquina_estacionA.start();
+		bajando_vagon_estacionA.start();
+		bajando_maquina_estacionB.start();
+		bajando_vagon_estacionB.start();
+		bajando_maquina_estacionC.start();
+		bajando_vagon_estacionC.start();
+		bajando_maquina_estacionD.start();
+		bajando_vagon_estacionD.start();
+		
+		tren_driver.start();
+
         
-        //manejoTren.start();
-      //  manejoAutos1.start();
-        //manejoAutos2.start();
-        //generadorPersonas.start();
-       // generadorAutos.start();
-        //handlerVagon.start();
-        //handlerMaquina.start();
+        
+        tren_driver.join();
+        Main.ejecutar_hilos=false;
+        System.out.println("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: ");
         
 	}
 

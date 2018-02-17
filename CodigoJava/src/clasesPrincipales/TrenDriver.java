@@ -26,7 +26,7 @@ public class TrenDriver implements Runnable {
     @Override
     public void run() {
         
-    	while(true){
+    	for(int vueltas=0; vueltas<500; vueltas++) {
     		for(int i=0; i<this.transiciones_viaje.length; i++) {
     			monitor.dispararTransicion(this.transiciones_viaje[i]);
     		}

@@ -104,12 +104,12 @@ public class testMonitorCompleto2 {
         		monitor.dispararTransicion(0);
         		//System.out.println("Genere un recurso, cuenta: "+ cuentas);
         		
-        		logger.info(""
+        		/*logger.info(""
         				+"\n	**********************************************************************"
         				+"\n 	Finalizando Proceso 2, cuenta: "+ cuentas
         				+"\n	**********************************************************************"
         				+"\nMarcado P0: " + monitor.getMarcado()[0][0]);
-
+				*/
         		cuentas=cuentas+1;
         	}
         }

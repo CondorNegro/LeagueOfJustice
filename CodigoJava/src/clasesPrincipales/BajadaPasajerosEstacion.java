@@ -32,7 +32,7 @@ public class BajadaPasajerosEstacion implements Runnable {
     @Override
     public void run() {
         
-    	while(true){
+    	while(Main.ejecutar_hilos){
     		monitor.dispararTransicion(transicion_bajada);
     	}
     }
