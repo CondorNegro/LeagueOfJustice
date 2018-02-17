@@ -16,9 +16,17 @@ public class Main {
 	public static boolean ejecutar_hilos=true;
 
 	public static void main(String[] args) throws InterruptedException {
-		
+		String nameFile="./RedesParaTest/TestTren/excelTren.xls";
+		if((System.getProperty("os.name")).equals("Windows 10")){	
+			 if(System.getProperty("user.name").equals("kzAx")){
+				 nameFile="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls";
+			 }
+			 else{
+				nameFile="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.
+			 }
+		}
 		Monitor monitor=Monitor.getInstance(); //Patron Singleton
-		monitor.configRdp("./excelTren.xls"); //Configuro la red de petri para el monitor segun el path.
+		monitor.configRdp(nameFile); //Configuro la red de petri para el monitor segun el path.
 		
 		//Politica 0: aleatoria.
 		//Politica 1: primero los que suben.
