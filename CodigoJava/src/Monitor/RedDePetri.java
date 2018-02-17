@@ -35,6 +35,9 @@ public class RedDePetri{
 	private int[][] M0; //Marcado inicial
 	private int[][] sumaDisparosTransiciones;
 	private int contadorTransicionesDisparadas;
+	boolean flagImpresionVerifTInv=false;
+	
+	
 	
 	
 	
@@ -221,6 +224,7 @@ public class RedDePetri{
 		  
 		  for(int indice=0; indice<this.transicionesDisparadas.size();indice++){ //Realizo la suma de disparos por cada transicion
 			  sumaDisparosTransiciones[transicionesDisparadas.get(indice)][0]++;
+			  
 		  }
 		   
 		 
@@ -270,10 +274,40 @@ public class RedDePetri{
 		
 		  
 		  //Verificacion de TInv
+		  if(this.flagImpresionVerifTInv){
+			  int[][] Mprint=OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransiciones);
+			  
+			  for(int i=0;i<Mprint.length;i++){
+				  System.out.print("Marcado a restar plaza "+i+": ");
+				  System.out.println(Mprint[i][0]);
+			  }
+		  }
+		  
+		 
+		  
+		 //int[][] Maux={{1},{2},{3}};  //Si se descomenta fuerza el error. Es para test.
+		  
+		 
 		  int[][] Maux = OperacionesMatricesListas.restaMatrices(this.getMatrizM(),OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransiciones));
+			  
+		  
+		  	  
+		  
 		  for(int plaza=0; plaza<Maux.length; plaza++){
+			  if(this.flagImpresionVerifTInv){
+				  System.out.print("Marcado Maux Plaza "+ plaza +": ");//Debe ser igual a M0
+				  System.out.println(Maux[plaza][0]);
+			  }
+			  
 			  if(Maux[plaza][0] != this.getMarcadoInicial()[plaza][0]){
 				  throw new IllegalStateException("Error en los Tinvariantes");
+			  }
+			  if(this.flagImpresionVerifTInv){
+				  if(Maux[plaza][0] == this.getMarcadoInicial()[Maux.length-1][0]){
+			  
+					  System.out.println("T_Invariantes OK");	  
+				  }
+		
 			  }
 		  }
 		  
