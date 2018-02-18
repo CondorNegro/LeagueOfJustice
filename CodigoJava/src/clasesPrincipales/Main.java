@@ -74,19 +74,19 @@ public class Main {
 
 		//Creacion de hilo tren driver - 1 hilos
 		int[] transiciones_tren=new int[14];
-		transiciones_tren[0]=36;
+		transiciones_tren[0]=36; //temporal
 		transiciones_tren[1]=35;
-		transiciones_tren[2]=34;
+		transiciones_tren[2]=34; //temporal
 		transiciones_tren[3]=18;
-		transiciones_tren[4]=21;
-		transiciones_tren[5]=21;
+		transiciones_tren[4]=21; //temporal
+		transiciones_tren[5]=21; //temporal
 		transiciones_tren[6]=30;
-		transiciones_tren[7]=19;
+		transiciones_tren[7]=19; //temporal
 		transiciones_tren[8]=8;
-		transiciones_tren[9]=4;
+		transiciones_tren[9]=4; //temporal
 		transiciones_tren[10]=14;
-		transiciones_tren[11]=16;
-		transiciones_tren[12]=16;
+		transiciones_tren[11]=16; //temporal
+		transiciones_tren[12]=16; //temporal
 		transiciones_tren[13]=5;
 		Thread tren_driver = new Thread(new TrenDriver(transiciones_tren,monitor));
             
