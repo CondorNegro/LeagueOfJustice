@@ -73,7 +73,7 @@ public class testMonitorCompleto2 {
         hilo1.join();
         
         try{
-        	Thread.sleep(10);
+        	Thread.sleep(100);
         	hilo2.stop();
             hilo3.stop();
             hilo4.stop();
