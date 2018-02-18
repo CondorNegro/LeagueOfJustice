@@ -47,7 +47,7 @@ public class testTinvariantes {
 	public void setUp() throws Exception {
 		if((System.getProperty("os.name")).equals("Windows 10")){	
 			 if(System.getProperty("user.name").equals("kzAx")){
-				 this.redExcel="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TinvariantesTest\\testExcel.xls";
+				 this.redExcel="..\\src\\RedesParaTest\\TinvariantesTest\\testExcel.xls";
 			 }
 			 else{
 				 this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TinvariantesTest\\testExcel.xls"; //Path para Windows.

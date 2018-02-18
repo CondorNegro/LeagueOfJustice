@@ -23,7 +23,7 @@ public class testMonitorCompleto {
     public void setUp() throws Exception {
     	if((System.getProperty("os.name")).equals("Windows 10")){	
     		if(System.getProperty("user.name").equals("kzAx")){
-				this.redExcel="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls";
+				this.redExcel="..\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls";
 				
 			}
 			 else{
