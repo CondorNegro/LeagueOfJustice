@@ -22,7 +22,7 @@ public class ControlBajadaPasajeros implements Runnable {
     @Override
     public void run() {
         
-    	while(Main.ejecutar_hilos){
+    	while(Main.ejecutar_hilos==1){
     		monitor.dispararTransicion(transicion_control_bajada);
     	}
     }

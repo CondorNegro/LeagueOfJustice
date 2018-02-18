@@ -13,7 +13,7 @@ import Monitor.Monitor; //Clase Monitor.
 import Logueo.LogDeEventos;
 
 public class Main {
-	public static boolean ejecutar_hilos=true;
+	public static volatile int ejecutar_hilos=1;
 
 	public static void main(String[] args) throws InterruptedException {
 		String nameFile="./RedesParaTest/TestTren/excelTren.xls";
@@ -127,7 +127,10 @@ public class Main {
         
         
         tren_driver.join();
-        Main.ejecutar_hilos=false;
+       
+        Main.ejecutar_hilos=0; //Es una accion atomica. Tipo de dato primitivo
+        
+      
         System.out.println("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: ");
         
 	}
