@@ -305,7 +305,7 @@ public class testRedDePetri {
 			redTest= new RedDePetri(this.redExcel5);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][0],0);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],2);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],200);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][1],-1);
 		}
 		catch(Exception e){
@@ -355,7 +355,7 @@ public class testRedDePetri {
 			assertEquals(tsensandtime[1],0);
 			assertEquals(tsensandtime[2],0);
 			assertEquals(tsensandtime[3],0);
-			TimeUnit.SECONDS.sleep(3);
+			TimeUnit.MILLISECONDS.sleep(300);
 			tsensandtime=redTest.getlogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],0);
 			assertEquals(tsensandtime[1],1);
@@ -382,7 +382,7 @@ public class testRedDePetri {
 			redTest.getlogicaTemporal().updateTimeStamp(transTemporales, transTemporales, -1);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][0],0);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],2);
+			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],200);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][1],-1);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
@@ -397,7 +397,7 @@ public class testRedDePetri {
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
-			TimeUnit.SECONDS.sleep(3);
+			TimeUnit.MILLISECONDS.sleep(300);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),true);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
@@ -409,7 +409,7 @@ public class testRedDePetri {
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
-			TimeUnit.SECONDS.sleep(6);
+			TimeUnit.MILLISECONDS.sleep(600);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
 			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),true);

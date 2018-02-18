@@ -178,12 +178,14 @@ public class RedDePetri{
                 this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getConjuncionEAndB(),  transicion);
                 try{
                 	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
+                	/*
                 	this.transicionesDisparadas.add(transicion);
                 	this.contadorTransicionesDisparadas++;
                 	if(contadorTransicionesDisparadas>4){
                 		this.contadorTransicionesDisparadas=0;
                 		this.verificarTInvariantes();
                 	}
+                	*/
                 }
                 catch(Exception e){
                 	e.printStackTrace();

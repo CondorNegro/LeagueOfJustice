@@ -15,11 +15,12 @@ import java.util.logging.SimpleFormatter;
 public class testMonitorCompleto2 {
     Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/RedPrioridades/lectorEscritor.xls"; //Path para Linux.
-    int flagPolitica=0;
+    int flagPolitica=2;
     int cuentas1=0;
     int cuentas2=0;
     Logger logger = Logger.getLogger("MyLog");  
     FileHandler fh;  
+    int[][] marca;
     
     @org.junit.Before
     public void setUp() throws Exception {
@@ -67,19 +68,17 @@ public class testMonitorCompleto2 {
         hilo5.start();
        
         
-        while(hilo1.getState()!= Thread.State.TERMINATED) {
 
-       }
         
         hilo1.join();
         
         try{
-        	Thread.sleep(1000);
-        	hilo2.interrupt();
-            hilo3.interrupt();
-            hilo4.interrupt();
-            hilo5.interrupt();
-            hilo6.interrupt();
+        	Thread.sleep(10);
+        	hilo2.stop();
+            hilo3.stop();
+            hilo4.stop();
+            hilo5.stop();
+            hilo6.stop();
            
         }
         catch(InterruptedException e){
@@ -110,7 +109,8 @@ public class testMonitorCompleto2 {
         @Override
         public void run() {
         	int cuentas=0;
-        	while(monitor.getMarcado()[6][0]<24){
+        	marca=monitor.getMarcado();
+        	while(marca[6][0]<24){
         		monitor.dispararTransicion(0);
         		//System.out.println("Genere un recurso, cuenta: "+ cuentas);
         		
@@ -121,6 +121,7 @@ public class testMonitorCompleto2 {
         				+"\nMarcado P0: " + monitor.getMarcado()[0][0]);
 				*/
         		cuentas=cuentas+1;
+        		marca=monitor.getMarcado();
         	}
         }
     }
@@ -129,11 +130,12 @@ public class testMonitorCompleto2 {
     class HiloProceso1 implements Runnable{
     	@Override
         public void run() {
-    		
-    		while(monitor.getMarcado()[6][0]!=25){
+    		marca=monitor.getMarcado();
+    		while(marca[6][0]<24){
         		monitor.dispararTransicion(1);
         		System.out.println("Inicio Proceso 1, cuenta: "+cuentas1);
         		cuentas1=cuentas1+1;
+        		marca=monitor.getMarcado();
         	}
     }
     	}
@@ -141,11 +143,12 @@ public class testMonitorCompleto2 {
     	class HiloProceso2 implements Runnable{
         	@Override
             public void run() {
-        		
-        		while(monitor.getMarcado()[6][0]!=25){
+        		marca=monitor.getMarcado();
+        		while(marca[6][0]<24){
             		monitor.dispararTransicion(2);
             		System.out.println("Inicio Proceso 2, cuenta: "+cuentas2);
             		cuentas2=cuentas2+1;
+            		marca=monitor.getMarcado();
             	}
         }
     	}
@@ -156,12 +159,14 @@ public class testMonitorCompleto2 {
             @Override
             public void run() {
             	int cuentas=0;
-            	while(monitor.getMarcado()[6][0]!=25){
-            		if(monitor.getMarcado()[1][0]!=0||monitor.getMarcado()[3][0]!=0) {
+            	marca=monitor.getMarcado();
+            	while(marca[6][0]<24){
+            		if(marca[1][0]!=0||marca[3][0]!=0) {
             			fail("Hay tokens en el proceso 2 mientras se ejecutaba proceso 1");
             		}
             		monitor.dispararTransicion(3);
             		monitor.dispararTransicion(5);
+            		marca=monitor.getMarcado();
             		System.out.println("Finalizo Proceso 1, cuenta: "+cuentas);
             		cuentas=cuentas+1;
             	}
@@ -172,12 +177,14 @@ public class testMonitorCompleto2 {
             @Override
             public void run() {
             	int cuentas=0;
-            	while(monitor.getMarcado()[6][0]!=25){
-            		if(monitor.getMarcado()[2][0]!=0||monitor.getMarcado()[4][0]!=0) {
+            	marca=monitor.getMarcado();
+            	while(marca[6][0]<24){
+            		if(marca[2][0]!=0||marca[4][0]!=0) {
             			fail("Hay tokens en el proceso 1 mientras se ejecutaba proceso 2");
             		}
             		monitor.dispararTransicion(4);
             		monitor.dispararTransicion(6);
+            		marca=monitor.getMarcado();
             		System.out.println("Finalizo Proceso 2, cuenta: "+cuentas);
             		cuentas=cuentas+1;
             	}
@@ -188,11 +195,13 @@ public class testMonitorCompleto2 {
             @Override
             public void run() {
             	int cuentas=0;
-            	while(monitor.getMarcado()[6][0]!=25){
-            		if(monitor.getMarcado()[5][0]!=0&&(monitor.getMarcado()[1][0]!=0||monitor.getMarcado()[2][0]!=0||monitor.getMarcado()[3][0]!=0||monitor.getMarcado()[4][0]!=0)) {
+            	marca=monitor.getMarcado();
+            	while(marca[6][0]<24){
+            		if(marca[5][0]!=0&&(marca[1][0]!=0||marca[2][0]!=0||marca[3][0]!=0||marca[4][0]!=0)) {
             			fail("Hay tokens en la plaza 1 2 3 o 4, cuando hay un token en la plaza 5");
             		}
             		monitor.dispararTransicion(7);
+            		marca=monitor.getMarcado();
             		System.out.println("Libero recurso, cuenta: "+cuentas);
             		cuentas=cuentas+1;
             	}
