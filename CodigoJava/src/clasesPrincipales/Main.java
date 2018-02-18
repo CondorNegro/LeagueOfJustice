@@ -9,13 +9,17 @@ package clasesPrincipales;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream; //Para logueo de eventos
+
+import Monitor.Cronometro;
 import Monitor.Monitor; //Clase Monitor.
 import Logueo.LogDeEventos;
 
 public class Main {
 	public static volatile int ejecutar_hilos=1;
-
+	
 	public static void main(String[] args) throws InterruptedException {
+		Cronometro tiempo_transcurrido=new Cronometro();
+		tiempo_transcurrido.setNuevoTimeStamp();
 		String nameFile="./RedesParaTest/TestTren/excelTren.xls";
 		if((System.getProperty("os.name")).equals("Windows 10")){	
 			 if(System.getProperty("user.name").equals("kzAx")){
@@ -131,7 +135,7 @@ public class Main {
         Main.ejecutar_hilos=0; //Es una accion atomica. Tipo de dato primitivo
         
       
-        System.out.println("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: ");
+        System.out.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
         
 	}
 
