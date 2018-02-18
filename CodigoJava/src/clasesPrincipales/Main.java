@@ -54,8 +54,8 @@ public class Main {
 		
 		//Creacion de hilos pasajeros subiendo al tren/vagon - 8 hilos
 		Thread subiendo_maquina_estacionA = new Thread(new SubidaPasajerosEstacion(10,monitor,"Estacion A","Maquina"));
-		Thread subiendo_vagon_estacionA = new Thread(new SubidaPasajerosEstacion(17,monitor,"Estacion A","Vagon"));
-		Thread subiendo_maquina_estacionB = new Thread(new SubidaPasajerosEstacion(19,monitor,"Estacion B","Maquina"));
+		Thread subiendo_vagon_estacionA = new Thread(new SubidaPasajerosEstacion(7,monitor,"Estacion A","Vagon"));
+		Thread subiendo_maquina_estacionB = new Thread(new SubidaPasajerosEstacion(9,monitor,"Estacion B","Maquina"));
 		Thread subiendo_vagon_estacionB = new Thread(new SubidaPasajerosEstacion(13,monitor,"Estacion B","Vagon"));
 		Thread subiendo_maquina_estacionC = new Thread(new SubidaPasajerosEstacion(23,monitor,"Estacion C","Maquina"));
 		Thread subiendo_vagon_estacionC = new Thread(new SubidaPasajerosEstacion(12,monitor,"Estacion C","Vagon"));
