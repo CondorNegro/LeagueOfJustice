@@ -190,6 +190,7 @@ public class RedDePetri{
                 catch(Exception e){
                 	e.printStackTrace();
                 	System.out.println("Error en invariantes");
+                	System.exit(1);
                 }
                 
                 return true;

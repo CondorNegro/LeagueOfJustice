@@ -19,7 +19,7 @@ public class Main {
 		String nameFile="./RedesParaTest/TestTren/excelTren.xls";
 		if((System.getProperty("os.name")).equals("Windows 10")){	
 			 if(System.getProperty("user.name").equals("kzAx")){
-				 nameFile="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls";
+				 nameFile="..\\src\\RedesParaTest\\TestTren\\excelTren.xls";
 			 }
 			 else{
 				nameFile="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.

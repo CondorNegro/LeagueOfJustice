@@ -46,7 +46,7 @@ public class testLogDeEventos {
 		
 		 if((System.getProperty("os.name")).equals("Windows 10")){
 			 if(System.getProperty("user.name").equals("kzAx")){
-				 nameFile="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFileB.txt";
+				 nameFile="..\\src\\Logueo\\logFileB.txt";
 			 }
 			 else{
 				 nameFile="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFileB.txt";
@@ -130,7 +130,7 @@ public class testLogDeEventos {
 		log.createMessage(new String("comoandas"), 1);
 		log.flushBufferToFile(1);
 		try{
-			File file=new File("..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFileB.txt");
+			File file=new File(this.nameFile);
 			
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);

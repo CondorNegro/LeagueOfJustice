@@ -29,8 +29,13 @@ public class LogDeEventos {
 				   messages[i]=new String("");
 				  		   
 			    	if((System.getProperty("os.name")).equals("Windows 10")){	
-						this.nameFiles[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
-					}
+			    		 if(System.getProperty("user.name").equals("kzAx")){
+			    			 this.nameFiles[i]="..\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
+						 }
+						 else{
+							 this.nameFiles[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
+						 }
+			    	}
 			    	else{
 			    		this.nameFiles[i]="./Logueo/logFile"+ this.getLetraAbecedario(i) +".txt"; //Path para Linux.
 					    

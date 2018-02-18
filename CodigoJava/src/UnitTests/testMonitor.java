@@ -72,8 +72,8 @@ public class testMonitor {
 		this.list2Test[3]=1;
 		if((System.getProperty("os.name")).equals("Windows 10")){
 			if(System.getProperty("user.name").equals("kzAx")){
-				this.redExcel1="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
-				this.redExcel2="D:\\Concurrent repository\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
+				this.redExcel1="..\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
+				this.redExcel2="..\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
 			}
 			 else{
 				 this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
