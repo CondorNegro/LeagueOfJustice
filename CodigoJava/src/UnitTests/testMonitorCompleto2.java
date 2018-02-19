@@ -73,16 +73,17 @@ public class testMonitorCompleto2 {
         hilo1.join();
         
         try{
-        	Thread.sleep(100);
-        	hilo2.stop();
-            hilo3.stop();
-            hilo4.stop();
-            hilo5.stop();
-            hilo6.stop();
+        	System.out.println("Sali del join");
+        	Thread.sleep(1000);
+        	hilo2.interrupt();
+        	hilo3.interrupt();
+        	hilo4.interrupt();
+        	hilo5.interrupt();
+        	hilo6.interrupt();
            
         }
         catch(InterruptedException e){
-        	e.printStackTrace();
+        	//e.printStackTrace();
         }
         
         finally{
@@ -97,7 +98,7 @@ public class testMonitorCompleto2 {
         	if(flagPolitica==0) {
         		assert(cuentas2!=0&&cuentas1!=0); //Se generaron todos los recursos
         	}
-
+        	System.exit(0);
         }
         
         

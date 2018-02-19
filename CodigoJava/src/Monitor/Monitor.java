@@ -44,9 +44,16 @@ public class Monitor {
 	public static Monitor getInstance(){return instance;}
 	
 	public void writeLogFiles(){
+		try{
+			mutex.acquire(); //Adquiero acceso al monitor.
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+		}
 		for(int i=0;i<3;i++){
 			log.flushBufferToFile(i);
 		}
+		mutex.release();
 	}
 	
 	/**
