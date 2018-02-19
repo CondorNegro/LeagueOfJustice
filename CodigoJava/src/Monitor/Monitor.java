@@ -2,6 +2,7 @@ package Monitor;
 
 import java.util.concurrent.Semaphore;
 
+import Logueo.LogDeEventos;
 import jxl.Sheet;
 import jxl.Workbook;
 
@@ -18,6 +19,7 @@ public class Monitor {
     private Cola colas[];
     private RedDePetri rdp;
     private Semaphore mutex;
+    private LogDeEventos log;
     
    
     
@@ -29,12 +31,23 @@ public class Monitor {
 		 //Fairness true: FIFO en cola de hilos bloqueados.
 	       mutex=new Semaphore(1,true);
 	       //La red de petri y las transiciones se configuran posteriormente.
+	       this.log=new LogDeEventos(3);
+	       this.log.createMessage("Transiciones disparadas: \r\n", 1);
+		   
+		 
+		   //LogFileA: Evolucion del marcado
+		   //LogFileB: Vector con contadores de transiciones disparadas
+		   //LogFileC: Contador de transiciones disparadas.
 	  }
 
 	
 	public static Monitor getInstance(){return instance;}
 	
-	
+	public void writeLogFiles(){
+		for(int i=0;i<3;i++){
+			log.flushBufferToFile(i);
+		}
+	}
 	
 	/**
 	 * Metodo getPolitica. Utilizado para testing.
@@ -50,6 +63,7 @@ public class Monitor {
 		mutex.release();
 		return this.politica.getModo();
 	}
+	
 	
 	
 	
@@ -87,6 +101,7 @@ public class Monitor {
 	
 	
 	
+	
 	/**
 	 * Metodo configRdp. 
 	 * Crea y configura la Red de Petri y sus matrices. 
@@ -101,8 +116,9 @@ public class Monitor {
 		catch(InterruptedException e){
 			e.printStackTrace();
 		}
-		this.rdp=new RedDePetri(path);
+		this.rdp=new RedDePetri(path,this.log);
 		this.cantTransiciones=rdp.getCantTransiciones();
+		
 		colas= new Cola[this.cantTransiciones];
         for(int i=0;i<this.cantTransiciones;i++){ 
             colas[i]=new Cola(); //Inicialización de colas.
@@ -171,9 +187,12 @@ public class Monitor {
 			}
 			boolean k=true; //Variable booleana de control.  
 		
-		
+			this.log.addMessage("\r\nTransicion a disparar: " + transicion+ "\r\n", 0);
 		
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
+			
+			
+			
 			//System.out.println(k);
 			//System.out.println(transicion);
 			if(k){ //K=true verifica el estado de la red.

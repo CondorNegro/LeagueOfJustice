@@ -38,7 +38,7 @@ public class Main {
 		monitor.setPolitica(0);
 		
 		
-		//LogDeEventos log=new LogDeEventos(8);
+		
 		
 		
 		//Creacion de hilos generadores - 6 hilos
@@ -134,9 +134,17 @@ public class Main {
        
         Main.ejecutar_hilos=0; //Es una accion atomica. Tipo de dato primitivo
         
-      
-        System.out.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
+        try{
+        	Thread.sleep(1000);
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        }
         
+        monitor.writeLogFiles();
+        
+        System.out.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
+        System.exit(0);
 	}
 
 }

@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import Logueo.LogDeEventos;
 import Monitor.LogicaTemporal;
 import Monitor.Monitor;
 import Monitor.OperacionesMatricesListas;
@@ -33,6 +34,7 @@ public class testRedDePetri {
 	private String redExcel3="./RedesParaTest/TestInvariantes1/testExcelRed2Invariantes.xls"; //Path para Linux.
 	private String redExcel4="./RedesParaTest/TestInvariantes2/testExcelRed2Invariantes2.xls"; //Path para Linux.
 	private String redExcel5="./RedesParaTest/redTemporal/testExcel.xls"; //Path para Linux.
+	private LogDeEventos log;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -54,6 +56,7 @@ public class testRedDePetri {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		log=new LogDeEventos(3);
 		if((System.getProperty("os.name")).equals("Windows 10")){
 			if(System.getProperty("user.name").equals("kzAx")){
 				 
@@ -92,7 +95,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testRedDePetri() {
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1, log);
 		assertEquals(redTest.getCantTransiciones(), 4);
 	}
 
@@ -101,9 +104,9 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetCantTransiciones() {
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1, log);
 		assertEquals(redTest.getCantTransiciones(), 4);
-		redTest= new RedDePetri(this.redExcel2);
+		redTest= new RedDePetri(this.redExcel2, log);
 		assertTrue(redTest.getCantTransiciones()==5);
 		assertFalse(redTest.getCantTransiciones()==4);
 	}
@@ -113,7 +116,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testGetSensibilizadas() {
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1, log);
 		assertEquals(redTest.getSensibilizadas()[0], transicionesSensibilizadasTest[0]);
 		assertEquals(redTest.getSensibilizadas()[1], transicionesSensibilizadasTest[1]);
 		assertEquals(redTest.getSensibilizadas()[2], transicionesSensibilizadasTest[2]);
@@ -125,7 +128,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testDisparar() {
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1, log);
 		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
 		assertEquals(redTest.getSensibilizadas()[0],transicionesSensibilizadasTest[0]);
 		assertEquals(redTest.getSensibilizadas()[1],transicionesSensibilizadasTest[1]);
@@ -148,16 +151,16 @@ public class testRedDePetri {
 	public void testGetMarcadoSiguiente() {
 		int[][] a = { {0}, {2}, {0}, {0} };
 		int[][] b = { {1}, {0}, {0}, {0} };
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1, log);
 		assertEquals(redTest.getMarcadoSiguiente(0), a);
-		redTest= new RedDePetri(this.redExcel2);
+		redTest= new RedDePetri(this.redExcel2, log);
 		//System.out.println(Arrays.deepToString(redTest.getMarcadoSiguiente(4)));
 		assertEquals(redTest.getMarcadoSiguiente(4),b);	
 	}
 	
 	@Test (expected=IllegalArgumentException.class) public void testGetMarcadoSiguienteException() {
 		int[][] b = { {2}, {0}, {0}, {-2} };
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1, log);
 		assertEquals(redTest.getMarcadoSiguiente(4),b);
 	}
 
@@ -166,7 +169,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testEsDisparoValido() {
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1, log);
 		//System.out.println(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)));
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(0)),true);
 		assertEquals(redTest.esDisparoValido(redTest.getMarcadoSiguiente(1)),false);
@@ -197,7 +200,7 @@ public class testRedDePetri {
 	@Test
 	public void testVerificarTInvariantes() throws InterruptedException {
 		
-		redTest=new RedDePetri(this.redExcel3); 	//configuro la red a testear los Tinvariantes
+		redTest=new RedDePetri(this.redExcel3, log); 	//configuro la red a testear los Tinvariantes
 		
 		int[][] tinvariant=redTest.getTInv(); 		//Guardo en una variable local los Tinvariantes de la red configurada
 		int[][] primerMarcado=redTest.getMatrizM();	//Obtengo el marcado actual de la red configurada y lo guardo en la variable local "marcaActual" 
@@ -224,7 +227,7 @@ public class testRedDePetri {
 	 */
 	@Test
 	public void testMatrizH() {
-		redTest= new RedDePetri(this.redExcel1);
+		redTest= new RedDePetri(this.redExcel1,log);
 		try{
 			Method getMatrizH  = RedDePetri.class.getDeclaredMethod("getMatrizH", null);
 			getMatrizH.setAccessible(true);
@@ -255,7 +258,7 @@ public class testRedDePetri {
 	public void testSetTransicionesInmediatas() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel1);
+			redTest= new RedDePetri(this.redExcel1, log);
 			int T[] =redTest.getVectorTransicionesInmediatas();
 			for(int i=0; i<redTest.getCantTransiciones(); i++){
 				if(T[i] != 0){
@@ -282,7 +285,7 @@ public class testRedDePetri {
 	public void testTemporalgetCantTransiciones() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel5);
+			redTest= new RedDePetri(this.redExcel5, log);
 			Method getCantTransiciones  = LogicaTemporal.class.getDeclaredMethod("getCantTransiciones", null);
 			getCantTransiciones.setAccessible(true);
 			int cantidadT=(int)getCantTransiciones.invoke(redTest.getlogicaTemporal());
@@ -302,7 +305,7 @@ public class testRedDePetri {
 	public void testTemporalgetVectorDeIntervalos() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel5);
+			redTest= new RedDePetri(this.redExcel5, log);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][0],0);
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
 			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],200);
@@ -321,7 +324,7 @@ public class testRedDePetri {
 	public void testUpdateVectorZ() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel5);
+			redTest= new RedDePetri(this.redExcel5, log);
 			redTest.getlogicaTemporal().updateVectorZ(redTest.getConjuncionEAndB());
 			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[0],1);
 			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[1],0);
@@ -343,7 +346,7 @@ public class testRedDePetri {
 	public void testTemporalgetVectorEstados() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel5);
+			redTest= new RedDePetri(this.redExcel5, log);
 			int[] tsensandtime=redTest.getlogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],1);
 			assertEquals(tsensandtime[1],0);
@@ -376,7 +379,7 @@ public class testRedDePetri {
 	public void testTemporalupdateTimeStamp() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel5);
+			redTest= new RedDePetri(this.redExcel5, log);
 			int[] transTemporales= new int[redTest.getCantTransiciones()];
 			transTemporales=OperacionesMatricesListas.andVector(redTest.getSensibilizadas(), redTest.getlogicaTemporal().construirVectorTransicionesInmediatas());
 			redTest.getlogicaTemporal().updateTimeStamp(transTemporales, transTemporales, -1);
@@ -432,7 +435,7 @@ public class testRedDePetri {
 	public void testGetVectorQ() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel1);
+			redTest= new RedDePetri(this.redExcel1, log);
 			Method getVectorQ_Actualizado  = RedDePetri.class.getDeclaredMethod("getVectorQ_Actualizado", null);
 			getVectorQ_Actualizado.setAccessible(true);
 			int Q[][]=(int[][])getVectorQ_Actualizado.invoke(redTest);
@@ -457,7 +460,7 @@ public class testRedDePetri {
 	public void testGetMatrizB() {
 		
 		try{
-			redTest= new RedDePetri(this.redExcel1);
+			redTest= new RedDePetri(this.redExcel1, log);
 			Method getMatrizB_Actualizada  = RedDePetri.class.getDeclaredMethod("getMatrizB_Actualizada", null);
 			getMatrizB_Actualizada.setAccessible(true);
 			int B[][]=(int[][])getMatrizB_Actualizada.invoke(redTest);
@@ -469,7 +472,7 @@ public class testRedDePetri {
 				}
 			}
 			
-			redTest= new RedDePetri(this.redExcel5);
+			redTest= new RedDePetri(this.redExcel5, log);
 			getMatrizB_Actualizada = RedDePetri.class.getDeclaredMethod("getMatrizB_Actualizada", null);
 			getMatrizB_Actualizada.setAccessible(true);
 			B=(int[][])getMatrizB_Actualizada.invoke(redTest);

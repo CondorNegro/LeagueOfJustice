@@ -3,6 +3,8 @@ package Monitor;
 import java.util.ArrayList;
 import java.util.List;
 
+import Logueo.LogDeEventos;
+
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -28,10 +30,11 @@ public class RedDePetri{
 	private int[] transicionesInmediatas; //Un uno indica que la transicion es inmediata.
 	private int[] prioridadesSubida; 
 	private int[] prioridadesBajada;
+	private LogDeEventos log;
 	
 	
 	//Verificacion T-Invariantes
-	private List<Integer> transicionesDisparadas; //Vector con todos los disparos efectuados
+	//private List<Integer> transicionesDisparadas; //Vector con todos los disparos efectuados
 	private int[][] M0; //Marcado inicial
 	private int[][] sumaDisparosTransiciones;
 	private int contadorTransicionesDisparadas;
@@ -41,7 +44,7 @@ public class RedDePetri{
 	
 	
 	
-	public RedDePetri(String path){
+	public RedDePetri(String path, LogDeEventos log){
 		this.path=path;
 		this.setMatricesFromExcel(path);
 		setCantTransiciones(I[1].length);
@@ -50,20 +53,30 @@ public class RedDePetri{
 		setTransicionesInmediatas();
 		this.B=getMatrizB_Actualizada();
 		this.logicaTemporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
-		this.transicionesDisparadas=new ArrayList<Integer>();
+		//this.transicionesDisparadas=new ArrayList<Integer>();
 		this.M0=this.M.clone();
+		
+		
 		sumaDisparosTransiciones=new int[this.getCantTransiciones()][1]; //Sumatoria de todos los disparos efectuados por transicion.
 		for(int i=0; i<sumaDisparosTransiciones.length;i++){ //Reseteo vector.
 			  sumaDisparosTransiciones[i][0]=0;
 		  }
 		contadorTransicionesDisparadas=0;
+		this.setLogEventos(log);
 	}
 	
 	
+	public int contadorTransicionesDisparadas(){
+		return this.contadorTransicionesDisparadas;
+	}
 	
-	public List<Integer> getTransicionesDisparadas(){
+	public int[][] sumaDisparosTransiciones(){
+		return this.sumaDisparosTransiciones;
+	}
+	
+	/**public List<Integer> getTransicionesDisparadas(){
 		return this.transicionesDisparadas;
-	}
+	}**/
 	
 	public int[][] getMarcadoInicial(){
 		return this.M0;
@@ -178,26 +191,41 @@ public class RedDePetri{
                 this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getConjuncionEAndB(),  transicion);
                 try{
                 	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
-                	/*
-                	this.transicionesDisparadas.add(transicion);
+                	
+                	//this.transicionesDisparadas.add(transicion);
+                	sumaDisparosTransiciones[transicion][0]++;
                 	this.contadorTransicionesDisparadas++;
-                	if(contadorTransicionesDisparadas>4){
+                	this.log.createMessage("Cantidad de transiciones disparadas:\r\n"+String.valueOf(this.contadorTransicionesDisparadas), 2);
+                	this.log.addMessage(String.valueOf(transicion)+ new String("\r\n"), 1);
+                	
+                	/**if(contadorTransicionesDisparadas>4){
                 		this.contadorTransicionesDisparadas=0;
-                		this.verificarTInvariantes();
-                	}
-                	*/
+                		//this.verificarTInvariantes(this.getMatrizM());
+                	}**/
+                	
                 }
                 catch(Exception e){
                 	e.printStackTrace();
                 	System.out.println("Error en invariantes");
                 	System.exit(1);
                 }
-                
+                this.log.addMessage(new String("Valor de K: true\r\n"), 0);
+        		this.log.addMessage(new String("Marcado PostDisparo:\r\n"), 0);
+        		for(int plaza=0;plaza<this.M.length;plaza++){
+        			this.log.addMessage(String.valueOf(this.M[plaza][0])+"-", 0);
+        		}
+        		this.log.addMessage("\r\n", 0);
                 return true;
          
         }
 
         //System.out.println(transicion);
+        this.log.addMessage("Valor de K: false\r\n", 0);
+		this.log.addMessage("Marcado PostDisparo: \r\n", 0);
+		for(int plaza=0;plaza<this.M.length;plaza++){
+			this.log.addMessage(String.valueOf(this.M[plaza][0])+"-", 0);
+		}
+		this.log.addMessage("\r\n", 0);
 	    return false;
 	    
 
@@ -222,13 +250,13 @@ public class RedDePetri{
 	
 	
 	
-	private void verificarTInvariantes() throws IllegalStateException{
+	private void verificarTInvariantes(int[][] Mactual) throws IllegalStateException{
 		 
 		  
-		  for(int indice=0; indice<this.transicionesDisparadas.size();indice++){ //Realizo la suma de disparos por cada transicion
+		 /** for(int indice=0; indice<this.transicionesDisparadas.size();indice++){ //Realizo la suma de disparos por cada transicion
 			  sumaDisparosTransiciones[transicionesDisparadas.get(indice)][0]++;
 			  
-		  }
+		  }**/
 		   
 		 
 		 
@@ -242,7 +270,7 @@ public class RedDePetri{
 			  flagPrimero=true;
 			 
 			  for(int columna=0; columna<this.Tinvariantes[0].length;columna++){
-				  if(flagPrimero & Tinvariantes[fila][columna]==1){
+				  if(flagPrimero & Tinvariantes[fila][columna]>0){
 					  flagPrimero=false;
 					  minimo[fila]=sumaDisparosTransiciones[columna][0];
 				  }
@@ -263,7 +291,15 @@ public class RedDePetri{
 					  //Resto el minimo. 
 					  sumaDisparosTransiciones[columna][0]=sumaDisparosTransiciones[columna][0]-minimo[fila];
 					  if(sumaDisparosTransiciones[columna][0]<0){
+						  System.out.println("Causa del error:");
+						  System.out.println(sumaDisparosTransiciones[columna][0]);
+						  System.out.println("Columna:");
+						  System.out.println(columna);
+						  System.out.println("minimo:"); 
+						  System.out.println(minimo[fila]);
 						  throw new IllegalStateException("Suma de disparos negativa");	
+						  
+						  
 					  }
 				  }
 				 
@@ -291,7 +327,7 @@ public class RedDePetri{
 		 //int[][] Maux={{1},{2},{3}};  //Si se descomenta fuerza el error. Es para test.
 		  
 		 
-		  int[][] Maux = OperacionesMatricesListas.restaMatrices(this.getMatrizM(),OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransiciones));
+		  int[][] Maux = OperacionesMatricesListas.restaMatrices(Mactual,OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransiciones));
 			  
 		  
 		  	  
@@ -304,6 +340,7 @@ public class RedDePetri{
 			  
 			  if(Maux[plaza][0] != this.getMarcadoInicial()[plaza][0]){
 				  throw new IllegalStateException("Error en los Tinvariantes");
+				 
 			  }
 			  if(this.flagImpresionVerifTInv){
 				  if(Maux[plaza][0] == this.getMarcadoInicial()[Maux.length-1][0]){
@@ -315,7 +352,7 @@ public class RedDePetri{
 		  }
 		  
 		//resetear lista
-		  this.transicionesDisparadas.clear();
+		 // this.transicionesDisparadas.clear();
 		//El contador de disparos de cada transicion de la red queda actualizado.
 				
 	}
@@ -593,6 +630,17 @@ public class RedDePetri{
 
     	return q;
     }
+    
+    
+    
+    public void setLogEventos(LogDeEventos log){
+		this.log=log;
+		this.log.createMessage("Evolucion del marcado: \r\n\r\nMarcado M0: \r\n", 0);
+		for(int plaza=0;plaza<M0.length;plaza++){
+			this.log.addMessage(String.valueOf(this.M0[plaza][0])+"-", 0);
+		}
+		this.log.addMessage("\r\n", 0);
+	}
     
 	
 }

@@ -15,7 +15,7 @@ import java.util.logging.SimpleFormatter;
 public class testMonitorCompleto2 {
     Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/RedPrioridades/lectorEscritor.xls"; //Path para Linux.
-    int flagPolitica=2;
+    int flagPolitica=0;
     int cuentas1=0;
     int cuentas2=0;
     Logger logger = Logger.getLogger("MyLog");  
