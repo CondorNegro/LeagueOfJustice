@@ -3,6 +3,54 @@
 #Autores: Casabella Martin, Kleiner Matias, Lopez Gaston
 from colorama import init, Fore, Back, Style
 import xlrd #Para trabajar con libros Excel (Lectura)
+import os #Para determinar el sistema operativo
+import numpy as np
+
+global cadenaImpresion
+global cantidadPlazas
+global cantidadTransiciones
+global matrizM0
+global matrizManterior
+global matrizMactual
+
+def impresionConsolaRed(cadenaImpresion):
+	if(os.name=='nt'):#Windows
+		init()
+		print(Fore.RED+cadenaImpresion)
+		print(Style.RESET_ALL)
+	elif(os.name=='posix'): 
+		init()
+		print(Fore.RED+cadenaImpresion)
+		print(Style.RESET_ALL)
+		#Linux
+
+def impresionConsolaBlue(cadenaImpresion):
+	if(os.name=='nt'):
+		#Windows
+		init()
+		print(Fore.BLUE+cadenaImpresion)
+		print(Style.RESET_ALL)
+	elif(os.name=='posix'):
+		init()
+		print(Fore.BLUE+cadenaImpresion)
+		print(Style.RESET_ALL)
+		#Linux
+
+
+def impresionConsolaGreen(cadenaImpresion):
+	if(os.name=='nt'): 
+		#Windows
+		init()
+		print(Fore.GREEN+cadenaImpresion)
+		print(Style.RESET_ALL)
+	elif(os.name=='posix'):
+		#Linux
+		init()
+		print(Fore.RED+cadenaImpresion)
+		print(Style.RESET_ALL)
+		#print(chr(27)+"[4;32;47m"+"Test cantidad de transiciones disparadas. OK") 
+
+
 
 print 'Inicio del programa'
 
@@ -13,7 +61,7 @@ try:
 	archivoC= open("logFileC.txt","r")
 	archivoB= open("logFileB.txt","r")
 except: 
-	print '\nError en la apertura del archivo'
+	impresionConsolaRed('\nError en la apertura del archivo')
 	exit(1)
 
 
@@ -23,9 +71,9 @@ listaA=[]
 listaB=[]
 listaC=[]
 matrizI=[]
-matrizM0=[]
-matrizManterior=[]
-matrizMactual=[]
+pInvariantes=[]
+tInvariantes=[]
+matricesMarcado=[]
 listaK=[]
 listaTransicionesADisparar=[]
 
@@ -59,7 +107,7 @@ archivoA.close()
 archivoB.close()
 archivoC.close()
 
-print '\nTest cantidad de transiciones disparadas.'
+impresionConsolaBlue('\nTest cantidad de transiciones disparadas.')
 
 contadorDeTransicionesDisparadas=0
 
@@ -68,33 +116,30 @@ try:
 	#print contadorDeTransicionesDisparadas
 
 except:
-	print 'Error en metodo int()'
+	impresionConsolaRed('Error en metodo int()')
 	exit(1)
 
 
 flagCantidadTransicionesOK=False
 
 if(contadorDeTransicionesDisparadas==len(listaB)):
-	init()
-	print(Fore.GREEN+"\nTest cantidad de transiciones disparadas. OK")
-	print(Style.RESET_ALL);
+	impresionConsolaGreen("\nTest cantidad de transiciones disparadas. OK")
+	
 	flagCantidadTransicionesOK=True
     #print(chr(27)+"[4;32;47m"+"Test cantidad de transiciones disparadas. OK") 
 	#print 'Test cantidad de transiciones disparadas. OK'
 else:
-	init()
-	print(Fore.RED+"\nTest cantidad de transiciones disparadas. FAIL")
-	print(Style.RESET_ALL);
-
+	impresionConsolaRed("\nTest cantidad de transiciones disparadas. FAIL")
+	
 
 if(flagCantidadTransicionesOK):
 
-	print 'Cargado de matrices y listas'
+	print 'Cargado de matriz I'
 
 	try:
  		book = xlrd.open_workbook("excelTren.xls")
 	except:
-		print 'No se pudo abrir el archivo excel.'
+		impresionConsolaRed('No se pudo abrir el archivo excel.')
 		exit(1)	
 
 	#print "The number of worksheets is", book.nsheets
@@ -102,24 +147,59 @@ if(flagCantidadTransicionesOK):
 
 	sheet = book.sheet_by_index(2)
 
+
 	for fila in range(1,sheet.nrows):
 		matrizI.append([])
 		for columna in range(1,sheet.ncols):
 			matrizI[fila-1].append(sheet.cell_value(rowx=fila, colx=columna))
 
+	cantidadTransiciones=len(matrizI[0])
+	cantidadPlazas=len(matrizI)
 	
-	
+	print '\nCantidad de plazas:',
+	print cantidadPlazas
+	print 'Cantidad de transiciones:',
+	print cantidadTransiciones
 
+	matrizI=np.array(matrizI).reshape(cantidadPlazas,cantidadTransiciones)
+	matrizI=np.asmatrix(matrizI)
+
+	sheet = book.sheet_by_index(6)
+	
+	for fila in range(1,sheet.nrows):
+		pInvariantes.append([])
+		for columna in range(sheet.ncols):
+			pInvariantes[fila-1].append(sheet.cell_value(rowx=fila, colx=columna))
+
+	if(len(pInvariantes[0])!=cantidadPlazas):
+		impresionConsolaRed('pInvariantes erroneos')
+		exit(1)		
+
+	sheet = book.sheet_by_index(5)
+	
+	for fila in range(1,sheet.nrows):
+		tInvariantes.append([])
+		for columna in range(sheet.ncols):
+			tInvariantes[fila-1].append(sheet.cell_value(rowx=fila, colx=columna))
+
+	if(len(tInvariantes[0])!=cantidadTransiciones):
+		impresionConsolaRed('tInvariantes erroneos')
+		exit(1)		
+	
+	print '\nCargado de valores de K, transiciones a disparar y marcados.'
 	flagComienzo=True
 	for indice in range(len(listaA)):
 		if(not flagComienzo):
+			if(indice%4==1):
+				aux=listaA[indice].split('-')
+				matricesMarcado.append(aux[:len(aux)-1])
 			if(indice%4==3):
 				if("true" in listaA[indice]):
 					listaK.append(True)
 				elif("false" in listaA[indice]):
 					listaK.append(False)
 				else:
-					print 'Error en listaK.'
+					impresionConsolaRed('Error en listaK.')
 					exit(1)
 			if(indice%4==2):
 				index= listaA[indice].find(":", 0, len(listaA[indice]))
@@ -127,7 +207,10 @@ if(flagCantidadTransicionesOK):
 
 
 		if(flagComienzo):
-			
+			if(indice==1):
+				aux=listaA[indice].split('-')
+				matricesMarcado.append(aux[:len(aux)-1])
+				
 			if(indice==3):
 				flagComienzo=False
 				if("true" in listaA[indice]):
@@ -135,7 +218,7 @@ if(flagCantidadTransicionesOK):
 				elif("false" in listaA[indice]):
 					listaK.append(False)
 				else:
-					print 'Error en listaK.'
+					impresionConsolaRed('Error en listaK.')
 					exit(1)
 
 			if(indice==2):
@@ -143,7 +226,7 @@ if(flagCantidadTransicionesOK):
 				try:
 					listaTransicionesADisparar.append(int(listaA[indice][index+2:]))
 				except:
-					print 'Error en pasar a int la lista transiciones a disparar'
+					impresionConsolaRed('Error en pasar a int la lista transiciones a disparar')
 					exit(1)
 
 	#for i in range(len(listaTransicionesADisparar)):
@@ -151,22 +234,69 @@ if(flagCantidadTransicionesOK):
 		#print listaK[i]
 
 	if(len(listaK)!=len(listaTransicionesADisparar)):
-		print 
+		impresionConsolaRed("Lista K de distinto tamanio que lista de transiciones a disparar")
+		exit(1)
+	if(len(listaK)+1!=len(matricesMarcado)):
+		impresionConsolaRed("Tamanio incorrecto de lista de marcados")
+		print len(listaK)
+		print len(matricesMarcado)
+		exit(1)
+
+	for i in range(len(matricesMarcado)):
+		for j in range(len(matricesMarcado[i])):
+			if(len(matricesMarcado[i])!=cantidadPlazas):
+				impresionConsolaRed("Marcado con numero de plazas distinto.")
+				exit(1)
+			try:
+				matricesMarcado[i][j]=int(matricesMarcado[i][j])
+			except:
+				impresionConsolaRed('Error en pasar a int los marcados')
+				exit(1)
+
+
 
 	flagEvolucionMarcado=True
-	print '\nTest evolucion Marcado'
+	impresionConsolaBlue('\nTest evolucion Marcado')
+
+	#Testear evolucion marcado.
+	for marca in range(len(matricesMarcado)):
+		if(marca==0):
+			matrizM0=np.array(matricesMarcado[0]).reshape(cantidadPlazas,1);
+			matrizMactual=matrizM0
+		else:
+			matrizManterior=matrizMactual
+			matrizMactual=np.array(matricesMarcado[marca]).reshape(cantidadPlazas,1);
+			if(not listaK[marca-1]):
+				aux=matrizMactual!=matrizManterior   #Comparo que si k es falso, la marca se mantenga constante
+				for booleano in range(len(aux)):
+					if(aux[booleano][0]):
+						flagEvolucionMarcado=False
+			else:
+				transicion=listaTransicionesADisparar[marca-1]
+				vectorDisparo=np.zeros((cantidadTransiciones,1), dtype=int)
+				vectorDisparo[transicion][0]=1
+				vectorDisparo=np.asmatrix(vectorDisparo)
+				matrizProducto= matrizI*vectorDisparo
+				matrizSuma=matrizManterior+matrizProducto
+				aux= matrizMactual != matrizSuma   #Comparo que si k es true,  la marca evolucione correctamente segun los disparos
+				for booleano in range(len(aux)):
+					if(aux[booleano][0]):
+						flagEvolucionMarcado=False
+
+
+
+
+
+
+
 
 	if(flagEvolucionMarcado):
-		init()
-		print(Fore.GREEN+"\nTest evolucion Marcado. OK")
-		print(Style.RESET_ALL);
-		
+		impresionConsolaGreen("\nTest evolucion Marcado. OK")
 	    #print(chr(27)+"[4;32;47m"+"Test cantidad de transiciones disparadas. OK") 
 		#print 'Test cantidad de transiciones disparadas. OK'
 	else:
-		init()
-		print(Fore.RED+"\nTest evolucion Marcado. FAIL")
-		print(Style.RESET_ALL);
+		impresionConsolaRed("\nTest evolucion Marcado. FAIL")
+		
 
 
 
