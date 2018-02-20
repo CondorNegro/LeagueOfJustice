@@ -3,23 +3,15 @@ package UnitTests;
 
 import Monitor.Monitor;
 
-
-
 import static org.junit.Assert.*;
-
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-
 
 public class testMonitorCompleto2 {
     Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/RedPrioridades/lectorEscritor.xls"; //Path para Linux.
-    int flagPolitica=2;
+    int flagPolitica=0;
     int cuentas1=0;
     int cuentas2=0;
-    Logger logger = Logger.getLogger("MyLog");  
-    FileHandler fh;  
+ 
     int[][] marca;
     
     @org.junit.Before
@@ -27,7 +19,6 @@ public class testMonitorCompleto2 {
     	if((System.getProperty("os.name")).equals("Windows 10")){	
     		if(System.getProperty("user.name").equals("kzAx")){
 				this.redExcel="..\\src\\RedesParaTest\\RedPrioridades\\lectorEscritor.xls";
-				
 			}
 			 else{
 				 this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedPrioridades\\lectorEscritor.xls"; //Path para Windows.
@@ -35,17 +26,19 @@ public class testMonitorCompleto2 {
     	}
         monitor.configRdp(redExcel);
         
+        
+        
         monitor.setPolitica(flagPolitica);	 // 0-modo aleatorio
 							     			// 1-prioridad al proceso 1
         									// 2-prioridad al proceso 2
+        
+        
+        
         String nombreArchivo="./MyLogFile.log";
         if((System.getProperty("os.name")).equals("Windows 10")){	
         	nombreArchivo=".\\MyLogFile.log";
         }
-        this.fh=new FileHandler(nombreArchivo);  
-        logger.addHandler(fh);
-        SimpleFormatter formatter = new SimpleFormatter();  
-        fh.setFormatter(formatter);  
+
         
     }
 
@@ -73,14 +66,14 @@ public class testMonitorCompleto2 {
         hilo1.join();
         this.marca=monitor.getMarcado();
         try{
-        	System.out.println("Sali del join");
+        	
         	Thread.sleep(1000);
         	hilo2.stop();
         	hilo3.stop();
         	hilo4.stop();
         	hilo5.stop();
         	hilo6.stop();
-           
+        	Thread.sleep(1000);
         }
         catch(InterruptedException e){
         	//e.printStackTrace();
@@ -88,8 +81,8 @@ public class testMonitorCompleto2 {
         
         finally{
         	
-        	assert(marca[7][0]==0); //Se generaron todos los recursos
-        	assert(marca[6][0]>=5); //Se generaron todos los recursos
+        	assert(this.marca[7][0]==0); //Se generaron todos los recursos
+        	assert(this.marca[6][0]>=5); //Se generaron todos los recursos
         	if(flagPolitica==1) {
         		assert(cuentas1>=24); //Se generaron todos los recursos
         	}
@@ -127,7 +120,6 @@ public class testMonitorCompleto2 {
     class HiloProceso1 implements Runnable{
     	@Override
         public void run() {
-    		
     		for(int i=0; i<50; i++){
         		monitor.dispararTransicion(1);
         		System.out.println("Inicio Proceso 1, cuenta: "+cuentas1);
@@ -154,12 +146,12 @@ public class testMonitorCompleto2 {
             @Override
             public void run() {
             	int cuentas=0;
-            	int [][] marca_hilo=monitor.getMarcado();
             	for(int i=0; i<50; i++){
+            		monitor.dispararTransicion(3);
+            		int [][] marca_hilo=monitor.getMarcado();
             		if(marca_hilo[1][0]!=0||marca_hilo[3][0]!=0) {
             			fail("Hay tokens en el proceso 2 mientras se ejecutaba proceso 1");
             		}
-            		monitor.dispararTransicion(3);
             		monitor.dispararTransicion(5);
             		
             		System.out.println("Finalizo Proceso 1, cuenta: "+cuentas);
@@ -172,12 +164,12 @@ public class testMonitorCompleto2 {
             @Override
             public void run() {
             	int cuentas=0;
-            	int [][] marca_hilo=monitor.getMarcado();
             	for(int i=0; i<50; i++){
+            		monitor.dispararTransicion(4);
+            		int [][] marca_hilo=monitor.getMarcado();
             		if(marca_hilo[2][0]!=0||marca_hilo[4][0]!=0) {
             			fail("Hay tokens en el proceso 1 mientras se ejecutaba proceso 2");
             		}
-            		monitor.dispararTransicion(4);
             		monitor.dispararTransicion(6);
             		System.out.println("Finalizo Proceso 2, cuenta: "+cuentas);
             		cuentas=cuentas+1;
@@ -189,8 +181,8 @@ public class testMonitorCompleto2 {
             @Override
             public void run() {
             	int cuentas=0;
-            	int [][] marca_hilo=monitor.getMarcado();
             	for(int i=0; i<50; i++){
+            		int [][] marca_hilo=monitor.getMarcado();
             		if(marca_hilo[5][0]!=0&&(marca_hilo[1][0]!=0||marca_hilo[2][0]!=0||marca_hilo[3][0]!=0||marca_hilo[4][0]!=0)) {
             			fail("Hay tokens en la plaza 1 2 3 o 4, cuando hay un token en la plaza 5");
             		}
