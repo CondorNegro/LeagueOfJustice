@@ -12,6 +12,12 @@ global cantidadTransiciones
 global matrizM0
 global matrizManterior
 global matrizMactual
+global constantesPinvariantes
+global flagVerificarPinv
+global flagVerificarTinv
+global arregloFlagsTInv
+global flagFinalizacionTInv
+
 
 def impresionConsolaRed(cadenaImpresion):
 	if(os.name=='nt'):#Windows
@@ -46,9 +52,75 @@ def impresionConsolaGreen(cadenaImpresion):
 	elif(os.name=='posix'):
 		#Linux
 		init()
-		print(Fore.RED+cadenaImpresion)
+		print(Fore.GREEN+cadenaImpresion)
 		print(Style.RESET_ALL)
 		#print(chr(27)+"[4;32;47m"+"Test cantidad de transiciones disparadas. OK") 
+
+
+
+def verificarPinvariantes(matrizM, pInvariantes, constantesPinvariantes):
+	flagVerificarPinv=True
+	constantesPinvariantesActual=[]
+	for filaPinvariante in range(len(pInvariantes)):
+		constantesPinvariantesActual.append((matrizM*pInvariantes[filaPinvariante]).sum())
+	constantesPinvariantesActual=np.array(constantesPinvariantesActual).reshape(len(constantesPinvariantesActual),1)
+	constantesPinvariantesActual=np.asarray(constantesPinvariantesActual,dtype=int)
+	vectorAuxEqual=constantesPinvariantesActual!= constantesPinvariantes
+	for i in range(len(vectorAuxEqual)):
+		if(vectorAuxEqual[i][0]):
+			flagVerificarPinv=False
+			impresionConsolaRed('Error en verificacion de PInvariantes')
+			exit(1)
+
+
+def verificarFlagFinalizacion(flags):
+	for i in range(len(flags)):
+		if(flags[i]==True):
+			return True;
+	return False;
+
+def isElementoNegativo(lista):
+	for i in range(len(lista)):
+		if(lista[i]<0):
+			return True
+	return False;
+
+def verificarTinvariantes(tInv, listaTranciones, I, M0, Multimo):
+	flagFinalizacionTInv=False
+	listaContadores=[]
+	arregloFlagsTInv=[]
+	for i in range(cantidadTransiciones):
+		listaContadores.append(0)
+	for transicion in listaTranciones:
+		listaContadores[transicion]=listaContadores[transicion]+1
+	listaContadores=np.array(listaContadores)
+	listaContadoresAnterior=listaContadores
+	arrayTinvariantes=np.array(tInv)
+	for fila in range(len(tInv)):
+		arregloFlagsTInv.append(True)
+	while(not flagFinalizacionTInv):
+		for fila in range(len(tInv)):
+			if(arregloFlagsTInv[fila]):
+				listaContadoresAnterior=listaContadores
+				listaContadores=listaContadores -  arrayTinvariantes[fila]
+				flagListaNegativa=isElementoNegativo(listaContadores)
+				if(flagListaNegativa):
+					listaContadores=listaContadoresAnterior
+					arregloFlagsTInv[fila]=False
+			flagFinalizacionTInv=verificarFlagFinalizacion(arregloFlagsTInv)
+	listaContadores=np.asmatrix(listaContadores)
+	producto=I*np.transpose(listaContadores)
+	resta=Multimo-producto
+	resta=np.asmatrix(resta,dtype=int)
+	comparacion=resta!=M0
+	for i in range(len(comparacion)):
+		if(comparacion[i]):
+			impresionConsolaRed('\n Error en TInvariantes')
+			exit(1)
+
+
+
+
 
 
 
@@ -63,6 +135,10 @@ try:
 except: 
 	impresionConsolaRed('\nError en la apertura del archivo')
 	exit(1)
+
+
+
+
 
 
 print '\nLectura de archivos'
@@ -175,6 +251,10 @@ if(flagCantidadTransicionesOK):
 		impresionConsolaRed('pInvariantes erroneos')
 		exit(1)		
 
+
+	constantesPinvariantes=np.zeros((len(pInvariantes),1),dtype=int)
+
+
 	sheet = book.sheet_by_index(5)
 	
 	for fila in range(1,sheet.nrows):
@@ -261,11 +341,16 @@ if(flagCantidadTransicionesOK):
 	#Testear evolucion marcado.
 	for marca in range(len(matricesMarcado)):
 		if(marca==0):
-			matrizM0=np.array(matricesMarcado[0]).reshape(cantidadPlazas,1);
+			matrizM0aux=np.array(matricesMarcado[0]).reshape(1,cantidadPlazas)
+			matrizM0=np.array(matricesMarcado[0]).reshape(cantidadPlazas,1)
+			for filaPinvariante in range(len(pInvariantes)):
+				constantesPinvariantes[filaPinvariante]=(matrizM0aux*pInvariantes[filaPinvariante]).sum()
 			matrizMactual=matrizM0
+		
 		else:
 			matrizManterior=matrizMactual
 			matrizMactual=np.array(matricesMarcado[marca]).reshape(cantidadPlazas,1);
+
 			if(not listaK[marca-1]):
 				aux=matrizMactual!=matrizManterior   #Comparo que si k es falso, la marca se mantenga constante
 				for booleano in range(len(aux)):
@@ -282,6 +367,9 @@ if(flagCantidadTransicionesOK):
 				for booleano in range(len(aux)):
 					if(aux[booleano][0]):
 						flagEvolucionMarcado=False
+			if(flagEvolucionMarcado):
+				matrizMactualAux=np.array(matricesMarcado[marca]).reshape(1,cantidadPlazas);
+				verificarPinvariantes(matrizMactualAux, pInvariantes, constantesPinvariantes)
 
 
 
@@ -297,9 +385,16 @@ if(flagCantidadTransicionesOK):
 	else:
 		impresionConsolaRed("\nTest evolucion Marcado. FAIL")
 		
-
-
-
+	for i in range(len(listaB)):
+		try:
+			listaB[i]=int(listaB[i])
+		except:
+			impresionConsolaRed("\nError en pasar elementos de listaB a int")
+			exit(1)
+	verificarTinvariantes(tInvariantes, listaB, matrizI, matrizM0, matrizMactual)
+	impresionConsolaBlue('\nInvariantes:')
+	impresionConsolaGreen('\nPInvariantes OK.')
+	impresionConsolaGreen('\nTInvariantes OK.')
 
 
 
