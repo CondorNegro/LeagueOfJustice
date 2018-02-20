@@ -178,8 +178,8 @@ public class testTrenConcurrente {
         
         try{
         	Thread.sleep(1000);
-        	tren_driver.interrupt();
-        	control_bajada.interrupt();
+        	tren_driver.stop();
+        	control_bajada.stop();
            
         }
         catch(InterruptedException e){

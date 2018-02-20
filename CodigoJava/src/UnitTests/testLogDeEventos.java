@@ -103,7 +103,7 @@ public class testLogDeEventos {
 		log.createMessage(new String("hola"), 1);
 		log.flushBufferToFile(1);
 		try{
-			File file=new File("..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFileB.txt");
+			File file=new File(nameFile);
 			
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
