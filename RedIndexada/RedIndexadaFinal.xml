@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><pnml>
 <net id="Net-One" type="P/T net">
 <token id="Default" enabled="true" red="0" green="0" blue="0"/>
-<labels x="624" y="437" width="69" height="21" border="true">
+<labels x="605" y="438" width="70" height="22" border="true">
 <text>Estacion A</text>
 </labels>
-<labels x="1663" y="421" width="69" height="21" border="true">
+<labels x="1644" y="422" width="70" height="22" border="true">
 <text>Estacion B</text>
 </labels>
-<labels x="1669" y="952" width="69" height="21" border="true">
+<labels x="1670" y="963" width="70" height="22" border="true">
 <text>Estacion C</text>
 </labels>
-<labels x="679" y="958" width="69" height="21" border="true">
+<labels x="680" y="959" width="70" height="22" border="true">
 <text>Estacion D</text>
 </labels>
-<labels x="308" y="620" width="69" height="52" border="true">
+<labels x="309" y="621" width="70" height="53" border="true">
 <text>Gente que quiere subir en A</text>
 </labels>
-<labels x="2015" y="613" width="69" height="52" border="true">
+<labels x="2016" y="614" width="70" height="53" border="true">
 <text>Gente que quiere subir en B</text>
 </labels>
-<labels x="1998" y="827" width="69" height="52" border="true">
+<labels x="1999" y="828" width="70" height="53" border="true">
 <text>Gente que quiere subir en C</text>
 </labels>
-<labels x="311" y="838" width="69" height="52" border="true">
+<labels x="312" y="839" width="70" height="53" border="true">
 <text>Gente que quiere subir en D</text>
 </labels>
-<labels x="1142" y="421" width="153" height="25" border="true">
+<labels x="1123" y="412" width="154" height="26" border="true">
 <text>Gente viajando maquina</text>
 </labels>
-<labels x="1144" y="608" width="153" height="21" border="true">
+<labels x="1145" y="609" width="154" height="22" border="true">
 <text>Gente viajando vagon</text>
 </labels>
-<labels x="1147" y="1054" width="153" height="21" border="true">
+<labels x="1148" y="1055" width="154" height="22" border="true">
 <text>Lugares vacios maquina</text>
 </labels>
-<labels x="1150" y="904" width="153" height="21" border="true">
+<labels x="1151" y="905" width="154" height="22" border="true">
 <text>Lugares vacios vagon</text>
 </labels>
-<labels x="1180" y="119" width="134" height="26" border="true">
+<labels x="1181" y="120" width="135" height="27" border="true">
 <text>Paso de nivel (A a B)</text>
 </labels>
-<labels x="878" y="1181" width="134" height="20" border="true">
+<labels x="879" y="1182" width="135" height="21" border="true">
 <text>Paso de nivel (C a D)</text>
 </labels>
-<labels x="1127" y="353" width="69" height="21" border="true">
+<labels x="1128" y="354" width="70" height="22" border="true">
 <text>Viaje A a B</text>
 </labels>
-<labels x="1822" y="672" width="69" height="21" border="true">
+<labels x="1823" y="673" width="70" height="22" border="true">
 <text>Viaje B a C</text>
 </labels>
-<labels x="1435" y="1120" width="69" height="21" border="true">
+<labels x="1436" y="1121" width="70" height="22" border="true">
 <text>Viaje C a D</text>
 </labels>
-<labels x="455" y="681" width="69" height="21" border="true">
+<labels x="456" y="682" width="70" height="22" border="true">
 <text>Viaje D a A</text>
 </labels>
 <place id="P0">
@@ -82,7 +82,7 @@
 <name>
 <value>P1</value>
 <graphics>
-<offset x="48.88888888888903" y="-11.111111111111162"/>
+<offset x="31.031746031746167" y="-8.96825396825402"/>
 </graphics>
 </name>
 <initialMarking>
@@ -117,7 +117,7 @@
 </place>
 <place id="P11">
 <graphics>
-<position x="1890.0" y="785.0"/>
+<position x="1890.0" y="780.0"/>
 </graphics>
 <name>
 <value>P11</value>
@@ -182,7 +182,7 @@
 <name>
 <value>P14</value>
 <graphics>
-<offset x="0.0" y="0.0"/>
+<offset x="0.7142857142857142" y="25.71428571428571"/>
 </graphics>
 </name>
 <initialMarking>
@@ -237,7 +237,7 @@
 </place>
 <place id="P17">
 <graphics>
-<position x="1275.0" y="1256.25"/>
+<position x="1275.0" y="1260.0"/>
 </graphics>
 <name>
 <value>P17</value>
@@ -306,7 +306,7 @@
 </graphics>
 </name>
 <initialMarking>
-<value>Default,1</value>
+<value>Default,0</value>
 <graphics>
 <offset x="0.0" y="0.0"/>
 </graphics>
@@ -317,7 +317,7 @@
 </place>
 <place id="P20">
 <graphics>
-<position x="1665.0" y="1256.25"/>
+<position x="1665.0" y="1260.0"/>
 </graphics>
 <name>
 <value>P20</value>
@@ -337,12 +337,12 @@
 </place>
 <place id="P21">
 <graphics>
-<position x="590.3571428571433" y="659.7619047619047"/>
+<position x="600.0" y="660.0"/>
 </graphics>
 <name>
 <value>P21</value>
 <graphics>
-<offset x="-1.0416666666666896" y="18.333333333333353"/>
+<offset x="16.339285714285605" y="67.14285714285712"/>
 </graphics>
 </name>
 <initialMarking>
@@ -357,7 +357,7 @@
 </place>
 <place id="P22">
 <graphics>
-<position x="1185.0" y="652.5"/>
+<position x="1185.0" y="660.0"/>
 </graphics>
 <name>
 <value>P22</value>
@@ -397,12 +397,12 @@
 </place>
 <place id="P24">
 <graphics>
-<position x="1185.0" y="745.0"/>
+<position x="1185.0" y="750.0"/>
 </graphics>
 <name>
 <value>P24</value>
 <graphics>
-<offset x="0.0" y="0.0"/>
+<offset x="60.0" y="18.0"/>
 </graphics>
 </name>
 <initialMarking>
@@ -457,7 +457,7 @@
 </place>
 <place id="P27">
 <graphics>
-<position x="400.0" y="565.0"/>
+<position x="405.0" y="570.0"/>
 </graphics>
 <name>
 <value>P27</value>
@@ -477,7 +477,7 @@
 </place>
 <place id="P28">
 <graphics>
-<position x="1080.0" y="322.5"/>
+<position x="1080.0" y="330.0"/>
 </graphics>
 <name>
 <value>P28</value>
@@ -562,7 +562,7 @@
 <name>
 <value>P4</value>
 <graphics>
-<offset x="25.27777777777784" y="-15.833333333333325"/>
+<offset x="68.13492063492077" y="19.166666666666668"/>
 </graphics>
 </name>
 <initialMarking>
@@ -597,7 +597,7 @@
 </place>
 <place id="P6">
 <graphics>
-<position x="1185.0" y="865.0"/>
+<position x="1185.0" y="870.0"/>
 </graphics>
 <name>
 <value>P6</value>
@@ -637,7 +637,7 @@
 </place>
 <place id="P8">
 <graphics>
-<position x="525.0" y="322.5"/>
+<position x="525.0" y="330.0"/>
 </graphics>
 <name>
 <value>P8</value>
@@ -657,7 +657,7 @@
 </place>
 <place id="P9">
 <graphics>
-<position x="405.0" y="770.0"/>
+<position x="405.0" y="765.0"/>
 </graphics>
 <name>
 <value>P9</value>
@@ -677,7 +677,7 @@
 </place>
 <transition id="T0">
 <graphics>
-<position x="305.71428571428567" y="565.0"/>
+<position x="300.0" y="570.0"/>
 </graphics>
 <name>
 <value>T0</value>
@@ -703,7 +703,7 @@
 </transition>
 <transition id="T1">
 <graphics>
-<position x="2007.8571428571445" y="570.0"/>
+<position x="2010.0" y="570.0"/>
 </graphics>
 <name>
 <value>T1</value>
@@ -755,7 +755,7 @@
 </transition>
 <transition id="T11">
 <graphics>
-<position x="750.0" y="790.0"/>
+<position x="750.0" y="795.0"/>
 </graphics>
 <name>
 <value>T11</value>
@@ -807,7 +807,7 @@
 </transition>
 <transition id="T13">
 <graphics>
-<position x="1655.0" y="602.5"/>
+<position x="1650.0" y="600.0"/>
 </graphics>
 <name>
 <value>T13</value>
@@ -920,7 +920,7 @@
 </graphics>
 </name>
 <orientation>
-<value>0</value>
+<value>45</value>
 </orientation>
 <rate>
 <value>1.0</value>
@@ -937,7 +937,7 @@
 </transition>
 <transition id="T18">
 <graphics>
-<position x="1155.0" y="1256.25"/>
+<position x="1155.0" y="1260.0"/>
 </graphics>
 <name>
 <value>T18</value>
@@ -989,7 +989,7 @@
 </transition>
 <transition id="T2">
 <graphics>
-<position x="2010.357142857145" y="784.9999999999999"/>
+<position x="2010.0" y="780.0"/>
 </graphics>
 <name>
 <value>T2</value>
@@ -1041,7 +1041,7 @@
 </transition>
 <transition id="T21">
 <graphics>
-<position x="1455.0" y="1256.25"/>
+<position x="1455.0" y="1260.0"/>
 </graphics>
 <name>
 <value>T21</value>
@@ -1093,7 +1093,7 @@
 </transition>
 <transition id="T23">
 <graphics>
-<position x="1650.0" y="755.0"/>
+<position x="1650.0" y="750.0"/>
 </graphics>
 <name>
 <value>T23</value>
@@ -1119,12 +1119,12 @@
 </transition>
 <transition id="T24">
 <graphics>
-<position x="1185.0" y="697.5"/>
+<position x="1185.0" y="705.0"/>
 </graphics>
 <name>
 <value>T24</value>
 <graphics>
-<offset x="-5.0" y="35.0"/>
+<offset x="42.0" y="0.0"/>
 </graphics>
 </name>
 <orientation>
@@ -1197,7 +1197,7 @@
 </transition>
 <transition id="T27">
 <graphics>
-<position x="882.5" y="880.0"/>
+<position x="885.0" y="885.0"/>
 </graphics>
 <name>
 <value>T27</value>
@@ -1206,7 +1206,7 @@
 </graphics>
 </name>
 <orientation>
-<value>0</value>
+<value>135</value>
 </orientation>
 <rate>
 <value>1.0</value>
@@ -1249,7 +1249,7 @@
 </transition>
 <transition id="T29">
 <graphics>
-<position x="900.0" y="382.5"/>
+<position x="900.0" y="390.0"/>
 </graphics>
 <name>
 <value>T29</value>
@@ -1275,7 +1275,7 @@
 </transition>
 <transition id="T3">
 <graphics>
-<position x="309.1071428571428" y="770.0"/>
+<position x="315.0" y="765.0"/>
 </graphics>
 <name>
 <value>T3</value>
@@ -1301,7 +1301,7 @@
 </transition>
 <transition id="T30">
 <graphics>
-<position x="760.7142857142857" y="1080.0"/>
+<position x="765.0" y="1080.0"/>
 </graphics>
 <name>
 <value>T30</value>
@@ -1353,7 +1353,7 @@
 </transition>
 <transition id="T32">
 <graphics>
-<position x="1445.0" y="390.0"/>
+<position x="1440.0" y="390.0"/>
 </graphics>
 <name>
 <value>T32</value>
@@ -1379,7 +1379,7 @@
 </transition>
 <transition id="T33">
 <graphics>
-<position x="1445.0" y="437.5"/>
+<position x="1440.0" y="435.0"/>
 </graphics>
 <name>
 <value>T33</value>
@@ -1483,7 +1483,7 @@
 </transition>
 <transition id="T4">
 <graphics>
-<position x="705.0" y="322.5"/>
+<position x="705.0" y="330.0"/>
 </graphics>
 <name>
 <value>T4</value>
@@ -1535,7 +1535,7 @@
 </transition>
 <transition id="T6">
 <graphics>
-<position x="725.0" y="747.5"/>
+<position x="720.0" y="750.0"/>
 </graphics>
 <name>
 <value>T6</value>
@@ -1613,7 +1613,7 @@
 </transition>
 <transition id="T9">
 <graphics>
-<position x="1592.5" y="557.5"/>
+<position x="1590.0" y="555.0"/>
 </graphics>
 <name>
 <value>T9</value>
@@ -1646,8 +1646,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="722" y="488" curvePoint="false"/>
-<arcpath id="001" x="775" y="590" curvePoint="false"/>
+<arcpath id="000" x="723" y="490" curvePoint="false"/>
+<arcpath id="001" x="776" y="591" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion A to T2" source="P0" target="T8">
@@ -1659,8 +1659,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="701" y="475" curvePoint="false"/>
-<arcpath id="001" x="551" y="475" curvePoint="false"/>
+<arcpath id="000" x="702" y="476" curvePoint="false"/>
+<arcpath id="001" x="552" y="476" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Estacion A to T21" source="P0" target="T10">
@@ -1672,8 +1672,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="723" y="487" curvePoint="false"/>
-<arcpath id="001" x="775" y="560" curvePoint="false"/>
+<arcpath id="000" x="725" y="489" curvePoint="false"/>
+<arcpath id="001" x="776" y="561" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion A to T39" source="P0" target="T29">
@@ -1685,8 +1685,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="730" y="470" curvePoint="false"/>
-<arcpath id="001" x="905" y="393" curvePoint="false"/>
+<arcpath id="000" x="730" y="471" curvePoint="false"/>
+<arcpath id="001" x="906" y="402" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion A to T40" source="P0" target="T31">
@@ -1698,8 +1698,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="730" y="472" curvePoint="false"/>
-<arcpath id="001" x="905" y="431" curvePoint="false"/>
+<arcpath id="000" x="731" y="473" curvePoint="false"/>
+<arcpath id="001" x="906" y="432" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion B to T1" source="P1" target="T5">
@@ -1711,8 +1711,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1615" y="461" curvePoint="false"/>
-<arcpath id="001" x="1615" y="375" curvePoint="false"/>
+<arcpath id="000" x="1616" y="462" curvePoint="false"/>
+<arcpath id="001" x="1616" y="376" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Estacion B to T20" source="P1" target="T9">
@@ -1724,9 +1724,9 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1613" y="490" curvePoint="false"/>
-<arcpath id="001" x="1610" y="528" curvePoint="false"/>
-<arcpath id="002" x="1602" y="562" curvePoint="false"/>
+<arcpath id="000" x="1615" y="491" curvePoint="false"/>
+<arcpath id="001" x="1611" y="529" curvePoint="false"/>
+<arcpath id="002" x="1601" y="561" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion B to T24" source="P1" target="T13">
@@ -1738,9 +1738,9 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1621" y="490" curvePoint="false"/>
-<arcpath id="001" x="1645" y="557" curvePoint="false"/>
-<arcpath id="002" x="1665" y="607" curvePoint="false"/>
+<arcpath id="000" x="1622" y="491" curvePoint="false"/>
+<arcpath id="001" x="1646" y="558" curvePoint="false"/>
+<arcpath id="002" x="1661" y="606" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion B to T41" source="P1" target="T32">
@@ -1752,8 +1752,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1602" y="468" curvePoint="false"/>
-<arcpath id="001" x="1460" y="401" curvePoint="false"/>
+<arcpath id="000" x="1603" y="470" curvePoint="false"/>
+<arcpath id="001" x="1456" y="402" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion B to T42" source="P1" target="T33">
@@ -1765,8 +1765,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1601" y="472" curvePoint="false"/>
-<arcpath id="001" x="1460" y="448" curvePoint="false"/>
+<arcpath id="000" x="1602" y="474" curvePoint="false"/>
+<arcpath id="001" x="1456" y="447" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion C to T23" source="P2" target="T12">
@@ -1778,8 +1778,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1628" y="896" curvePoint="false"/>
-<arcpath id="001" x="1615" y="795" curvePoint="false"/>
+<arcpath id="000" x="1630" y="897" curvePoint="false"/>
+<arcpath id="001" x="1616" y="796" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion C to T33" source="P2" target="T23">
@@ -1791,9 +1791,9 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1633" y="896" curvePoint="false"/>
-<arcpath id="001" x="1641" y="860" curvePoint="false"/>
-<arcpath id="002" x="1660" y="770" curvePoint="false"/>
+<arcpath id="000" x="1634" y="897" curvePoint="false"/>
+<arcpath id="001" x="1642" y="861" curvePoint="false"/>
+<arcpath id="002" x="1666" y="767" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion C to T35" source="P2" target="T25">
@@ -1805,8 +1805,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1616" y="910" curvePoint="false"/>
-<arcpath id="001" x="1425" y="896" curvePoint="false"/>
+<arcpath id="000" x="1617" y="910" curvePoint="false"/>
+<arcpath id="001" x="1426" y="897" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion C to T36" source="P2" target="T26">
@@ -1818,8 +1818,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1616" y="912" curvePoint="false"/>
-<arcpath id="001" x="1425" y="941" curvePoint="false"/>
+<arcpath id="000" x="1617" y="914" curvePoint="false"/>
+<arcpath id="001" x="1426" y="942" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion C to T6" source="P2" target="T35">
@@ -1831,8 +1831,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1646" y="911" curvePoint="false"/>
-<arcpath id="001" x="1780" y="911" curvePoint="false"/>
+<arcpath id="000" x="1647" y="912" curvePoint="false"/>
+<arcpath id="001" x="1781" y="912" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Estacion D to T11" source="P3" target="T6">
@@ -1844,9 +1844,9 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="757" y="896" curvePoint="false"/>
-<arcpath id="001" x="741" y="816" curvePoint="false"/>
-<arcpath id="002" x="730" y="762" curvePoint="false"/>
+<arcpath id="000" x="758" y="897" curvePoint="false"/>
+<arcpath id="001" x="742" y="817" curvePoint="false"/>
+<arcpath id="002" x="726" y="766" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion D to T22" source="P3" target="T11">
@@ -1858,8 +1858,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="760" y="896" curvePoint="false"/>
-<arcpath id="001" x="760" y="805" curvePoint="false"/>
+<arcpath id="000" x="761" y="897" curvePoint="false"/>
+<arcpath id="001" x="761" y="811" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion D to T37" source="P3" target="T27">
@@ -1871,8 +1871,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="775" y="908" curvePoint="false"/>
-<arcpath id="001" x="887" y="891" curvePoint="false"/>
+<arcpath id="000" x="776" y="910" curvePoint="false"/>
+<arcpath id="001" x="893" y="900" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion D to T38" source="P3" target="T28">
@@ -1884,8 +1884,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="775" y="913" curvePoint="false"/>
-<arcpath id="001" x="890" y="941" curvePoint="false"/>
+<arcpath id="000" x="776" y="915" curvePoint="false"/>
+<arcpath id="001" x="891" y="942" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="Estacion D to T4" source="P3" target="T30">
@@ -1897,8 +1897,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="762" y="925" curvePoint="false"/>
-<arcpath id="001" x="775" y="1086" curvePoint="false"/>
+<arcpath id="000" x="763" y="926" curvePoint="false"/>
+<arcpath id="001" x="781" y="1087" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente que quiere subir en A to P9" source="T0" target="P27">
@@ -1910,8 +1910,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="331" y="576" curvePoint="false"/>
-<arcpath id="001" x="396" y="576" curvePoint="false"/>
+<arcpath id="000" x="326" y="582" curvePoint="false"/>
+<arcpath id="001" x="402" y="582" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente que quiere subir en B to P12" source="T1" target="P10">
@@ -1923,8 +1923,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="2003" y="581" curvePoint="false"/>
-<arcpath id="001" x="1931" y="581" curvePoint="false"/>
+<arcpath id="000" x="2006" y="582" curvePoint="false"/>
+<arcpath id="001" x="1932" y="582" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente que quiere subir en C to P13" source="T2" target="P11">
@@ -1936,8 +1936,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="2006" y="795" curvePoint="false"/>
-<arcpath id="001" x="1915" y="795" curvePoint="false"/>
+<arcpath id="000" x="2007" y="791" curvePoint="false"/>
+<arcpath id="001" x="1916" y="791" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente que quiere subir en D to P10" source="T3" target="P9">
@@ -1949,8 +1949,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="335" y="781" curvePoint="false"/>
-<arcpath id="001" x="401" y="781" curvePoint="false"/>
+<arcpath id="000" x="341" y="777" curvePoint="false"/>
+<arcpath id="001" x="402" y="777" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en maquina to T35" source="P4" target="T25">
@@ -1962,8 +1962,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1202" y="458" curvePoint="false"/>
-<arcpath id="001" x="1421" y="881" curvePoint="false"/>
+<arcpath id="000" x="1203" y="460" curvePoint="false"/>
+<arcpath id="001" x="1422" y="882" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en maquina to T37" source="P4" target="T27">
@@ -1975,8 +1975,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1187" y="457" curvePoint="false"/>
-<arcpath id="001" x="898" y="882" curvePoint="false"/>
+<arcpath id="000" x="1188" y="459" curvePoint="false"/>
+<arcpath id="001" x="896" y="889" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en maquina to T39" source="P4" target="T29">
@@ -1988,8 +1988,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1181" y="442" curvePoint="false"/>
-<arcpath id="001" x="916" y="388" curvePoint="false"/>
+<arcpath id="000" x="1182" y="444" curvePoint="false"/>
+<arcpath id="001" x="917" y="397" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en maquina to T41" source="P4" target="T32">
@@ -2001,8 +2001,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1210" y="442" curvePoint="false"/>
-<arcpath id="001" x="1451" y="396" curvePoint="false"/>
+<arcpath id="000" x="1211" y="444" curvePoint="false"/>
+<arcpath id="001" x="1447" y="397" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en vagon 1 to T36" source="P5" target="T26">
@@ -2014,8 +2014,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1203" y="578" curvePoint="false"/>
-<arcpath id="001" x="1416" y="935" curvePoint="false"/>
+<arcpath id="000" x="1204" y="579" curvePoint="false"/>
+<arcpath id="001" x="1417" y="936" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en vagon 1 to T38" source="P5" target="T28">
@@ -2027,8 +2027,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1186" y="577" curvePoint="false"/>
-<arcpath id="001" x="901" y="932" curvePoint="false"/>
+<arcpath id="000" x="1187" y="578" curvePoint="false"/>
+<arcpath id="001" x="902" y="934" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en vagon 1 to T40" source="P5" target="T31">
@@ -2040,8 +2040,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1182" y="558" curvePoint="false"/>
-<arcpath id="001" x="916" y="422" curvePoint="false"/>
+<arcpath id="000" x="1183" y="560" curvePoint="false"/>
+<arcpath id="001" x="917" y="424" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Gente viajando en vagon 1 to T42" source="P5" target="T33">
@@ -2053,8 +2053,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1208" y="558" curvePoint="false"/>
-<arcpath id="001" x="1451" y="442" curvePoint="false"/>
+<arcpath id="000" x="1210" y="560" curvePoint="false"/>
+<arcpath id="001" x="1447" y="441" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Lugares vacios vagon 1 to T12" source="P6" target="T7">
@@ -2066,8 +2066,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1182" y="867" curvePoint="false"/>
-<arcpath id="001" x="775" y="600" curvePoint="false"/>
+<arcpath id="000" x="1184" y="873" curvePoint="false"/>
+<arcpath id="001" x="776" y="601" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Lugares vacios vagon 1 to T22" source="P6" target="T11">
@@ -2079,8 +2079,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1181" y="872" curvePoint="false"/>
-<arcpath id="001" x="775" y="801" curvePoint="false"/>
+<arcpath id="000" x="1182" y="879" curvePoint="false"/>
+<arcpath id="001" x="776" y="807" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Lugares vacios vagon 1 to T23" source="P6" target="T12">
@@ -2092,8 +2092,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1210" y="872" curvePoint="false"/>
-<arcpath id="001" x="1600" y="791" curvePoint="false"/>
+<arcpath id="000" x="1211" y="878" curvePoint="false"/>
+<arcpath id="001" x="1601" y="792" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Lugares vacios vagon 1 to T24" source="P6" target="T13">
@@ -2105,8 +2105,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1208" y="868" curvePoint="false"/>
-<arcpath id="001" x="1650" y="613" curvePoint="false"/>
+<arcpath id="000" x="1210" y="874" curvePoint="false"/>
+<arcpath id="001" x="1661" y="616" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Maquina lugares vacios to T11" source="P7" target="T6">
@@ -2118,8 +2118,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1182" y="1022" curvePoint="false"/>
-<arcpath id="001" x="740" y="763" curvePoint="false"/>
+<arcpath id="000" x="1183" y="1024" curvePoint="false"/>
+<arcpath id="001" x="736" y="767" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Maquina lugares vacios to T20" source="P7" target="T9">
@@ -2131,8 +2131,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1205" y="1020" curvePoint="false"/>
-<arcpath id="001" x="1602" y="572" curvePoint="false"/>
+<arcpath id="000" x="1206" y="1020" curvePoint="false"/>
+<arcpath id="001" x="1601" y="571" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Maquina lugares vacios to T21" source="P7" target="T10">
@@ -2144,8 +2144,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1185" y="1020" curvePoint="false"/>
-<arcpath id="001" x="775" y="570" curvePoint="false"/>
+<arcpath id="000" x="1186" y="1020" curvePoint="false"/>
+<arcpath id="001" x="776" y="571" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Maquina lugares vacios to T33" source="P7" target="T23">
@@ -2157,8 +2157,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1208" y="1022" curvePoint="false"/>
-<arcpath id="001" x="1645" y="766" curvePoint="false"/>
+<arcpath id="000" x="1209" y="1024" curvePoint="false"/>
+<arcpath id="001" x="1656" y="766" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P0 to T0" source="P8" target="T4">
@@ -2170,8 +2170,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="550" y="335" curvePoint="false"/>
-<arcpath id="001" x="700" y="333" curvePoint="false"/>
+<arcpath id="000" x="552" y="342" curvePoint="false"/>
+<arcpath id="001" x="701" y="342" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P10 to T11" source="P9" target="T6">
@@ -2183,8 +2183,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="430" y="780" curvePoint="false"/>
-<arcpath id="001" x="720" y="758" curvePoint="false"/>
+<arcpath id="000" x="431" y="776" curvePoint="false"/>
+<arcpath id="001" x="716" y="762" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P10 to T22" source="P9" target="T11">
@@ -2196,8 +2196,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="430" y="781" curvePoint="false"/>
-<arcpath id="001" x="745" y="801" curvePoint="false"/>
+<arcpath id="000" x="431" y="778" curvePoint="false"/>
+<arcpath id="001" x="746" y="807" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P12 to T20" source="P10" target="T9">
@@ -2209,8 +2209,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1901" y="580" curvePoint="false"/>
-<arcpath id="001" x="1617" y="568" curvePoint="false"/>
+<arcpath id="000" x="1902" y="581" curvePoint="false"/>
+<arcpath id="001" x="1616" y="567" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P12 to T24" source="P10" target="T13">
@@ -2222,8 +2222,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1901" y="582" curvePoint="false"/>
-<arcpath id="001" x="1680" y="613" curvePoint="false"/>
+<arcpath id="000" x="1902" y="583" curvePoint="false"/>
+<arcpath id="001" x="1676" y="612" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P13 to T23" source="P11" target="T12">
@@ -2235,8 +2235,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1886" y="795" curvePoint="false"/>
-<arcpath id="001" x="1630" y="791" curvePoint="false"/>
+<arcpath id="000" x="1887" y="792" curvePoint="false"/>
+<arcpath id="001" x="1631" y="792" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P13 to T33" source="P11" target="T23">
@@ -2248,8 +2248,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1886" y="793" curvePoint="false"/>
-<arcpath id="001" x="1675" y="766" curvePoint="false"/>
+<arcpath id="000" x="1887" y="790" curvePoint="false"/>
+<arcpath id="001" x="1676" y="762" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P20 to T27" source="P13" target="T16">
@@ -2261,8 +2261,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1225" y="267" curvePoint="false"/>
-<arcpath id="001" x="1405" y="266" curvePoint="false"/>
+<arcpath id="000" x="1227" y="267" curvePoint="false"/>
+<arcpath id="001" x="1406" y="267" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P20 to T28" source="P13" target="T17">
@@ -2274,8 +2274,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1211" y="251" curvePoint="false"/>
-<arcpath id="001" x="1211" y="191" curvePoint="false"/>
+<arcpath id="000" x="1211" y="252" curvePoint="false"/>
+<arcpath id="001" x="1211" y="184" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="P21 to T28" source="P14" target="T17">
@@ -2287,8 +2287,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1090" y="177" curvePoint="false"/>
-<arcpath id="001" x="1205" y="176" curvePoint="false"/>
+<arcpath id="000" x="1091" y="176" curvePoint="false"/>
+<arcpath id="001" x="1207" y="173" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P23 to T1" source="P16" target="T5">
@@ -2300,8 +2300,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1615" y="280" curvePoint="false"/>
-<arcpath id="001" x="1615" y="365" curvePoint="false"/>
+<arcpath id="000" x="1616" y="281" curvePoint="false"/>
+<arcpath id="001" x="1616" y="366" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P24 to T31" source="P17" target="T21">
@@ -2313,8 +2313,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1301" y="1267" curvePoint="false"/>
-<arcpath id="001" x="1450" y="1267" curvePoint="false"/>
+<arcpath id="000" x="1302" y="1272" curvePoint="false"/>
+<arcpath id="001" x="1451" y="1272" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P24 to T32" source="P17" target="T22">
@@ -2326,8 +2326,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="1286" y="1252" curvePoint="false"/>
-<arcpath id="001" x="1286" y="1211" curvePoint="false"/>
+<arcpath id="000" x="1287" y="1257" curvePoint="false"/>
+<arcpath id="001" x="1287" y="1212" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="P25 to T32" source="P18" target="T22">
@@ -2339,8 +2339,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1165" y="1196" curvePoint="false"/>
-<arcpath id="001" x="1280" y="1196" curvePoint="false"/>
+<arcpath id="000" x="1166" y="1197" curvePoint="false"/>
+<arcpath id="001" x="1281" y="1197" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P27 to T4" source="P20" target="T30">
@@ -2352,10 +2352,10 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1675" y="1281" curvePoint="false"/>
-<arcpath id="001" x="1675" y="1302" curvePoint="false"/>
-<arcpath id="002" x="768" y="1306" curvePoint="false"/>
-<arcpath id="003" x="771" y="1095" curvePoint="false"/>
+<arcpath id="000" x="1676" y="1286" curvePoint="false"/>
+<arcpath id="001" x="1676" y="1303" curvePoint="false"/>
+<arcpath id="002" x="779" y="1307" curvePoint="false"/>
+<arcpath id="003" x="776" y="1096" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P28 to T0" source="P21" target="T4">
@@ -2367,8 +2367,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="606" y="656" curvePoint="false"/>
-<arcpath id="001" x="710" y="337" curvePoint="false"/>
+<arcpath id="000" x="616" y="657" curvePoint="false"/>
+<arcpath id="001" x="711" y="346" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P28 to T3" source="P21" target="T19">
@@ -2380,8 +2380,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="597" y="685" curvePoint="false"/>
-<arcpath id="001" x="540" y="906" curvePoint="false"/>
+<arcpath id="000" x="607" y="686" curvePoint="false"/>
+<arcpath id="001" x="541" y="907" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P28 to T34" source="P21" target="T24">
@@ -2393,8 +2393,8 @@
 <tagged>
 <value/>
 </tagged>
-<arcpath id="000" x="616" y="671" curvePoint="false"/>
-<arcpath id="001" x="1180" y="708" curvePoint="false"/>
+<arcpath id="000" x="626" y="673" curvePoint="false"/>
+<arcpath id="001" x="1181" y="717" curvePoint="false"/>
 <type value="inhibitor"/>
 </arc>
 <arc id="P28 to T5" source="P21" target="T34">
@@ -2406,8 +2406,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="615" y="676" curvePoint="false"/>
-<arcpath id="001" x="1615" y="1091" curvePoint="false"/>
+<arcpath id="000" x="625" y="677" curvePoint="false"/>
+<arcpath id="001" x="1616" y="1092" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P28 to T7" source="P21" target="T36">
@@ -2419,8 +2419,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="616" y="667" curvePoint="false"/>
-<arcpath id="001" x="1780" y="476" curvePoint="false"/>
+<arcpath id="000" x="626" y="669" curvePoint="false"/>
+<arcpath id="001" x="1781" y="477" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P29 to T34" source="P22" target="T24">
@@ -2432,8 +2432,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1195" y="677" curvePoint="false"/>
-<arcpath id="001" x="1195" y="702" curvePoint="false"/>
+<arcpath id="000" x="1196" y="686" curvePoint="false"/>
+<arcpath id="001" x="1196" y="711" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P2 to T7" source="P12" target="T36">
@@ -2445,8 +2445,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1795" y="385" curvePoint="false"/>
-<arcpath id="001" x="1795" y="470" curvePoint="false"/>
+<arcpath id="000" x="1796" y="386" curvePoint="false"/>
+<arcpath id="001" x="1796" y="471" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T35" source="P24" target="T25">
@@ -2458,8 +2458,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1208" y="763" curvePoint="false"/>
-<arcpath id="001" x="1416" y="891" curvePoint="false"/>
+<arcpath id="000" x="1209" y="769" curvePoint="false"/>
+<arcpath id="001" x="1417" y="892" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T36" source="P24" target="T26">
@@ -2471,8 +2471,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1207" y="765" curvePoint="false"/>
-<arcpath id="001" x="1415" y="942" curvePoint="false"/>
+<arcpath id="000" x="1208" y="771" curvePoint="false"/>
+<arcpath id="001" x="1416" y="943" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T37" source="P24" target="T27">
@@ -2484,8 +2484,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1182" y="761" curvePoint="false"/>
-<arcpath id="001" x="898" y="890" curvePoint="false"/>
+<arcpath id="000" x="1183" y="768" curvePoint="false"/>
+<arcpath id="001" x="903" y="896" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T38" source="P24" target="T28">
@@ -2497,8 +2497,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1182" y="763" curvePoint="false"/>
-<arcpath id="001" x="901" y="940" curvePoint="false"/>
+<arcpath id="000" x="1184" y="769" curvePoint="false"/>
+<arcpath id="001" x="902" y="941" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T39" source="P24" target="T29">
@@ -2510,8 +2510,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1186" y="743" curvePoint="false"/>
-<arcpath id="001" x="915" y="398" curvePoint="false"/>
+<arcpath id="000" x="1187" y="750" curvePoint="false"/>
+<arcpath id="001" x="916" y="407" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T40" source="P24" target="T31">
@@ -2523,8 +2523,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1186" y="743" curvePoint="false"/>
-<arcpath id="001" x="916" y="430" curvePoint="false"/>
+<arcpath id="000" x="1187" y="750" curvePoint="false"/>
+<arcpath id="001" x="917" y="431" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T41" source="P24" target="T32">
@@ -2536,8 +2536,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1205" y="743" curvePoint="false"/>
-<arcpath id="001" x="1450" y="406" curvePoint="false"/>
+<arcpath id="000" x="1205" y="749" curvePoint="false"/>
+<arcpath id="001" x="1446" y="407" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P30 to T42" source="P24" target="T33">
@@ -2549,8 +2549,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1205" y="743" curvePoint="false"/>
-<arcpath id="001" x="1450" y="450" curvePoint="false"/>
+<arcpath id="000" x="1206" y="750" curvePoint="false"/>
+<arcpath id="001" x="1446" y="448" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P3 to T3" source="P23" target="T19">
@@ -2562,8 +2562,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="535" y="1076" curvePoint="false"/>
-<arcpath id="001" x="535" y="915" curvePoint="false"/>
+<arcpath id="000" x="536" y="1077" curvePoint="false"/>
+<arcpath id="001" x="536" y="916" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P6 to T5" source="P25" target="T34">
@@ -2575,8 +2575,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1781" y="1091" curvePoint="false"/>
-<arcpath id="001" x="1645" y="1091" curvePoint="false"/>
+<arcpath id="000" x="1782" y="1092" curvePoint="false"/>
+<arcpath id="001" x="1646" y="1092" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P7 to T6" source="P26" target="T35">
@@ -2588,8 +2588,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1795" y="685" curvePoint="false"/>
-<arcpath id="001" x="1795" y="905" curvePoint="false"/>
+<arcpath id="000" x="1796" y="686" curvePoint="false"/>
+<arcpath id="001" x="1796" y="906" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P9 to T12" source="P27" target="T7">
@@ -2601,8 +2601,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="425" y="576" curvePoint="false"/>
-<arcpath id="001" x="760" y="596" curvePoint="false"/>
+<arcpath id="000" x="431" y="582" curvePoint="false"/>
+<arcpath id="001" x="761" y="597" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P9 to T21" source="P27" target="T10">
@@ -2614,8 +2614,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="425" y="575" curvePoint="false"/>
-<arcpath id="001" x="760" y="566" curvePoint="false"/>
+<arcpath id="000" x="431" y="581" curvePoint="false"/>
+<arcpath id="001" x="761" y="567" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T0 to Estacion A" source="T4" target="P0">
@@ -2627,8 +2627,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="720" y="338" curvePoint="false"/>
-<arcpath id="001" x="716" y="461" curvePoint="false"/>
+<arcpath id="000" x="721" y="347" curvePoint="false"/>
+<arcpath id="001" x="717" y="462" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T0 to Viaj A a B" source="T4" target="P28">
@@ -2640,8 +2640,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="730" y="333" curvePoint="false"/>
-<arcpath id="001" x="1076" y="333" curvePoint="false"/>
+<arcpath id="000" x="731" y="342" curvePoint="false"/>
+<arcpath id="001" x="1077" y="342" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T11 to Gente viajando en maquina" source="T6" target="P4">
@@ -2653,8 +2653,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="735" y="752" curvePoint="false"/>
-<arcpath id="001" x="1183" y="453" curvePoint="false"/>
+<arcpath id="000" x="731" y="756" curvePoint="false"/>
+<arcpath id="001" x="1184" y="455" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T11 to P29" source="T6" target="P22">
@@ -2666,8 +2666,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="750" y="758" curvePoint="false"/>
-<arcpath id="001" x="1181" y="666" curvePoint="false"/>
+<arcpath id="000" x="746" y="762" curvePoint="false"/>
+<arcpath id="001" x="1182" y="674" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T12 to Gente viajando en vagon 1" source="T7" target="P5">
@@ -2679,8 +2679,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="790" y="596" curvePoint="false"/>
-<arcpath id="001" x="1181" y="566" curvePoint="false"/>
+<arcpath id="000" x="791" y="597" curvePoint="false"/>
+<arcpath id="001" x="1182" y="568" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T12 to P29" source="T7" target="P22">
@@ -2692,8 +2692,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="790" y="596" curvePoint="false"/>
-<arcpath id="001" x="1181" y="661" curvePoint="false"/>
+<arcpath id="000" x="791" y="597" curvePoint="false"/>
+<arcpath id="001" x="1182" y="669" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T1 to P2" source="T5" target="P12">
@@ -2705,8 +2705,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1630" y="371" curvePoint="false"/>
-<arcpath id="001" x="1781" y="371" curvePoint="false"/>
+<arcpath id="000" x="1631" y="372" curvePoint="false"/>
+<arcpath id="001" x="1782" y="372" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T1 to P28" source="T5" target="P21">
@@ -2718,8 +2718,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1600" y="371" curvePoint="false"/>
-<arcpath id="001" x="615" y="666" curvePoint="false"/>
+<arcpath id="000" x="1601" y="372" curvePoint="false"/>
+<arcpath id="001" x="626" y="667" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T20 to Gente viajando en maquina" source="T9" target="P4">
@@ -2731,8 +2731,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1587" y="568" curvePoint="false"/>
-<arcpath id="001" x="1210" y="450" curvePoint="false"/>
+<arcpath id="000" x="1586" y="567" curvePoint="false"/>
+<arcpath id="001" x="1211" y="451" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T20 to P29" source="T9" target="P22">
@@ -2744,8 +2744,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1587" y="568" curvePoint="false"/>
-<arcpath id="001" x="1210" y="660" curvePoint="false"/>
+<arcpath id="000" x="1586" y="567" curvePoint="false"/>
+<arcpath id="001" x="1211" y="668" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T21 to Gente viajando en maquina" source="T10" target="P4">
@@ -2757,8 +2757,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="790" y="566" curvePoint="false"/>
-<arcpath id="001" x="1181" y="450" curvePoint="false"/>
+<arcpath id="000" x="791" y="567" curvePoint="false"/>
+<arcpath id="001" x="1182" y="451" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T21 to P29" source="T10" target="P22">
@@ -2770,8 +2770,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="790" y="566" curvePoint="false"/>
-<arcpath id="001" x="1181" y="660" curvePoint="false"/>
+<arcpath id="000" x="791" y="567" curvePoint="false"/>
+<arcpath id="001" x="1182" y="668" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T22 to Gente viajando en vagon 1" source="T11" target="P5">
@@ -2783,8 +2783,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="775" y="801" curvePoint="false"/>
-<arcpath id="001" x="1182" y="572" curvePoint="false"/>
+<arcpath id="000" x="776" y="807" curvePoint="false"/>
+<arcpath id="001" x="1183" y="574" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T22 to P29" source="T11" target="P22">
@@ -2796,8 +2796,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="775" y="801" curvePoint="false"/>
-<arcpath id="001" x="1181" y="667" curvePoint="false"/>
+<arcpath id="000" x="776" y="807" curvePoint="false"/>
+<arcpath id="001" x="1182" y="676" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T23 to Gente viajando en vagon 1" source="T12" target="P5">
@@ -2809,8 +2809,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1600" y="791" curvePoint="false"/>
-<arcpath id="001" x="1208" y="572" curvePoint="false"/>
+<arcpath id="000" x="1601" y="792" curvePoint="false"/>
+<arcpath id="001" x="1210" y="574" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T23 to P29" source="T12" target="P22">
@@ -2822,8 +2822,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1600" y="791" curvePoint="false"/>
-<arcpath id="001" x="1210" y="667" curvePoint="false"/>
+<arcpath id="000" x="1601" y="792" curvePoint="false"/>
+<arcpath id="001" x="1211" y="676" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T24 to Gente viajando en vagon 1" source="T13" target="P5">
@@ -2835,8 +2835,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1650" y="613" curvePoint="false"/>
-<arcpath id="001" x="1210" y="567" curvePoint="false"/>
+<arcpath id="000" x="1646" y="612" curvePoint="false"/>
+<arcpath id="001" x="1211" y="568" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T24 to P29" source="T13" target="P22">
@@ -2848,8 +2848,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1650" y="613" curvePoint="false"/>
-<arcpath id="001" x="1210" y="661" curvePoint="false"/>
+<arcpath id="000" x="1646" y="612" curvePoint="false"/>
+<arcpath id="001" x="1211" y="670" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T25 to P20" source="T14" target="P13">
@@ -2861,8 +2861,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1105" y="266" curvePoint="false"/>
-<arcpath id="001" x="1196" y="266" curvePoint="false"/>
+<arcpath id="000" x="1106" y="267" curvePoint="false"/>
+<arcpath id="001" x="1197" y="267" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T26 to P21" source="T15" target="P14">
@@ -2874,8 +2874,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1075" y="120" curvePoint="false"/>
-<arcpath id="001" x="1075" y="161" curvePoint="false"/>
+<arcpath id="000" x="1076" y="121" curvePoint="false"/>
+<arcpath id="001" x="1076" y="162" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T27 to P23" source="T16" target="P16">
@@ -2887,8 +2887,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1435" y="266" curvePoint="false"/>
-<arcpath id="001" x="1601" y="266" curvePoint="false"/>
+<arcpath id="000" x="1436" y="267" curvePoint="false"/>
+<arcpath id="001" x="1602" y="267" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T28 to P22" source="T17" target="P15">
@@ -2900,8 +2900,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1215" y="176" curvePoint="false"/>
-<arcpath id="001" x="1436" y="176" curvePoint="false"/>
+<arcpath id="000" x="1219" y="177" curvePoint="false"/>
+<arcpath id="001" x="1437" y="177" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T29 to P24" source="T18" target="P17">
@@ -2913,8 +2913,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1180" y="1267" curvePoint="false"/>
-<arcpath id="001" x="1271" y="1267" curvePoint="false"/>
+<arcpath id="000" x="1181" y="1272" curvePoint="false"/>
+<arcpath id="001" x="1272" y="1272" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T2 to P0" source="T8" target="P8">
@@ -2926,8 +2926,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="536" y="471" curvePoint="false"/>
-<arcpath id="001" x="536" y="347" curvePoint="false"/>
+<arcpath id="000" x="537" y="472" curvePoint="false"/>
+<arcpath id="001" x="537" y="356" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T2 to P28" source="T8" target="P21">
@@ -2939,8 +2939,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="541" y="481" curvePoint="false"/>
-<arcpath id="001" x="596" y="656" curvePoint="false"/>
+<arcpath id="000" x="542" y="482" curvePoint="false"/>
+<arcpath id="001" x="606" y="657" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T30 to P25" source="T20" target="P18">
@@ -2952,8 +2952,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1150" y="1140" curvePoint="false"/>
-<arcpath id="001" x="1150" y="1181" curvePoint="false"/>
+<arcpath id="000" x="1151" y="1141" curvePoint="false"/>
+<arcpath id="001" x="1151" y="1182" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T31 to P27" source="T21" target="P20">
@@ -2965,8 +2965,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1480" y="1267" curvePoint="false"/>
-<arcpath id="001" x="1661" y="1267" curvePoint="false"/>
+<arcpath id="000" x="1481" y="1272" curvePoint="false"/>
+<arcpath id="001" x="1662" y="1272" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T32 to P26" source="T22" target="P19">
@@ -2978,8 +2978,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1290" y="1196" curvePoint="false"/>
-<arcpath id="001" x="1511" y="1196" curvePoint="false"/>
+<arcpath id="000" x="1291" y="1197" curvePoint="false"/>
+<arcpath id="001" x="1512" y="1197" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T33 to Gente viajando en maquina" source="T23" target="P4">
@@ -2991,8 +2991,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1660" y="760" curvePoint="false"/>
-<arcpath id="001" x="1207" y="453" curvePoint="false"/>
+<arcpath id="000" x="1661" y="756" curvePoint="false"/>
+<arcpath id="001" x="1209" y="455" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T33 to P29" source="T23" target="P22">
@@ -3004,8 +3004,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1645" y="766" curvePoint="false"/>
-<arcpath id="001" x="1210" y="666" curvePoint="false"/>
+<arcpath id="000" x="1646" y="762" curvePoint="false"/>
+<arcpath id="001" x="1211" y="674" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T34 to P30" source="T24" target="P24">
@@ -3017,8 +3017,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1195" y="712" curvePoint="false"/>
-<arcpath id="001" x="1195" y="741" curvePoint="false"/>
+<arcpath id="000" x="1196" y="721" curvePoint="false"/>
+<arcpath id="001" x="1196" y="747" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T35 to Maquina lugares vacios" source="T25" target="P7">
@@ -3030,8 +3030,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1415" y="901" curvePoint="false"/>
-<arcpath id="001" x="1208" y="1022" curvePoint="false"/>
+<arcpath id="000" x="1416" y="902" curvePoint="false"/>
+<arcpath id="001" x="1209" y="1024" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T36 to Lugares vacios vagon 1" source="T26" target="P6">
@@ -3043,8 +3043,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1415" y="948" curvePoint="false"/>
-<arcpath id="001" x="1210" y="880" curvePoint="false"/>
+<arcpath id="000" x="1416" y="950" curvePoint="false"/>
+<arcpath id="001" x="1211" y="886" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T37 to Maquina lugares vacios" source="T27" target="P7">
@@ -3056,8 +3056,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="897" y="897" curvePoint="false"/>
-<arcpath id="001" x="1182" y="1025" curvePoint="false"/>
+<arcpath id="000" x="907" y="908" curvePoint="false"/>
+<arcpath id="001" x="1183" y="1026" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T38 to Lugares vacios vagon 1" source="T28" target="P6">
@@ -3069,8 +3069,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="900" y="947" curvePoint="false"/>
-<arcpath id="001" x="1181" y="878" curvePoint="false"/>
+<arcpath id="000" x="901" y="948" curvePoint="false"/>
+<arcpath id="001" x="1182" y="885" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T39 to Maquina lugares vacios" source="T29" target="P7">
@@ -3082,8 +3082,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="911" y="408" curvePoint="false"/>
-<arcpath id="001" x="1190" y="1017" curvePoint="false"/>
+<arcpath id="000" x="912" y="417" curvePoint="false"/>
+<arcpath id="001" x="1190" y="1018" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T3 to Estacion D" source="T19" target="P3">
@@ -3095,8 +3095,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="550" y="911" curvePoint="false"/>
-<arcpath id="001" x="746" y="911" curvePoint="false"/>
+<arcpath id="000" x="551" y="912" curvePoint="false"/>
+<arcpath id="001" x="747" y="912" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T3 to Viaj D a A" source="T19" target="P30">
@@ -3108,8 +3108,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="530" y="905" curvePoint="false"/>
-<arcpath id="001" x="535" y="685" curvePoint="false"/>
+<arcpath id="000" x="531" y="906" curvePoint="false"/>
+<arcpath id="001" x="536" y="686" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T40 to Lugares vacios vagon 1" source="T31" target="P6">
@@ -3121,8 +3121,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="915" y="437" curvePoint="false"/>
-<arcpath id="001" x="1187" y="862" curvePoint="false"/>
+<arcpath id="000" x="916" y="438" curvePoint="false"/>
+<arcpath id="001" x="1188" y="869" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T41 to Maquina lugares vacios" source="T32" target="P7">
@@ -3134,8 +3134,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1456" y="416" curvePoint="false"/>
-<arcpath id="001" x="1201" y="1016" curvePoint="false"/>
+<arcpath id="000" x="1452" y="417" curvePoint="false"/>
+<arcpath id="001" x="1202" y="1018" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T42 to Lugares vacios vagon 1" source="T33" target="P6">
@@ -3147,8 +3147,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1450" y="456" curvePoint="false"/>
-<arcpath id="001" x="1203" y="862" curvePoint="false"/>
+<arcpath id="000" x="1446" y="455" curvePoint="false"/>
+<arcpath id="001" x="1204" y="869" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T4 to P28" source="T30" target="P21">
@@ -3160,8 +3160,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="765" y="1085" curvePoint="false"/>
-<arcpath id="001" x="606" y="683" curvePoint="false"/>
+<arcpath id="000" x="771" y="1086" curvePoint="false"/>
+<arcpath id="001" x="617" y="686" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T4 to P3" source="T30" target="P23">
@@ -3173,8 +3173,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="756" y="1091" curvePoint="false"/>
-<arcpath id="001" x="551" y="1091" curvePoint="false"/>
+<arcpath id="000" x="761" y="1092" curvePoint="false"/>
+<arcpath id="001" x="552" y="1092" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T5 to Estacion C" source="T34" target="P2">
@@ -3186,8 +3186,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1630" y="1085" curvePoint="false"/>
-<arcpath id="001" x="1630" y="925" curvePoint="false"/>
+<arcpath id="000" x="1631" y="1086" curvePoint="false"/>
+<arcpath id="001" x="1631" y="926" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T5 to Viaj C a D" source="T34" target="P29">
@@ -3199,8 +3199,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1615" y="1091" curvePoint="false"/>
-<arcpath id="001" x="1481" y="1091" curvePoint="false"/>
+<arcpath id="000" x="1616" y="1092" curvePoint="false"/>
+<arcpath id="001" x="1482" y="1092" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T6 to P28" source="T35" target="P21">
@@ -3212,8 +3212,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1780" y="911" curvePoint="false"/>
-<arcpath id="001" x="616" y="673" curvePoint="false"/>
+<arcpath id="000" x="1781" y="912" curvePoint="false"/>
+<arcpath id="001" x="626" y="675" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T6 to P6" source="T35" target="P25">
@@ -3225,8 +3225,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1795" y="915" curvePoint="false"/>
-<arcpath id="001" x="1795" y="1076" curvePoint="false"/>
+<arcpath id="000" x="1796" y="916" curvePoint="false"/>
+<arcpath id="001" x="1796" y="1077" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T7 to Estacion B" source="T36" target="P1">
@@ -3238,8 +3238,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1780" y="476" curvePoint="false"/>
-<arcpath id="001" x="1631" y="476" curvePoint="false"/>
+<arcpath id="000" x="1781" y="477" curvePoint="false"/>
+<arcpath id="001" x="1632" y="477" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T7 to P7" source="T36" target="P26">
@@ -3251,8 +3251,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1795" y="480" curvePoint="false"/>
-<arcpath id="001" x="1795" y="656" curvePoint="false"/>
+<arcpath id="000" x="1796" y="481" curvePoint="false"/>
+<arcpath id="001" x="1796" y="657" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Viaj A a B to T25" source="P28" target="T14">
@@ -3264,8 +3264,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1090" y="318" curvePoint="false"/>
-<arcpath id="001" x="1090" y="270" curvePoint="false"/>
+<arcpath id="000" x="1091" y="327" curvePoint="false"/>
+<arcpath id="001" x="1091" y="271" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Viaj C a D to T29" source="P29" target="T18">
@@ -3277,10 +3277,10 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="1451" y="1090" curvePoint="false"/>
-<arcpath id="001" x="1015" y="1085" curvePoint="false"/>
-<arcpath id="002" x="1015" y="1262" curvePoint="false"/>
-<arcpath id="003" x="1150" y="1267" curvePoint="false"/>
+<arcpath id="000" x="1452" y="1091" curvePoint="false"/>
+<arcpath id="001" x="1016" y="1086" curvePoint="false"/>
+<arcpath id="002" x="1016" y="1273" curvePoint="false"/>
+<arcpath id="003" x="1151" y="1272" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="Viaj D a A to T2" source="P30" target="T8">
@@ -3292,8 +3292,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="535" y="656" curvePoint="false"/>
-<arcpath id="001" x="531" y="480" curvePoint="false"/>
+<arcpath id="000" x="536" y="657" curvePoint="false"/>
+<arcpath id="001" x="532" y="481" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 </net>
