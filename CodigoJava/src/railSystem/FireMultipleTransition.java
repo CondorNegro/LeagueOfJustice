@@ -7,12 +7,11 @@ public class FireMultipleTransition implements Runnable {
     private int[] transitions_to_fire;
     private Monitor monitor;
 
+    
 /**
  * 
- * @param transicion_subida transicion que hace subir a un pasajero al tren o vagon
+ * @param transiciones_viaje arreglo de enteros que representan las transiciones que disparara el hilo
  * @param monitor
- * @param identificador_estacion  identifica si se trata del control de subida en la estacion A, B, C o D
- * @param identificador_tren_vagon identifica si se trata de la maquina o del vagon
  */
     public FireMultipleTransition(
     		int[] transiciones_viaje, 

@@ -2,7 +2,7 @@ package Monitor;
 
 import java.util.concurrent.Semaphore;
 
-import Logueo.LogDeEventos;
+import Logueo.Logger;
 import jxl.Sheet;
 import jxl.Workbook;
 
@@ -19,7 +19,7 @@ public class Monitor {
     private Cola colas[];
     private RedDePetri rdp;
     private Semaphore mutex;
-    private LogDeEventos log;
+    private Logger log;
     
    
     
@@ -31,7 +31,7 @@ public class Monitor {
 		 //Fairness true: FIFO en cola de hilos bloqueados.
 	       mutex=new Semaphore(1,true);
 	       //La red de petri y las transiciones se configuran posteriormente.
-	       this.log=new LogDeEventos(3);
+	       this.log=new Logger(3);
 	       this.log.createMessage("Transiciones disparadas: \r\n", 1);
 		   
 		 

@@ -3,7 +3,7 @@ package Monitor;
 import java.util.ArrayList;
 import java.util.List;
 
-import Logueo.LogDeEventos;
+import Logueo.Logger;
 
 import static org.junit.Assert.fail;
 
@@ -30,7 +30,7 @@ public class RedDePetri{
 	private int[] transicionesInmediatas; //Un uno indica que la transicion es inmediata.
 	private int[] prioridadesSubida; 
 	private int[] prioridadesBajada;
-	private LogDeEventos log;
+	private Logger log;
 	
 	
 	//Verificacion T-Invariantes
@@ -44,7 +44,7 @@ public class RedDePetri{
 	
 	
 	
-	public RedDePetri(String path, LogDeEventos log){
+	public RedDePetri(String path, Logger log){
 		this.path=path;
 		this.setMatricesFromExcel(path);
 		setCantTransiciones(I[1].length);
@@ -633,7 +633,7 @@ public class RedDePetri{
     
     
     
-    public void setLogEventos(LogDeEventos log){
+    public void setLogEventos(Logger log){
 		this.log=log;
 		this.log.createMessage("Evolucion del marcado: \r\n\r\nMarcado M0: \r\n", 0);
 		for(int plaza=0;plaza<M0.length;plaza++){

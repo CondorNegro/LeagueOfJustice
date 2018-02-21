@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Logueo.LogDeEventos;
+import Logueo.Logger;
 import Monitor.LogicaTemporal;
 import Monitor.Monitor;
 import Monitor.OperacionesMatricesListas;
@@ -34,7 +34,7 @@ public class testRedDePetri {
 	private String redExcel3="./RedesParaTest/TestInvariantes1/testExcelRed2Invariantes.xls"; //Path para Linux.
 	private String redExcel4="./RedesParaTest/TestInvariantes2/testExcelRed2Invariantes2.xls"; //Path para Linux.
 	private String redExcel5="./RedesParaTest/redTemporal/testExcel.xls"; //Path para Linux.
-	private LogDeEventos log;
+	private Logger log;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -56,7 +56,7 @@ public class testRedDePetri {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		log=new LogDeEventos(3);
+		log=new Logger(3);
 		if((System.getProperty("os.name")).equals("Windows 10")){
 			if(System.getProperty("user.name").equals("kzAx")){
 				 

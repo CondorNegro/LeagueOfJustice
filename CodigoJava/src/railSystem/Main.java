@@ -6,16 +6,14 @@ package railSystem;
  */
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream; //Para logueo de eventos
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import Monitor.Cronometro;
 import Monitor.Monitor; //Clase Monitor.
-import Logueo.LogDeEventos;
+
 
 public class Main {
 	

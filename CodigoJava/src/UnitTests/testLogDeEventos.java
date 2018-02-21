@@ -16,11 +16,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import Logueo.LogDeEventos;
+import Logueo.Logger;
 
 
 public class testLogDeEventos {
-	private LogDeEventos log;
+	private Logger log;
 	private String nameFile;
 	/**
 	 * @throws java.lang.Exception
@@ -41,7 +41,7 @@ public class testLogDeEventos {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		log=new LogDeEventos(3);
+		log=new Logger(3);
 		nameFile="./Logueo/logFileB.txt";
 		
 		 if((System.getProperty("os.name")).equals("Windows 10")){
@@ -67,7 +67,7 @@ public class testLogDeEventos {
 
 
 	/**
-	 * Test method for {@link Logueo.LogDeEventos#createMessage(java.lang.String, int)}.
+	 * Test method for {@link Logueo.Logger#createMessage(java.lang.String, int)}.
 	 */
 	@Test
 	public void testCreateMessage() {
@@ -78,7 +78,7 @@ public class testLogDeEventos {
 	}
 
 	/**
-	 * Test method for {@link Logueo.LogDeEventos#addMessage(java.lang.String, int)}.
+	 * Test method for {@link Logueo.Logger#addMessage(java.lang.String, int)}.
 	 */
 	@Test
 	public void testAddMessage() {
@@ -95,7 +95,7 @@ public class testLogDeEventos {
 	
 
 	/**
-	 * Test method for {@link Logueo.LogDeEventos#flushBufferToFile(int)}.
+	 * Test method for {@link Logueo.Logger#flushBufferToFile(int)}.
 	 */
 	@Test
 	public void testFlushBufferToFile() {
@@ -122,7 +122,7 @@ public class testLogDeEventos {
 	}
 	
 	/**
-	 * Test method for {@link Logueo.LogDeEventos#flushBufferToFile(int)}.
+	 * Test method for {@link Logueo.Logger#flushBufferToFile(int)}.
 	 */
 	@Test
 	public void testFlushBufferToFileWithOverwrite() {

@@ -2,42 +2,41 @@
 package Logueo;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 
-public class LogDeEventos {
+
+public class Logger {
 	
 	
 
-	private String[] nameFiles;
+	private String[] name_files;
 	private String[] messages;
 	
-	public LogDeEventos(int numberOfLogs){
-		if(numberOfLogs<1){
-			numberOfLogs=1;
+	public Logger(int number_of_logs){
+		if(number_of_logs<1){
+			number_of_logs=1;
 		}
-		if(numberOfLogs>15){
-			numberOfLogs=15;
+		if(number_of_logs>15){
+			number_of_logs=15;
 		}
 		
 	
 	
-		nameFiles=new String[numberOfLogs];
-		messages=new String[numberOfLogs];
-		for(int i=0; i<numberOfLogs;i++){
+		name_files=new String[number_of_logs];
+		messages=new String[number_of_logs];
+		for(int i=0; i<number_of_logs;i++){
 				   messages[i]=new String("");
 				  		   
 			    	if((System.getProperty("os.name")).equals("Windows 10")){	
 			    		 if(System.getProperty("user.name").equals("kzAx")){
-			    			 this.nameFiles[i]="..\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
+			    			 this.name_files[i]="..\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
 						 }
 						 else{
-							 this.nameFiles[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
+							 this.name_files[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
 						 }
 			    	}
 			    	else{
-			    		this.nameFiles[i]="./Logueo/logFile"+ this.getLetraAbecedario(i) +".txt"; //Path para Linux.
+			    		this.name_files[i]="./Logueo/logFile"+ this.getLetraAbecedario(i) +".txt"; //Path para Linux.
 					    
 			    	}
 				 
@@ -45,8 +44,8 @@ public class LogDeEventos {
 	}
 	
 	/**
-	 * Metodo addMessage. Permite crear un mensaje nuevo en el archivo de logueo indicado con el indice. 
-	 * @param message Mensaje a añadir
+	 * Metodo createMessage. Permite crear un mensaje nuevo en el archivo de logueo indicado con el indice. 
+	 * @param message Mensaje a anadir
 	 * @param indice ID del PrintStream
 	 */
 	public synchronized void createMessage(String message, int indice){
@@ -55,8 +54,8 @@ public class LogDeEventos {
 	}
 	
 	/**
-	 * Metodo addMessage. Permite añadir al final del archivo de logueo indicado por el indice, el mensaje pasado como parámetro.
-	 * @param message Mensaje a añadir
+	 * Metodo addMessage. Permite anadir al final del archivo de logueo indicado por el indice, el mensaje pasado como parametro.
+	 * @param message Mensaje a anadir
 	 * @param indice ID del PrintStream
 	 */
 	public synchronized void addMessage(String message, int indice){
@@ -86,7 +85,7 @@ public class LogDeEventos {
 			//this.getBufferedWriter(indice).write(new String(this.messages[indice]));
 		
 			//this.getBufferedWriter(indice).flush();
-			FileWriter fw=new FileWriter(this.nameFiles[indice]);
+			FileWriter fw=new FileWriter(this.name_files[indice]);
 			BufferedWriter wr=new BufferedWriter(fw);
 			wr.write(new String(this.messages[indice]));
 			wr.flush();
@@ -104,6 +103,6 @@ public class LogDeEventos {
 	
 	private synchronized char getLetraAbecedario(int indice) {
 		char letra;
-		return (char) ('A' + indice ); 
+		return (char) ('A' + indice); 
 	}
 }
