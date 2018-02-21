@@ -184,7 +184,7 @@ public class Monitor {
 							colas[transicion].delay();
 						}
 						else{
-							long timeout=this.rdp.getlogicaTemporal().getTiempoFaltanteParaAlfa(transicion);
+							long timeout=this.rdp.getLogicaTemporal().getTiempoFaltanteParaAlfa(transicion);
 							colas[transicion].delay((timeout)+2); //Por problemas de redondeo.
 						}
 											

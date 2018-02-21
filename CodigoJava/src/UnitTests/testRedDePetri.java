@@ -208,7 +208,7 @@ public class testRedDePetri {
 		for(int j = 0; j<tinvariant.length; j++){ 	//Recorro todas las filas del vector tinvariant
 			while(operaciones.isNotAllZeros(tinvariant[j])){ //Si hay un elemento distinto de cero en esa fila del tinvariant, repetir
 		        for(int i = 0; i<tinvariant[j].length; i++){	//Recorro las columnas de esa fila de tinvariant
-		        	if(redTest.esDisparoValido(redTest.getMarcadoSiguiente(i))&&(tinvariant[j][i]!=0)&&redTest.getlogicaTemporal().isInWindowsTime(i)){ //Si la transicion i se encuentra sensibilizada y ademas pertenece al vector tinvariant, disparar la transicion
+		        	if(redTest.esDisparoValido(redTest.getMarcadoSiguiente(i))&&(tinvariant[j][i]!=0)&&redTest.getLogicaTemporal().isInWindowsTime(i)){ //Si la transicion i se encuentra sensibilizada y ademas pertenece al vector tinvariant, disparar la transicion
 		        		redTest.disparar(i);
 		        		tinvariant[j][i]=tinvariant[j][i]-1; //una vez disparada la transicion i, se marca esa transicion como cero en el vector tinvariant
 		        	}
@@ -288,7 +288,7 @@ public class testRedDePetri {
 			redTest= new RedDePetri(this.redExcel5, log);
 			Method getCantidadDeTransiciones  = LogicaTemporal.class.getDeclaredMethod("getCantidadDeTransiciones", null);
 			getCantidadDeTransiciones.setAccessible(true);
-			int cantidadT=(int)getCantidadDeTransiciones.invoke(redTest.getlogicaTemporal());
+			int cantidadT=(int)getCantidadDeTransiciones.invoke(redTest.getLogicaTemporal());
 			assertEquals(cantidadT,6);
 		}
 		catch(Exception e){
@@ -306,10 +306,10 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5, log);
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][0],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],200);
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][1],-1);
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[0][0],0);
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[1][0],200);
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[1][1],-1);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -325,12 +325,12 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5, log);
-			redTest.getlogicaTemporal().updateVectorZ(redTest.getConjuncionEAndB());
-			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[0],1);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[1],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[2],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[3],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[4],0);
+			redTest.getLogicaTemporal().updateVectorZ(redTest.getConjuncionEAndB());
+			assertEquals(redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[0],1);
+			assertEquals(redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[1],0);
+			assertEquals(redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[2],0);
+			assertEquals(redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[3],0);
+			assertEquals(redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getConjuncionEAndB())[4],0);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -347,19 +347,19 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5, log);
-			int[] tsensandtime=redTest.getlogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
+			int[] tsensandtime=redTest.getLogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],1);
 			assertEquals(tsensandtime[1],0);
 			assertEquals(tsensandtime[2],0);
 			assertEquals(tsensandtime[3],0);
 			redTest.disparar(0);
-			tsensandtime=redTest.getlogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
+			tsensandtime=redTest.getLogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],0);
 			assertEquals(tsensandtime[1],0);
 			assertEquals(tsensandtime[2],0);
 			assertEquals(tsensandtime[3],0);
 			TimeUnit.MILLISECONDS.sleep(300);
-			tsensandtime=redTest.getlogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
+			tsensandtime=redTest.getLogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],0);
 			assertEquals(tsensandtime[1],1);
 			assertEquals(tsensandtime[2],0);
@@ -381,43 +381,43 @@ public class testRedDePetri {
 		try{
 			redTest= new RedDePetri(this.redExcel5, log);
 			int[] transTemporales= new int[redTest.getCantTransiciones()];
-			transTemporales=OperacionesMatricesListas.andVector(redTest.getSensibilizadas(), redTest.getlogicaTemporal().construirVectorTransicionesInmediatas());
-			redTest.getlogicaTemporal().updateTimeStamp(transTemporales, transTemporales, -1);
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][0],0);
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][0],200);
-			assertEquals(redTest.getlogicaTemporal().getVectorDeIntervalos()[1][1],-1);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+			transTemporales=OperacionesMatricesListas.andVector(redTest.getSensibilizadas(), redTest.getLogicaTemporal().construirVectorTransicionesInmediatas());
+			redTest.getLogicaTemporal().updateTimeStamp(transTemporales, transTemporales, -1);
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[0][0],0);
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[0][1],-1);//[columna][fila]
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[1][0],200);
+			assertEquals(redTest.getLogicaTemporal().getVectorDeIntervalos()[1][1],-1);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(1),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(2),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(4),true);
 			redTest.disparar(1);
 			redTest.disparar(0);
 			redTest.disparar(1);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(1),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(2),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(4),true);
 			TimeUnit.MILLISECONDS.sleep(300);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),true);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(1),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(2),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(4),true);
 			redTest.disparar(1);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(1),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(2),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(4),true);
 			TimeUnit.MILLISECONDS.sleep(600);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(0),true);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(1),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(2),true);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(3),false);
-			assertEquals(redTest.getlogicaTemporal().isInWindowsTime(4),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(0),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(1),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(2),true);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(3),false);
+			assertEquals(redTest.getLogicaTemporal().isInWindowsTime(4),true);
 
 		}
 		catch(Exception e){

@@ -64,7 +64,7 @@ public class testMonitorCompleto {
         
         try{
         	Thread.sleep(1000);
-        	hilo2.interrupt();
+        	hilo2.stop();
           
            
         }

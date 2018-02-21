@@ -1,11 +1,10 @@
 package Monitor;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import Logueo.Logger;
 
-import static org.junit.Assert.fail;
+
 
 import java.io.File;
 import jxl.*;
@@ -16,27 +15,27 @@ import jxl.*;
 
 public class RedDePetri{
 	private String path;
-	private int cantTransiciones;
+	private int cantidad_transiciones_inmediatas;
 	
 	private int[][] I; // Matriz de incidencia (Plazas x Transiciones)
 	private int[][] M; // Matriz de marcado. 
-	private int[][] Pinvariantes; //Matriz de P-Invariantes
-	private int[][] Tinvariantes; //Matriz de T-Invariantes
-	private int[] constantePinvariante;
+	private int[][] pinvariantes; //Matriz de P-Invariantes
+	private int[][] tinvariantes; //Matriz de T-Invariantes
+	private int[] constante_pinvariante;
 	private int[][] H; //Matriz H.
 	private int[][] B; //Matriz B. B= H * Q
 	private int[][] Q;
-	private LogicaTemporal logicaTemporal;
-	private int[] transicionesInmediatas; //Un uno indica que la transicion es inmediata.
-	private int[] prioridadesSubida; 
-	private int[] prioridadesBajada;
+	private LogicaTemporal logica_temporal;
+	private int[] transiciones_inmediatas; //Un uno indica que la transicion es inmediata.
+	private int[] prioridades_subida; 
+	private int[] prioridades_bajada;
 	private Logger log;
 	
 	
 	//Verificacion T-Invariantes
 	//private List<Integer> transicionesDisparadas; //Vector con todos los disparos efectuados
 	private int[][] M0; //Marcado inicial
-	private int[][] sumaDisparosTransiciones;
+	private int[][] suma_disparos_transiciones;
 	private int contadorTransicionesDisparadas;
 	boolean flagImpresionVerifTInv=false;
 	
@@ -48,30 +47,30 @@ public class RedDePetri{
 		this.path=path;
 		this.setMatricesFromExcel(path);
 		setCantTransiciones(I[1].length);
-		logicaTemporal=new LogicaTemporal(this.getCantTransiciones());
-		this.logicaTemporal.setVectorIntervalosFromExcel(this.path); 
+		logica_temporal=new LogicaTemporal(this.getCantTransiciones());
+		this.logica_temporal.setVectorIntervalosFromExcel(this.path); 
 		setTransicionesInmediatas();
 		this.B=getMatrizB_Actualizada();
-		this.logicaTemporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
+		this.logica_temporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
 		//this.transicionesDisparadas=new ArrayList<Integer>();
 		this.M0=this.M.clone();
 		
 		
-		sumaDisparosTransiciones=new int[this.getCantTransiciones()][1]; //Sumatoria de todos los disparos efectuados por transicion.
-		for(int i=0; i<sumaDisparosTransiciones.length;i++){ //Reseteo vector.
-			  sumaDisparosTransiciones[i][0]=0;
+		suma_disparos_transiciones=new int[this.getCantTransiciones()][1]; //Sumatoria de todos los disparos efectuados por transicion.
+		for(int i=0; i<suma_disparos_transiciones.length;i++){ //Reseteo vector.
+			  suma_disparos_transiciones[i][0]=0;
 		  }
 		contadorTransicionesDisparadas=0;
 		this.setLogEventos(log);
 	}
 	
 	
-	public int contadorTransicionesDisparadas(){
+	public int getContadorTransicionesDisparadas(){
 		return this.contadorTransicionesDisparadas;
 	}
 	
-	public int[][] sumaDisparosTransiciones(){
-		return this.sumaDisparosTransiciones;
+	public int[][] getSumaDisparosTransiciones(){
+		return this.suma_disparos_transiciones;
 	}
 	
 	/**public List<Integer> getTransicionesDisparadas(){
@@ -83,21 +82,21 @@ public class RedDePetri{
 	}
 	
 	public int[] getPrioridadesSubida(){
-		return this.prioridadesSubida.clone();
+		return this.prioridades_subida.clone();
 	}
 	
 	public int[] getPrioridadesBajada(){
-		return this.prioridadesBajada.clone();
+		return this.prioridades_bajada.clone();
 	}
 	
 	
 	public int[] getVectorTransicionesInmediatas(){
-		return this.transicionesInmediatas;
+		return this.transiciones_inmediatas;
 	}
 	
 	
 	public void setTransicionesInmediatas(){
-		this.transicionesInmediatas=this.logicaTemporal.construirVectorTransicionesInmediatas();
+		this.transiciones_inmediatas=this.logica_temporal.construirVectorTransicionesInmediatas();
 	}
 	
 	
@@ -118,10 +117,10 @@ public class RedDePetri{
 	}
 	
 	public int[][] getPInv(){
-		return Pinvariantes.clone();
+		return pinvariantes.clone();
 	}
 	public int[][] getTInv(){
-		return Tinvariantes;
+		return tinvariantes;
 	}
 	
 	
@@ -130,7 +129,7 @@ public class RedDePetri{
 	 * @param cantidad Cantidad de transiciones de la red
 	 */
 	private void setCantTransiciones(int cantidad){
-		this.cantTransiciones=cantidad;
+		this.cantidad_transiciones_inmediatas=cantidad;
 	}
 	
 	/**
@@ -138,7 +137,7 @@ public class RedDePetri{
 	 * @return int Cantidad de transiciones de la red
 	 */
 	public int getCantTransiciones(){ //Esto es lo unico que esta OK.
-		return cantTransiciones;
+		return cantidad_transiciones_inmediatas;
 	}
 	
 	/**
@@ -188,12 +187,12 @@ public class RedDePetri{
         if (this.getSensibilizadasExtendido()[transicion]==1) {
         		int[] transSensAntesDisparo=this.getConjuncionEAndB();
                 M = marcado_siguiente;
-                this.logicaTemporal.updateTimeStamp(transSensAntesDisparo, this.getConjuncionEAndB(),  transicion);
+                this.logica_temporal.updateTimeStamp(transSensAntesDisparo, this.getConjuncionEAndB(),  transicion);
                 try{
                 	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
                 	
                 	//this.transicionesDisparadas.add(transicion);
-                	sumaDisparosTransiciones[transicion][0]++;
+                	suma_disparos_transiciones[transicion][0]++;
                 	this.contadorTransicionesDisparadas++;
                 	this.log.createMessage("Cantidad de transiciones disparadas:\r\n"+String.valueOf(this.contadorTransicionesDisparadas), 2);
                 	this.log.addMessage(String.valueOf(transicion)+ new String("\r\n"), 1);
@@ -237,140 +236,31 @@ public class RedDePetri{
 	 * @throws IllegalStateException
 	 * 
 	 * El objetivo es verificar que la cantidad de marcas se mantiene constante en las plazas P-invariantes, para ello
-	 * 	compara el valor que retorna marcadoPinvariante() con el marcado inicial "constantePinvariante" obtenida al momento de configurar la red de petri
+	 * 	compara el valor que retorna gerMarcadoPinvariante() con el marcado inicial "constante_pinvariante" obtenida al momento de configurar la red de petri
 	 */
 	
 	private void verificarPInvariantes() throws IllegalStateException{
-		for (int i = 0; i < Pinvariantes.length; i++) {	//Recorro todas las filas del Pinvariantes
-			if(marcadoPinvariante()[i]!=this.constantePinvariante[i]) { //verifico que cada solucion del P-invariante con el marcado actual sea igual a la solucion arrojada al momento de configurar la red de petri en "constantePinvariante"
-				throw new IllegalStateException("Error en los Pinvariantes");	//en otras palabras, si el marcado en esas plazas resulta diferente, se dispara IllegalStateException
+		for (int i = 0; i < pinvariantes.length; i++) {	//Recorro todas las filas del pinvariantes
+			if(gerMarcadoPinvariante()[i]!=this.constante_pinvariante[i]) { //verifico que cada solucion del P-invariante con el marcado actual sea igual a la solucion arrojada al momento de configurar la red de petri en "constante_pinvariante"
+				throw new IllegalStateException("Error en los pinvariantes");	//en otras palabras, si el marcado en esas plazas resulta diferente, se dispara IllegalStateException
 			}
 		}
 	}
 	
 	
-	
-	private void verificarTInvariantes(int[][] Mactual) throws IllegalStateException{
-		 
-		  
-		 /** for(int indice=0; indice<this.transicionesDisparadas.size();indice++){ //Realizo la suma de disparos por cada transicion
-			  sumaDisparosTransiciones[transicionesDisparadas.get(indice)][0]++;
-			  
-		  }**/
-		   
-		 
-		 
-		  int[] minimo=new int[Tinvariantes.length];
-		  
-		
-		  boolean flagPrimero=true;
-		//Determino el numero de T-invariantes completos por cada fila de la matriz T-Invariantes.
-		  for(int fila=0; fila<this.Tinvariantes.length;fila++){ 
-			  minimo[fila]=0;
-			  flagPrimero=true;
-			 
-			  for(int columna=0; columna<this.Tinvariantes[0].length;columna++){
-				  if(flagPrimero & Tinvariantes[fila][columna]>0){
-					  flagPrimero=false;
-					  minimo[fila]=sumaDisparosTransiciones[columna][0];
-				  }
-				  
-				  if(sumaDisparosTransiciones[columna][0]<minimo[fila]){
-					  
-					  minimo[fila]=sumaDisparosTransiciones[columna][0]; 
-					  //Determino el minimo numero de transiciones disparadas por cada fila de la matriz de T-Inv.
-					  
-				  }  
-			  }
-			  
-		  }
-		  for(int fila=0; fila<this.Tinvariantes.length;fila++){ //Chequeo el numero de T-Invariantes completos.
-			  
-			  for(int columna=0; columna<this.Tinvariantes[0].length;columna++){
-				  if(Tinvariantes[fila][columna]==1){
-					  //Resto el minimo. 
-					  sumaDisparosTransiciones[columna][0]=sumaDisparosTransiciones[columna][0]-minimo[fila];
-					  if(sumaDisparosTransiciones[columna][0]<0){
-						  System.out.println("Causa del error:");
-						  System.out.println(sumaDisparosTransiciones[columna][0]);
-						  System.out.println("Columna:");
-						  System.out.println(columna);
-						  System.out.println("minimo:"); 
-						  System.out.println(minimo[fila]);
-						  throw new IllegalStateException("Suma de disparos negativa");	
-						  
-						  
-					  }
-				  }
-				 
-			  }
-			  
-		  }
-		  
-		//sumaDisparosTransiciones en este punto ya contiene el excedente de disparo de los T-Invariantes y la cantidad de disparos de transiciones que 
-		  //no pertenecen a T-Invariantes.
-		  
-		
-		  
-		  //Verificacion de TInv
-		  if(this.flagImpresionVerifTInv){
-			  int[][] Mprint=OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransiciones);
-			  
-			  for(int i=0;i<Mprint.length;i++){
-				  System.out.print("Marcado a restar plaza "+i+": ");
-				  System.out.println(Mprint[i][0]);
-			  }
-		  }
-		  
-		 
-		  
-		 //int[][] Maux={{1},{2},{3}};  //Si se descomenta fuerza el error. Es para test.
-		  
-		 
-		  int[][] Maux = OperacionesMatricesListas.restaMatrices(Mactual,OperacionesMatricesListas.productoMatrices(this.I, sumaDisparosTransiciones));
-			  
-		  
-		  	  
-		  
-		  for(int plaza=0; plaza<Maux.length; plaza++){
-			  if(this.flagImpresionVerifTInv){
-				  System.out.print("Marcado Maux Plaza "+ plaza +": ");//Debe ser igual a M0
-				  System.out.println(Maux[plaza][0]);
-			  }
-			  
-			  if(Maux[plaza][0] != this.getMarcadoInicial()[plaza][0]){
-				  throw new IllegalStateException("Error en los Tinvariantes");
-				 
-			  }
-			  if(this.flagImpresionVerifTInv){
-				  if(Maux[plaza][0] == this.getMarcadoInicial()[Maux.length-1][0]){
-			  
-					  System.out.println("T_Invariantes OK");	  
-				  }
-		
-			  }
-		  }
-		  
-		//resetear lista
-		 // this.transicionesDisparadas.clear();
-		//El contador de disparos de cada transicion de la red queda actualizado.
-				
-	}
-	
-	
 	/**
-	 * Metodo marcadoPinvariante.
+	 * Metodo gerMarcadoPinvariante.
 	 * @return int[]					Vector que contiene las soluciones a las ecuaciones de los P-invariantes
 	 */
-    private int[] marcadoPinvariante() {
-        int[] resultado=new int[Pinvariantes.length];			//Inicializacion del vector resultado
-        for (int i = 0; i < Pinvariantes.length; i++) {			//Recorro las filas del vector Pinvariantes
-            for (int j = 0; j < Pinvariantes[0].length; j++) {	// 'j' representa cada columna del vector Pinvariantes[fila]
-                resultado[i]=resultado[i]+(this.Pinvariantes[i][j]*this.M[j][0]); //Multiplico Pinvariantes[fila][columna] con marcado[fila][columna]
+    private int[] gerMarcadoPinvariante() {
+        int[] resultado=new int[pinvariantes.length];			//Inicializacion del vector resultado
+        for (int i = 0; i < pinvariantes.length; i++) {			//Recorro las filas del vector pinvariantes
+            for (int j = 0; j < pinvariantes[0].length; j++) {	// 'j' representa cada columna del vector pinvariantes[fila]
+                resultado[i]=resultado[i]+(this.pinvariantes[i][j]*this.M[j][0]); //Multiplico pinvariantes[fila][columna] con marcado[fila][columna]
             }
         }
         
-        return resultado; //retorno resultado, que contiene las soluciones a las ecuaciones de los Pinvariantes
+        return resultado; //retorno resultado, que contiene las soluciones a las ecuaciones de los pinvariantes
     }
 	
 	
@@ -435,10 +325,10 @@ public class RedDePetri{
             Sheet paginaExcelTInv = archivoExcelMatrices.getSheet(5);//carga los T-invariantes
             columnas = paginaExcelTInv.getColumns();
             filas = paginaExcelTInv.getRows();
-            Tinvariantes = new int[filas-1][columnas];
+            tinvariantes = new int[filas-1][columnas];
             for (int i = 1; i < filas-1; i++) {
                 for (int j = 0; j < columnas; j++) {
-                	Tinvariantes[i - 1][j] = Integer.parseInt(paginaExcelTInv.getCell(j,i).getContents());
+                	tinvariantes[i - 1][j] = Integer.parseInt(paginaExcelTInv.getCell(j,i).getContents());
                 }
             }
             
@@ -446,36 +336,36 @@ public class RedDePetri{
             Sheet paginaExcelPInv = archivoExcelMatrices.getSheet(6);//carga los P-invariantes
             columnas = paginaExcelPInv.getColumns();
             filas = paginaExcelPInv.getRows();
-            Pinvariantes = new int[filas-1][columnas];
+            pinvariantes = new int[filas-1][columnas];
             for (int i = 1; i < filas-1; i++) {
                 for (int j = 0; j < columnas; j++) {
-                	Pinvariantes[i - 1][j] = Integer.parseInt(paginaExcelPInv.getCell(j,i).getContents());
+                	pinvariantes[i - 1][j] = Integer.parseInt(paginaExcelPInv.getCell(j,i).getContents());
                 }
             }
             
            
             
             
-            this.constantePinvariante=marcadoPinvariante(); //Obtiene el resultado de las ecuaciones del P-invariante
-            //System.out.println(constantePinvariante.length);
+            this.constante_pinvariante=gerMarcadoPinvariante(); //Obtiene el resultado de las ecuaciones del P-invariante
+            //System.out.println(constante_pinvariante.length);
             
             
             Sheet paginaExcel = archivoExcelMatrices.getSheet(8);//Prioridades subida
             columnas = paginaExcel.getColumns();
            // filas = paginaExcel.getRows();
-            this.prioridadesSubida = new int[columnas];
+            this.prioridades_subida = new int[columnas];
            
                 for (int j = 0; j < columnas; j++) {
-                	 this.prioridadesSubida[j] = Integer.parseInt(paginaExcel.getCell(j,1).getContents());
+                	 this.prioridades_subida[j] = Integer.parseInt(paginaExcel.getCell(j,1).getContents());
                 }
             
             
             paginaExcel = archivoExcelMatrices.getSheet(9);//Prioridades bajada
             columnas = paginaExcel.getColumns();
             //filas = paginaExcel.getRows();
-            this.prioridadesBajada = new int[columnas];
+            this.prioridades_bajada = new int[columnas];
             for (int j = 0; j < columnas; j++) {
-                	 this.prioridadesBajada[j] = Integer.parseInt(paginaExcel.getCell(j,1).getContents());
+                	 this.prioridades_bajada[j] = Integer.parseInt(paginaExcel.getCell(j,1).getContents());
             }
             
             
@@ -589,11 +479,11 @@ public class RedDePetri{
     
     
     private int[][] getTinvariant() {
-        return this.Tinvariantes;
+        return this.tinvariantes;
     }
     
-    public LogicaTemporal getlogicaTemporal() {
-        return this.logicaTemporal;
+    public LogicaTemporal getLogicaTemporal() {
+        return this.logica_temporal;
     }
     
     public int[] getSensibilizadasExtendido(){
@@ -607,7 +497,7 @@ public class RedDePetri{
     	for(int i=0; i<B.length;i++){
     		Baux[i]=B[i][0];
     	}
-    	int Z[]= logicaTemporal.getVectorZ_Actualizado(this.getConjuncionEAndB());
+    	int Z[]= logica_temporal.getVectorZ_Actualizado(this.getConjuncionEAndB());
     	
     	Ex=OperacionesMatricesListas.andVector(OperacionesMatricesListas.andVector(E, Z),Baux);
     	
