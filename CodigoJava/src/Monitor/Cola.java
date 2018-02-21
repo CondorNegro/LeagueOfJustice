@@ -3,19 +3,19 @@ package Monitor;
 //Existe una cola por transicion
 
 public class Cola { 
-	private int cantHilosEnCola;
+	private int cantidad_de_hilos_en_cola;
 	
 	public Cola(){
-		this.cantHilosEnCola=0;
+		this.cantidad_de_hilos_en_cola=0;
 	}
 	
 	
 	/**
-	 * Metodo getCantHilosEnCola
-	 * @return int cantHilosEnCola
+	 * Metodo getcantidad_de_hilos_en_cola
+	 * @return int cantidad_de_hilos_en_cola
 	 */
-	public int getCantHilosEnCola(){
-		return this.cantHilosEnCola;
+	public int getcantidad_de_hilos_en_cola(){
+		return this.cantidad_de_hilos_en_cola;
 	}
 	
 	
@@ -33,13 +33,13 @@ public class Cola {
 	 * @throws InterruptedException
 	 */
 	public synchronized void delay() throws InterruptedException{
-		this.cantHilosEnCola++;
+		this.cantidad_de_hilos_en_cola++;
 		try{
 			super.wait(); //El hilo entra a la cola, sumando la cantidad de hilos en cola
 		}catch(InterruptedException e){
 			//e.printStackTrace();
 		}
-		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
+		this.cantidad_de_hilos_en_cola--; //Cuando sale, resta la cantidad de hilos
 	}
 	
 	
@@ -48,9 +48,9 @@ public class Cola {
 	 * @throws InterruptedException
 	 */
 	public synchronized void delay(long timeout) throws InterruptedException{
-		this.cantHilosEnCola++;
+		this.cantidad_de_hilos_en_cola++;
 		 try{
-			if(timeout>0){ //Si esta vacía es el primer hilo
+			if(timeout>0){ //Si esta vacia es el primer hilo
 		            super.wait(timeout);
 		     }
 		     else{
@@ -63,7 +63,7 @@ public class Cola {
 		 catch(InterruptedException e){
 			
 		 }
-		this.cantHilosEnCola--; //Cuando sale, resta la cantidad de hilos
+		this.cantidad_de_hilos_en_cola--; //Cuando sale, resta la cantidad de hilos
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public class Cola {
 	 * @return boolean true si no hay hilos bloqueados en la cola.
 	 */
 	public boolean isEmpty(){ //Devuelve true si no hay hilos bloqueados en la cola
-		if(cantHilosEnCola==0){
+		if(cantidad_de_hilos_en_cola==0){
 			return true;
 		}
 		else{

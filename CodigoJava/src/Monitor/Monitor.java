@@ -3,20 +3,13 @@ package Monitor;
 import java.util.concurrent.Semaphore;
 
 import Logueo.Logger;
-import jxl.Sheet;
-import jxl.Workbook;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 //Se aplica SINGLETON. 
 
 public class Monitor { 
 	//Elementos del monitor.
 	private Politica politica;
-	private int cantTransiciones; //Igual a cantidad de colas.
-    private Cola colas[];
+	private int cantidad_de_transiciones; //Igual a cantidad de colas.
+    private Cola[] colas;
     private RedDePetri rdp;
     private Semaphore mutex;
     private Logger log;
@@ -124,10 +117,10 @@ public class Monitor {
 			e.printStackTrace();
 		}
 		this.rdp=new RedDePetri(path,this.log);
-		this.cantTransiciones=rdp.getCantTransiciones();
+		this.cantidad_de_transiciones=rdp.getCantTransiciones();
 		
-		colas= new Cola[this.cantTransiciones];
-        for(int i=0;i<this.cantTransiciones;i++){ 
+		colas= new Cola[this.cantidad_de_transiciones];
+        for(int i=0;i<this.cantidad_de_transiciones;i++){ 
             colas[i]=new Cola(); //Inicialización de colas.
         }
         
@@ -161,8 +154,8 @@ public class Monitor {
 	 * @return List<Integer> lista con enteros 1 y 0, indicando si las transiciones correspondientes poseen hilos esperando en sus colas o no, respectivamente.
 	 */
 	private int[] quienesEstanEnColas() {
-		int[] Vc = new int[this.cantTransiciones];
-        for(int i=0;i<this.cantTransiciones;i++){
+		int[] Vc = new int[this.cantidad_de_transiciones];
+        for(int i=0;i<this.cantidad_de_transiciones;i++){
         	if (colas[i].isEmpty()==true) {
         		Vc[i]=0;
         	}

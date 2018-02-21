@@ -286,9 +286,9 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5, log);
-			Method getCantTransiciones  = LogicaTemporal.class.getDeclaredMethod("getCantTransiciones", null);
-			getCantTransiciones.setAccessible(true);
-			int cantidadT=(int)getCantTransiciones.invoke(redTest.getlogicaTemporal());
+			Method getCantidadDeTransiciones  = LogicaTemporal.class.getDeclaredMethod("getCantidadDeTransiciones", null);
+			getCantidadDeTransiciones.setAccessible(true);
+			int cantidadT=(int)getCantidadDeTransiciones.invoke(redTest.getlogicaTemporal());
 			assertEquals(cantidadT,6);
 		}
 		catch(Exception e){

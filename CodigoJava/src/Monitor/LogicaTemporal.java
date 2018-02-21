@@ -4,37 +4,35 @@
 package Monitor;
 
 import java.io.File;
-import java.util.ArrayList;
+
 
 import jxl.Sheet;
 import jxl.Workbook;
 
 public class LogicaTemporal {
-	private int cantTransiciones;
-	private IDVector vectorID;
-	private int[][] vectorDeIntervalos;
-	private int[] vectorDeEstado;
-	private Cronometro vectorDeTimeStamps[];
-	private int [] vectorZ; //Contiene un uno si el contador esta entre alfa y beta. De lo contrario un cero.
+	private int cantidad_de_transiciones;
+	
+	private int[][] vector_de_intervalos;
+	private Cronometro[] vector_de_time_stamps;
+	private int [] vector_z; //Contiene un uno si el contador esta entre alfa y beta. De lo contrario un cero.
 	
 	
-	public LogicaTemporal(int cantTransiciones){
-		this.cantTransiciones=cantTransiciones;
-		this.vectorDeTimeStamps=new Cronometro[cantTransiciones];
-		for (int i= 0; i < this.getCantTransiciones(); i++) {
-			this.vectorDeTimeStamps[i] = new Cronometro();
+	public LogicaTemporal(int cantidad_de_transiciones){
+		this.cantidad_de_transiciones=cantidad_de_transiciones;
+		this.vector_de_time_stamps=new Cronometro[cantidad_de_transiciones];
+		for (int i= 0; i < this.getCantidadDeTransiciones(); i++) {
+			this.vector_de_time_stamps[i] = new Cronometro();
         }
-		this.vectorID=new IDVector(this.cantTransiciones);
-		this.vectorZ=new int[this.getCantTransiciones()];
+		this.vector_z=new int[this.getCantidadDeTransiciones()];
 		
 	}
 	
 	/**
-	 * Metodo getCantTransiciones.
+	 * Metodo getCantidadDeTransiciones.
 	 * @return int Cantidad de transiciones de la red
 	 */
-	private int getCantTransiciones(){
-		return this.cantTransiciones;
+	private int getCantidadDeTransiciones(){
+		return this.cantidad_de_transiciones;
 	}
 	
 	
@@ -53,13 +51,13 @@ public class LogicaTemporal {
 	       
 	         int  filas = pagina.getRows();
 	        
-	         this.vectorDeIntervalos = new int[columnas-1][filas-1];
+	         this.vector_de_intervalos = new int[columnas-1][filas-1];
 	         for (int i = 1; i < columnas; i++) {
 	             for (int j = 1; j < filas; j++) {
-	                 this.vectorDeIntervalos[i - 1][j - 1] = Integer.parseInt(pagina.getCell(i, j).getContents());
+	                 this.vector_de_intervalos[i - 1][j - 1] = Integer.parseInt(pagina.getCell(i, j).getContents());
 	             }
 	         }
-	         if((columnas-1)!=this.getCantTransiciones()){
+	         if((columnas-1)!=this.getCantidadDeTransiciones()){
 	        	 throw new IllegalStateException("Error en la cantidad de transiciones");
 	        	 
 	         }
@@ -76,7 +74,7 @@ public class LogicaTemporal {
 	 * @return int[][] Copia del vector de intervalos de tiempo.
 	 */
 	public int[][] getVectorDeIntervalos(){
-		return this.vectorDeIntervalos.clone();
+		return this.vector_de_intervalos.clone();
 	}
 	
 	
@@ -87,38 +85,38 @@ public class LogicaTemporal {
 	/**
 	 * Metodo updateTimeStamp
 	 */
-	public void updateTimeStamp(int[] tSensibilizadasAntesDisparar, int[] tSensibilizadasDespuesDisparar,  int transicionDisparar){
+	public void updateTimeStamp(int[] t_sensibilizadas_antes_disparar, int[] t_sensibilizadas_despues_disparar,  int t_a_disparar){
 		
-		if(transicionDisparar==-1) { //inicio de red, no se dispara ninguna t
-			for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
-				if(tSensibilizadasAntesDisparar[transicion]==1) {
-					this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
+		if(t_a_disparar==-1) { //inicio de red, no se dispara ninguna t
+			for (int transicion = 0; transicion < this.cantidad_de_transiciones; transicion++) {
+				if(t_sensibilizadas_antes_disparar[transicion]==1) {
+					this.vector_de_time_stamps[transicion].setNuevoTimeStamp();
 				}
 
 			}
 		}
 		
-		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
+		for (int transicion = 0; transicion < this.cantidad_de_transiciones; transicion++) {
 			
-			if(tSensibilizadasAntesDisparar[transicion]==1 && tSensibilizadasDespuesDisparar[transicion]==1) {
-				if(transicion==transicionDisparar) {
-					this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
+			if(t_sensibilizadas_antes_disparar[transicion]==1 && t_sensibilizadas_despues_disparar[transicion]==1) {
+				if(transicion==t_a_disparar) {
+					this.vector_de_time_stamps[transicion].setNuevoTimeStamp();
 				}
 			}
-			else if(tSensibilizadasAntesDisparar[transicion]==1 && tSensibilizadasDespuesDisparar[transicion]==0) {
-				this.vectorDeTimeStamps[transicion].resetearContador();
+			else if(t_sensibilizadas_antes_disparar[transicion]==1 && t_sensibilizadas_despues_disparar[transicion]==0) {
+				this.vector_de_time_stamps[transicion].resetearContador();
 			}
 			
-			else if(tSensibilizadasAntesDisparar[transicion]==0 && tSensibilizadasDespuesDisparar[transicion]==1) {
-				this.vectorDeTimeStamps[transicion].setNuevoTimeStamp();
+			else if(t_sensibilizadas_antes_disparar[transicion]==0 && t_sensibilizadas_despues_disparar[transicion]==1) {
+				this.vector_de_time_stamps[transicion].setNuevoTimeStamp();
 			}
 			
-			else if(tSensibilizadasAntesDisparar[transicion]==0 && tSensibilizadasDespuesDisparar[transicion]==0) {
-				this.vectorDeTimeStamps[transicion].resetearContador();
+			else if(t_sensibilizadas_antes_disparar[transicion]==0 && t_sensibilizadas_despues_disparar[transicion]==0) {
+				this.vector_de_time_stamps[transicion].resetearContador();
 			}
 		
 		}
-		this.updateVectorZ( tSensibilizadasDespuesDisparar);
+		this.updateVectorZ( t_sensibilizadas_despues_disparar);
 	}
 	
 	
@@ -127,12 +125,12 @@ public class LogicaTemporal {
 	 */
 	public void updateVectorZ(int[] q){
 		
-		for (int i= 0; i < this.cantTransiciones; i++) {
+		for (int i= 0; i < this.cantidad_de_transiciones; i++) {
 			if(isInWindowsTime(i) & q[i]==1) {
-				vectorZ[i]=1;
+				vector_z[i]=1;
 			}
 			else {
-				vectorZ[i]=0;
+				vector_z[i]=0;
 			}
 		}
 	}
@@ -141,7 +139,7 @@ public class LogicaTemporal {
 	 */
 	public int[] getVectorZ_Actualizado(int[] q){
 		this.updateVectorZ(q);
-		return this.vectorZ;
+		return this.vector_z;
 	}
 	
 	
@@ -150,10 +148,10 @@ public class LogicaTemporal {
 	 * 
 	 * @return int[] vector de transiciones sensibilizadas y dentro de su ventana temporal.
 	 */
-	public int[] getVectorEstados(int[] transicionesSensibilizadas) {
-		int[] tSensAndWindowsTime = new int[this.cantTransiciones];
-		for (int transicion = 0; transicion < this.cantTransiciones; transicion++) {
-			if((transicionesSensibilizadas[transicion]==1)&&isInWindowsTime(transicion)) {
+	public int[] getVectorEstados(int[] transiciones_sensibilizadas) {
+		int[] tSensAndWindowsTime = new int[this.cantidad_de_transiciones];
+		for (int transicion = 0; transicion < this.cantidad_de_transiciones; transicion++) {
+			if((transiciones_sensibilizadas[transicion]==1)&&isInWindowsTime(transicion)) {
 				tSensAndWindowsTime[transicion]=1;
 			}
 			else {
@@ -171,14 +169,14 @@ public class LogicaTemporal {
 	 */
 	public boolean isInWindowsTime(int transicion) throws IllegalArgumentException{
 		
-		if(transicion>this.cantTransiciones) {
+		if(transicion>this.cantidad_de_transiciones) {
 			throw new IllegalArgumentException("Transicion invalida");	
 		}
 		
-		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()>=(long)vectorDeIntervalos[transicion][0];
-		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()<=(long)vectorDeIntervalos[transicion][1];
-		boolean comparacion3=(long)vectorDeIntervalos[transicion][1]==(long)-1;
-		boolean comparacion4=(long)vectorDeIntervalos[transicion][0]==0;
+		boolean comparacion1=this.vector_de_time_stamps[transicion].getMillis()>=(long)vector_de_intervalos[transicion][0];
+		boolean comparacion2=this.vector_de_time_stamps[transicion].getMillis()<=(long)vector_de_intervalos[transicion][1];
+		boolean comparacion3=(long)vector_de_intervalos[transicion][1]==(long)-1;
+		boolean comparacion4=(long)vector_de_intervalos[transicion][0]==0;
 		if((comparacion1&&(comparacion2||comparacion3))||construirVectorTransicionesInmediatas()[transicion]==1||comparacion4) {
 			return true;
 		}
@@ -191,9 +189,9 @@ public class LogicaTemporal {
 	
 	
 	public int[] construirVectorTransicionesInmediatas(){
-		int aux[]=new int[this.getCantTransiciones()];
-		for(int i=0; i< this.getCantTransiciones();i++){
-			if(this.vectorDeIntervalos[i][0]==0 & this.vectorDeIntervalos[i][1]==-1){
+		int aux[]=new int[this.getCantidadDeTransiciones()];
+		for(int i=0; i< this.getCantidadDeTransiciones();i++){
+			if(this.vector_de_intervalos[i][0]==0 & this.vector_de_intervalos[i][1]==-1){
 				aux[i]=1;
 			}
 			else{
@@ -212,26 +210,26 @@ public class LogicaTemporal {
 	 */
 	public long getTiempoFaltanteParaAlfa(int transicion) throws IllegalArgumentException{
 		
-		if(transicion>this.cantTransiciones) {
+		if(transicion>this.cantidad_de_transiciones) {
 			throw new IllegalArgumentException("Transicion invalida");	
 		}
 		
-		boolean comparacion1=this.vectorDeTimeStamps[transicion].getMillis()>=(long)vectorDeIntervalos[transicion][0];
-		boolean comparacion2=this.vectorDeTimeStamps[transicion].getMillis()<=(long)vectorDeIntervalos[transicion][1];
-		boolean comparacion3=(long)vectorDeIntervalos[transicion][1]==(long)-1;
-		boolean comparacion4=(long)vectorDeIntervalos[transicion][0]==0;
+		boolean comparacion1=this.vector_de_time_stamps[transicion].getMillis()>=(long)vector_de_intervalos[transicion][0];
+		boolean comparacion2=this.vector_de_time_stamps[transicion].getMillis()<=(long)vector_de_intervalos[transicion][1];
+		boolean comparacion3=(long)vector_de_intervalos[transicion][1]==(long)-1;
+		boolean comparacion4=(long)vector_de_intervalos[transicion][0]==0;
 		if((comparacion1&&(comparacion2||comparacion3))||construirVectorTransicionesInmediatas()[transicion]==1||comparacion4) {
 			return 0;
 		}
 		else {
-			//System.out.println("hola");
-			//System.out.println(this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis());
-			if((this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis())<=0) {
+			
+			//System.out.println(this.vector_de_intervalos[transicion][0]-this.vector_de_time_stamps[transicion].getMillis());
+			if((this.vector_de_intervalos[transicion][0]-this.vector_de_time_stamps[transicion].getMillis())<=0) {
 				return (long)0;
 			}
 			else {
-				//System.out.println(this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis());
-				return ((long)this.vectorDeIntervalos[transicion][0]-this.vectorDeTimeStamps[transicion].getMillis());
+				//System.out.println(this.vector_de_intervalos[transicion][0]-this.vector_de_time_stamps[transicion].getMillis());
+				return ((long)this.vector_de_intervalos[transicion][0]-this.vector_de_time_stamps[transicion].getMillis());
 			}
 		}
 	

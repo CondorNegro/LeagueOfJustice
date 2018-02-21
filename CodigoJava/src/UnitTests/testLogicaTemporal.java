@@ -70,12 +70,12 @@ public class testLogicaTemporal {
 	@Test
 	public void testLogicaTemporal() {
 		
-		Method getCantTransiciones;
+		Method getCantidadDeTransiciones;
 		Object cantidad=null;
 		try{
-			getCantTransiciones= LogicaTemporal.class.getDeclaredMethod("getCantTransiciones", null);
-			getCantTransiciones.setAccessible(true);
-			cantidad= getCantTransiciones.invoke(time);
+			getCantidadDeTransiciones= LogicaTemporal.class.getDeclaredMethod("getCantidadDeTransiciones", null);
+			getCantidadDeTransiciones.setAccessible(true);
+			cantidad= getCantidadDeTransiciones.invoke(time);
 		}
 		catch(Exception e){
 			e.printStackTrace();
