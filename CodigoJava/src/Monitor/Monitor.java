@@ -36,6 +36,8 @@ public class Monitor {
 	
 	public static Monitor getInstance(){return instance;}
 	
+	
+
 	public void writeLogFiles(){
 		try{
 			mutex.acquire(); //Adquiero acceso al monitor.
@@ -50,10 +52,6 @@ public class Monitor {
 	}
 	
 
-	
-	
-	
-	
 	/**
 	 * Metodo configRdp. 
 	 * Crea y configura la Red de Petri y sus matrices. 
@@ -125,7 +123,6 @@ public class Monitor {
 	 * (Ver diagrama de secuencia).
 	 * @param transicion Transicion a disparar
 	 */
-	
 	
 	public void dispararTransicion(int transicion) {
 		int[] m;
