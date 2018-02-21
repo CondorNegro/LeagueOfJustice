@@ -9,12 +9,6 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
 import Monitor.RedDePetri;
-import clasesPrincipales.AutosDriver;
-import clasesPrincipales.BajadaPasajerosEstacion;
-import clasesPrincipales.ControlBajadaPasajeros;
-import clasesPrincipales.Generador;
-import clasesPrincipales.SubidaPasajerosEstacion;
-import clasesPrincipales.TrenDriver;
 
 
 public class testTrenConcurrente {

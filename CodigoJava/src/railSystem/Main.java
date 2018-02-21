@@ -1,4 +1,4 @@
-package clasesPrincipales;
+package railSystem;
 
 /*
  Trabajo Practico Integrador Programacion Concurrente 2017. (Ferrocarril).
@@ -23,6 +23,7 @@ public class Main {
 		Cronometro tiempo_transcurrido=new Cronometro();
 		tiempo_transcurrido.setNuevoTimeStamp();
 		String name_file="./RedesParaTest/TestTren/excelTren.xls";
+		
 		if((System.getProperty("os.name")).equals("Windows 10")){	
 			 if(System.getProperty("user.name").equals("kzAx")){
 				 name_file="..\\src\\RedesParaTest\\TestTren\\excelTren.xls";
@@ -31,12 +32,16 @@ public class Main {
 				 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.
 			 }
 		}
+		
 		Monitor monitor=Monitor.getInstance(); //Patron Singleton
 		monitor.configRdp(name_file); //Configuro la red de petri para el monitor segun el path.
 		
-		//Politica 0: aleatoria.
-		//Politica 1: primero los que suben.
-		//Politica 2: primero los que bajan.
+		
+		/*
+		 * Politica 0: aleatoria.
+		 * Politica 1: primero los que suben.
+		 * Politica 2: primero los que bajan.
+		*/
 		monitor.setPolitica(0);
 		
 		
@@ -44,39 +49,39 @@ public class Main {
 		
 		
 		//Creacion de hilos generadores - 6 hilos
-		executor.execute(new Generador(0,monitor));
-		executor.execute(new Generador(1,monitor));
-		executor.execute(new Generador(2,monitor));
-		executor.execute(new Generador(3,monitor));
-		executor.execute(new Generador(15,monitor));
-		executor.execute(new Generador(20,monitor));
+		executor.execute(new FireSingleTransition(0,monitor));
+		executor.execute(new FireSingleTransition(1,monitor));
+		executor.execute(new FireSingleTransition(2,monitor));
+		executor.execute(new FireSingleTransition(3,monitor));
+		executor.execute(new FireSingleTransition(15,monitor));
+		executor.execute(new FireSingleTransition(20,monitor));
 		
 		//Creacion de hilo control de bajada - 1 hilos
-		executor.execute(new ControlBajadaPasajeros(24,monitor));
+		executor.execute(new FireSingleTransition(24,monitor));
 		
 		//Creacion de hilos circulacion de autos por barrera - 2 hilos
-		executor.execute(new AutosDriver(22,monitor));
-		executor.execute(new AutosDriver(17,monitor));
+		executor.execute(new FireSingleTransition(22,monitor));
+		executor.execute(new FireSingleTransition(17,monitor));
 		
 		//Creacion de hilos pasajeros subiendo al tren/vagon - 8 hilos
-		executor.execute(new SubidaPasajerosEstacion(10,monitor,"Estacion A","Maquina"));
-		executor.execute(new SubidaPasajerosEstacion(7,monitor,"Estacion A","Vagon"));
-		executor.execute(new SubidaPasajerosEstacion(9,monitor,"Estacion B","Maquina"));
-		executor.execute(new SubidaPasajerosEstacion(13,monitor,"Estacion B","Vagon"));
-		executor.execute(new SubidaPasajerosEstacion(23,monitor,"Estacion C","Maquina"));
-		executor.execute(new SubidaPasajerosEstacion(12,monitor,"Estacion C","Vagon"));
-		executor.execute(new SubidaPasajerosEstacion(6,monitor,"Estacion D","Maquina"));
-		executor.execute(new SubidaPasajerosEstacion(11,monitor,"Estacion D","Vagon"));
+		executor.execute(new FireSingleTransition(10,monitor));  // "Estacion A","Maquina"
+		executor.execute(new FireSingleTransition(7,monitor));	 // "Estacion A","Vagon"
+		executor.execute(new FireSingleTransition(9,monitor));	 // "Estacion B","Maquina"
+		executor.execute(new FireSingleTransition(13,monitor));	 // "Estacion B","Vagon"
+		executor.execute(new FireSingleTransition(23,monitor));  // "Estacion C","Maquina"
+		executor.execute(new FireSingleTransition(12,monitor));  // "Estacion C","Vagon"
+		executor.execute(new FireSingleTransition(6,monitor));   // "Estacion D","Maquina"
+		executor.execute(new FireSingleTransition(11,monitor));  // "Estacion D","Vagon"
 		
 		//Creacion de hilos pasajeros bajando al tren/vagon - 8 hilos
-		executor.execute(new BajadaPasajerosEstacion(29,monitor,"Estacion A","Maquina"));
-		executor.execute(new BajadaPasajerosEstacion(31,monitor,"Estacion A","Vagon"));
-		executor.execute(new BajadaPasajerosEstacion(32,monitor,"Estacion B","Maquina"));
-		executor.execute(new BajadaPasajerosEstacion(33,monitor,"Estacion B","Vagon"));
-		executor.execute(new BajadaPasajerosEstacion(25,monitor,"Estacion C","Maquina"));
-		executor.execute(new BajadaPasajerosEstacion(26,monitor,"Estacion C","Vagon"));
-		executor.execute(new BajadaPasajerosEstacion(27,monitor,"Estacion D","Maquina"));
-		executor.execute(new BajadaPasajerosEstacion(28,monitor,"Estacion D","Vagon"));
+		executor.execute(new FireSingleTransition(29,monitor));	 // "Estacion A","Maquina"
+		executor.execute(new FireSingleTransition(31,monitor));  // "Estacion A","Vagon"
+		executor.execute(new FireSingleTransition(32,monitor));  // "Estacion B","Maquina"
+		executor.execute(new FireSingleTransition(33,monitor));  // "Estacion B","Vagon"
+		executor.execute(new FireSingleTransition(25,monitor));  // "Estacion C","Maquina"
+		executor.execute(new FireSingleTransition(26,monitor));  // "Estacion C","Vagon"
+		executor.execute(new FireSingleTransition(27,monitor));  // "Estacion D","Maquina"
+		executor.execute(new FireSingleTransition(28,monitor));  // "Estacion D","Vagon"
 
 		//Creacion de hilo tren driver - 1 hilos
 		int[] transiciones_tren=new int[14];
@@ -94,13 +99,16 @@ public class Main {
 		transiciones_tren[11]=16; //temporal
 		transiciones_tren[12]=16; //temporal
 		transiciones_tren[13]=5;
-		executor.execute(new TrenDriver(transiciones_tren,monitor));
+		executor.execute(new FireMultipleTransition(transiciones_tren,monitor));
             
 		
 
        
-        
-		executor.awaitTermination(2, TimeUnit.MINUTES); //finalizo la ejecucion del executor al terminar X minutos
+        /*
+         * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
+         * 		Especifica el tiempo que espera executor antes de finalizar la ejecucion de los hilos que tenga a cargo.				
+         */
+		executor.awaitTermination(35, TimeUnit.SECONDS);
         
         
         monitor.writeLogFiles();
