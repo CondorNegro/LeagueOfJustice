@@ -21,7 +21,7 @@ public class AutosDriver implements Runnable {
 
     @Override
     public void run() {
-    	while(Main.ejecutar_hilos==1){
+    	while(true){
     		monitor.dispararTransicion(transicion_autos_cruzando);
     	}
     }

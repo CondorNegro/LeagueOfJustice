@@ -21,7 +21,7 @@ public class Generador implements Runnable {
     @Override
     public void run() {
         
-    	while(Main.ejecutar_hilos==1){
+    	while(true){
     		monitor.dispararTransicion(transicion_generadora);
     	}
     }
