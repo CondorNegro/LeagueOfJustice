@@ -16,12 +16,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import Monitor.Cola;
 import Monitor.Monitor;
+import Monitor.Politica;
 import Monitor.RedDePetri;
 
 
@@ -97,16 +99,22 @@ public class testMonitor {
 	 * @throws IllegalAccessException 
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
+	 * @throws NoSuchFieldException 
 	 */
 	@Test
-	public void testGetInstance() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public void testGetInstance() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
 		this.monitor1.setPolitica(1); //creo dos instancias de monitor y seteo politicas diferentes
 		this.monitor2.setPolitica(2); //quiero probar que se crea un solo monitor, con la ultima politica definida
-		Method getPolitica = Monitor.class.getDeclaredMethod("getPolitica", null);
-		getPolitica.setAccessible(true);
-		Object Politica = getPolitica.invoke(monitor1);
-		assertFalse((int)Politica==1);
-		assertTrue((int)Politica==2);   //monitor1 y monitor2 en realidad
+		Field field1 = monitor1.getClass().getDeclaredField("politica");
+		field1.setAccessible(true);
+		Politica testPrivateReflection1 = (Politica)field1.get(monitor1);	
+		
+		Field field2 = monitor2.getClass().getDeclaredField("politica");
+		field2.setAccessible(true);
+		Politica testPrivateReflection2 = (Politica)field2.get(monitor2);	
+		
+		assertFalse((int)testPrivateReflection1.getModo()==1);
+		assertTrue((int)testPrivateReflection2.getModo()==2);   //monitor1 y monitor2 en realidad
 								  		// son las mismas intancias
 	}
 
@@ -117,16 +125,22 @@ public class testMonitor {
 	 * @throws InvocationTargetException 
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 
+	 * @throws NoSuchFieldException 
 	 */
 	@Test
-	public void testConfigRdp() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void testConfigRdp() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchFieldException {
 		this.monitor1.configRdp(this.redExcel1);
-		Method getRDP = Monitor.class.getDeclaredMethod("getRDP", null);
-		getRDP.setAccessible(true);
+		
+		
+		Field f = monitor1.getClass().getDeclaredField("rdp");
+		f.setAccessible(true);
+		RedDePetri testPrivateReflection = (RedDePetri)f.get(monitor1);
+		
+		
 		//Object[] parameters = new Object[1];
 		//parameters[0] = "A String parameter";
-		RedDePetri cantidadTransiciones = (RedDePetri) getRDP.invoke(monitor1);
-		assertEquals(cantidadTransiciones.getCantTransiciones(), 4); //monitor1 y monitor2 en realidad
+		
+		assertEquals(testPrivateReflection.getCantTransiciones(), 4); //monitor1 y monitor2 en realidad
 	}
 
 	/**
@@ -136,18 +150,21 @@ public class testMonitor {
 	 * @throws IllegalAccessException 
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
+	 * @throws NoSuchFieldException 
 	 */
 	@Test
-	public void testSetPolitica() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public void testSetPolitica() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
 		this.monitor1.setPolitica(1);
-		Method getPolitica = Monitor.class.getDeclaredMethod("getPolitica", null);
-		getPolitica.setAccessible(true);
-		Object Politica = getPolitica.invoke(monitor1);
-		assertFalse((int)Politica==2);
-		assertTrue((int)Politica==1);
+		
+		Field f = monitor1.getClass().getDeclaredField("politica");
+		f.setAccessible(true);
+		Politica testPrivateReflection = (Politica)f.get(monitor1);		
+		
+		assertFalse((int)testPrivateReflection.getModo()==2);
+		assertTrue((int)testPrivateReflection.getModo()==1);
 		this.monitor1.setPolitica(2);
-		Politica = getPolitica.invoke(monitor1);
-		assertEquals((int)Politica, 2);
+		Politica testPrivateReflection2 = (Politica)f.get(monitor1);	
+		assertEquals((int)testPrivateReflection2.getModo(), 2);
 	}
 
 	/**
@@ -160,16 +177,20 @@ public class testMonitor {
 		
 		try {
 			Method quienesEstanEnColas;
-		
+			
 			quienesEstanEnColas = Monitor.class.getDeclaredMethod("quienesEstanEnColas", null);
 			quienesEstanEnColas.setAccessible(true);
 					
+			
+			
+			Field f = monitor1.getClass().getDeclaredField("colas");
+			f.setAccessible(true);
+			Cola[] testPrivateReflection = (Cola[])f.get(monitor1);
+			
+			
 		
-			Method getColaCero;
-		
-			getColaCero = Monitor.class.getDeclaredMethod("getColaCero", null);
-			getColaCero.setAccessible(true);
-			Object cola = getColaCero.invoke(monitor1);
+			
+			Object cola = testPrivateReflection[0];
 			
 			hiloDelay=new HiloDelay((Cola) cola);
 			hiloResume=new HiloResume((Cola) cola);
@@ -233,11 +254,10 @@ public class testMonitor {
 		Thread threadTUno=new Thread(hiloUno);
 		
 		try {
-			Method getRDP;
-		
-			getRDP = Monitor.class.getDeclaredMethod("getRDP", null);
-			getRDP.setAccessible(true);
-			RedDePetri rdp = (RedDePetri) getRDP.invoke(monitor1);		
+			
+			Field f = monitor1.getClass().getDeclaredField("rdp");
+			f.setAccessible(true);
+			RedDePetri testPrivateReflection = (RedDePetri)f.get(monitor1);		
 		
 			int[][] m0={{2},{0},{0},{0}};
 			int[][] m1={{0},{2},{0},{0}};
@@ -253,11 +273,11 @@ public class testMonitor {
 			
 			
 			
-			assertEquals(rdp.getMatrizM(),m0);
+			assertEquals(testPrivateReflection.getMatrizM(),m0);
 			
 			threadTCero.start();
 			threadTCero.join();
-			assertEquals(rdp.getMatrizM(),m1);
+			assertEquals(testPrivateReflection.getMatrizM(),m1);
 			threadTUno.join();
 			
 			try{
@@ -266,8 +286,8 @@ public class testMonitor {
 			catch(InterruptedException e){
 				fail("Se genero error por interrupcion de thread");
 			}
-			RedDePetri rdp1 = (RedDePetri) getRDP.invoke(monitor1);	
-			assertEquals(rdp1.getMatrizM(),m2);
+			
+			assertEquals(testPrivateReflection.getMatrizM(),m2);
 			
 		} 
 		catch (Exception e){

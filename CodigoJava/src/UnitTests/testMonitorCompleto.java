@@ -7,6 +7,7 @@ import Monitor.Monitor;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import Monitor.RedDePetri;
 
@@ -108,12 +109,11 @@ public class testMonitorCompleto {
             	
             	monitor.dispararTransicion(4);
             	if(monitor.getMarcado()[2][0]!=0){
-            		Method getRDP;
             		try{
-            			getRDP = Monitor.class.getDeclaredMethod("getRDP", null);
-                		getRDP.setAccessible(true);
-            			RedDePetri RDP = (RedDePetri) getRDP.invoke(monitor);
-            			assert(RDP.getSensibilizadasExtendido()[0]==0);
+            			Field f = monitor.getClass().getDeclaredField("rdp");
+            			f.setAccessible(true);
+            			RedDePetri testPrivateReflection = (RedDePetri)f.get(monitor);
+            			assert(testPrivateReflection.getSensibilizadasExtendido()[0]==0);
             		}
             		catch(Exception e){
             			e.printStackTrace();

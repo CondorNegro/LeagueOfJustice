@@ -49,55 +49,7 @@ public class Monitor {
 		mutex.release();
 	}
 	
-	/**
-	 * Metodo getPolitica. Utilizado para testing.
-	 * @return int Modo de la politica utilizada
-	 */
-	private int getPolitica(){
-		try{
-			mutex.acquire(); //Adquiero acceso al monitor.
-		}
-		catch(InterruptedException e){
-			e.printStackTrace();
-		}
-		mutex.release();
-		return this.politica.getModo();
-	}
-	
-	
-	
-	
-	/**
-	 * Metodo getColaCero. Utilizado para testing. 
-	 * @return Cola Elemento 0 del atributo colas[] .
-	 */
-	private Cola getColaCero(){
-		try{
-			mutex.acquire(); //Adquiero acceso al monitor.
-		}
-		catch(InterruptedException e){
-			e.printStackTrace();
-		}
-		mutex.release();
-		return colas[0];
-	}
-	
-	
-	
-	/**
-	 * Metodo getRDP.
-	 * @return RedDePetri Devuelve la red de petri con la que se configuro este monitor.
-	 */
-	private RedDePetri getRDP(){
-		try{
-			mutex.acquire(); //Adquiero acceso al monitor.
-		}
-		catch(InterruptedException e){
-			e.printStackTrace();
-		}
-		mutex.release();
-		return this.rdp;
-	}
+
 	
 	
 	
@@ -151,7 +103,7 @@ public class Monitor {
 	
 	/**
 	 * Metodo quienesEstanEnColas.
-	 * @return List<Integer> lista con enteros 1 y 0, indicando si las transiciones correspondientes poseen hilos esperando en sus colas o no, respectivamente.
+	 * @return int[] lista con enteros 1 y 0, indicando si las transiciones correspondientes poseen hilos esperando en sus colas o no, respectivamente.
 	 */
 	private int[] quienesEstanEnColas() {
 		int[] Vc = new int[this.cantidad_de_transiciones];
@@ -265,9 +217,5 @@ public class Monitor {
         mutex.release();
         return m;
     }
-    
-    
-	
-
 	
 }
