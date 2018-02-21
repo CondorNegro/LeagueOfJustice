@@ -19,6 +19,17 @@ global arregloFlagsTInv
 global flagFinalizacionTInv
 
 
+'''
+#Flags de tests particulares
+'''
+
+
+
+'''
+#Funciones
+'''
+
+
 def impresionConsolaRed(cadenaImpresion):
 	if(os.name=='nt'):#Windows
 		init()
@@ -119,8 +130,23 @@ def verificarTinvariantes(tInv, listaTranciones, I, M0, Multimo):
 			exit(1)
 
 
-
-
+def testTrenEnUnaEstacion(marcado):
+	if(marcado[0]==0):
+		if(marcado[1]==0 or marcado[2]==0 or marcado[3]==0):
+			impresionConsolaRed('Error. Un tren en mas de una estacion. Caso 1')
+			exit(1)
+	elif(marcado[1]==0):
+		if(marcado[0]==0 or marcado[2]==0 or marcado[3]==0):
+			impresionConsolaRed('Error. Un tren en mas de una estacion. Caso 2')
+			exit(1)
+	elif(marcado[2]==0):
+		if(marcado[1]==0 or marcado[0]==0 or marcado[3]==0):
+			impresionConsolaRed('Error. Un tren en mas de una estacion. Caso 3')
+			exit(1)
+	elif(marcado[3]==0):
+		if(marcado[1]==0 or marcado[2]==0 or marcado[0]==0):
+			impresionConsolaRed('Error. Un tren en mas de una estacion. Caso 4')
+			exit(1)
 
 
 
@@ -339,7 +365,9 @@ if(flagCantidadTransicionesOK):
 	impresionConsolaBlue('\nTest evolucion Marcado')
 
 	#Testear evolucion marcado.
+	
 	for marca in range(len(matricesMarcado)):
+		testTrenEnUnaEstacion(matricesMarcado[marca])
 		if(marca==0):
 			matrizM0aux=np.array(matricesMarcado[0]).reshape(1,cantidadPlazas)
 			matrizM0=np.array(matricesMarcado[0]).reshape(cantidadPlazas,1)
@@ -395,6 +423,11 @@ if(flagCantidadTransicionesOK):
 	impresionConsolaBlue('\nInvariantes:')
 	impresionConsolaGreen('\nPInvariantes OK.')
 	impresionConsolaGreen('\nTInvariantes OK.')
+
+
+	impresionConsolaBlue('\nTest particulares')
+	impresionConsolaGreen('\nTest Tren en una sola estacion. OK')
+
 
 
 
