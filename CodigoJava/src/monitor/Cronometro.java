@@ -1,11 +1,11 @@
 package monitor;
 
-
+//Clase dedicada a los timestamps
 public class Cronometro{
 	public static final long MILLIS_TO_SECONDS = 1000;
 	public static final long MILLIS_TO_MINUTES = 60000;
     public static final long MILLIS_TO_HOURS = 3600000;
-    private long contador;
+    private long contador; //Variable contador
     private long millis;
    
     
@@ -13,8 +13,11 @@ public class Cronometro{
     public Cronometro(){
     	this.contador=0;
     }
-   /**
+   
+    /**
     * Metodo setNuevoTimeStamp. 
+    * Setea al atributo contador la cantidad de tiempo transcurrido desde que comenzo a ejecutarse el programa.
+    * (Estampa de tiempo)
     */
 
     public void setNuevoTimeStamp() {
@@ -23,7 +26,7 @@ public class Cronometro{
     
     
     /**
-     * Metodo resetearContador.
+     * Metodo resetearContador. (Transicion disparada o desensibilizada)
      */
     public void resetearContador() {
     	contador = -1;
@@ -32,7 +35,8 @@ public class Cronometro{
     
     /**
      * Metodo getMillis.
-     * @return long
+     * @return long Diferencia de tiempo entre el tiempo actual y el atributo contador en milisegundos. 
+     * Devuelve -1 en caso de que contador se encuentre reseteado
      */
     public long getMillis() {
     	if(this.contador==-1) {
@@ -46,7 +50,7 @@ public class Cronometro{
     
 
     /**
-     * Metodo getSeconds.
+     * Metodo getSeconds. Idem a metodo getMillis pero el tiempo es devuelto en segundos
      * @return long 
      */
     public long getSeconds() {
@@ -62,7 +66,7 @@ public class Cronometro{
 
     /**
      * Metodo getContador.
-     * @return long
+     * @return long Atributo contador
      */
     public long getContador() {
         return this.contador;

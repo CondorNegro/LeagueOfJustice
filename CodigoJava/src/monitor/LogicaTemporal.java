@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package monitor;
 
 import java.io.File;
@@ -84,6 +82,10 @@ public class LogicaTemporal {
 	
 	/**
 	 * Metodo updateTimeStamp
+	 * Actualiza el vector de timeStamps o contadores.
+	 * @param t_sensibilizadas_antes_disparar Vector de transiciones sensibilizadas antes de disparar la transicion elegida
+	 * @param t_sensibilizadas_despues_disparar Vector de transiciones sensibilizadas despues de disparar la transicion elegida
+	 * @param t_a_disparar Transicion elegida para disparar
 	 */
 	public void updateTimeStamp(int[] t_sensibilizadas_antes_disparar, int[] t_sensibilizadas_despues_disparar,  int t_a_disparar){
 		
@@ -122,6 +124,8 @@ public class LogicaTemporal {
 	
 	/**
 	 * Metodo updateVectorZ
+	 * Actualiza el vector Z.
+	 * @param q Vector Q
 	 */
 	public void updateVectorZ(int[] q){
 		
@@ -134,8 +138,10 @@ public class LogicaTemporal {
 			}
 		}
 	}
+	
 	/**
-	 * Metodo getVectorZ
+	 * Metodo getVectorZ_Actualizado
+	 * Permite obtener la ultima version del vector Z
 	 */
 	public int[] getVectorZ_Actualizado(int[] q){
 		this.updateVectorZ(q);
@@ -145,8 +151,8 @@ public class LogicaTemporal {
 	
 	/**
 	 * Metodo getVectorEstados
-	 * 
-	 * @return int[] vector de transiciones sensibilizadas y dentro de su ventana temporal.
+	 * @param transiciones_sensibilizadas Vector de transiciones sensibilizadas
+	 * @return int[] vector de transiciones sensibilizadas que se encuentran dentro de su ventana temporal.
 	 */
 	public int[] getVectorEstados(int[] transiciones_sensibilizadas) {
 		int[] tSensAndWindowsTime = new int[this.cantidad_de_transiciones];
@@ -164,8 +170,9 @@ public class LogicaTemporal {
 	
 	/**
 	 * Metodo isInWindowsTime
-	 * 
+	 * @param transicion transicion a determinar si su contador se encuentra dentro de la ventana de tiempo
 	 * @return boolean true si se encuentra dentro de la ventana, de lo contrario false.
+	 * @throws IllegalArgumentException En caso de transicion invalida
 	 */
 	public boolean isInWindowsTime(int transicion) throws IllegalArgumentException{
 		
@@ -187,7 +194,11 @@ public class LogicaTemporal {
 	}
 	
 	
-	
+	/**
+	 * Metodo construirVectorTransicionesInmediatas.
+	 * Genera un vector de transiciones indicando con un uno si la transicion es inmediata o con un cero si no lo es.
+	 * @return int[] vector de transiciones inmediatas
+	 */
 	public int[] construirVectorTransicionesInmediatas(){
 		int aux[]=new int[this.getCantidadDeTransiciones()];
 		for(int i=0; i< this.getCantidadDeTransiciones();i++){
@@ -204,9 +215,11 @@ public class LogicaTemporal {
 	
 	
 	/**
-	 * Metodo isInWindowsTime
-	 * 
-	 * @return boolean true si se encuentra dentro de la ventana, de lo contrario false.
+	 * Metodo getTiempoFaltanteParaAlfa. 
+	 * @param transicion 
+	 * @return long Tiempo faltante que posee el contador de la transicion para alcanzar el valor de alfa. 
+	 * Devuelve cero en caso de haber alcanzado o superado dicho valor.
+	 * @throws IllegalArgumentException En caso de transicion invalida
 	 */
 	public long getTiempoFaltanteParaAlfa(int transicion) throws IllegalArgumentException{
 		

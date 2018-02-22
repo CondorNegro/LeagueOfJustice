@@ -2,10 +2,10 @@ package monitor;
 
 
 public class Politica { 
-	//Vector indicando la prioridad de las transiciones.
-	//{2,5,4} -> indica que la transicion 2 es la de mayor prioridad. La t4 es la de menor prioridad.
-	private int[] transiciones_prioritarias_subida; //Corregir
-	private int[] transiciones_prioritarias_bajada; //Corregir
+	//Vector indicando cuales transiciones son de mayor prioridad.
+	//{2,5,4} -> indica que la transicion 2, 5 y 4 son de mayor prioridad comparadas con el resto de las transiciones
+	private int[] transiciones_prioritarias_subida; 
+	private int[] transiciones_prioritarias_bajada; 
 	
 	
 	private int modo_politica;

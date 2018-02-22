@@ -36,7 +36,10 @@ public class Monitor {
 	public static Monitor getInstance(){return instance;}
 	
 	
-
+	/**
+	 * Metodo writeLogFiles. 
+	 * Es utilizado para escribir los archivos de log que se crean en el constructor.
+	 */
 	public void writeLogFiles(){
 		try{
 			mutex.acquire(); //Adquiero acceso al monitor.
@@ -135,9 +138,9 @@ public class Monitor {
 			}
 			boolean k=true; //Variable booleana de control.  
 		
-			this.log.addMessage("\r\nTransicion a disparar: " + transicion+ "\r\n", 0);
+			this.log.addMessage("\r\nTransicion a disparar: " + transicion+ "\r\n", 0); //Log de transicion a disparar
 		
-			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar se pone en true.
+			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar, k se pone en true.
 			
 			
 			
@@ -147,7 +150,7 @@ public class Monitor {
 				int[] Vs=rdp.getSensibilizadasExtendido(); //get transiciones sensibilizadas
 				int[] Vc=quienesEstanEnColas(); //get Quienes estan en colas
 				try{
-					m= OperacionesMatricesListas.andVector(Vs, Vc); //Obtengo listaM
+					m= OperacionesMatricesListas.andVector(Vs, Vc); //Obtengo listaM  (Vs AND Vc)
 				}
 				catch(IndexOutOfBoundsException e){
 					e.printStackTrace();
@@ -155,9 +158,9 @@ public class Monitor {
 				}	
 				if(OperacionesMatricesListas.isNotAllZeros(m)){ //Hay posibilidad de disparar una transicion.
 					try{
-						int transicionADisparar=politica.cualDisparar(m); 
+						int transicionADisparar=politica.cualDisparar(m); //Pregunto a politica 
 						//System.out.println("transicion"+transicionADisparar);
-						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion. 
+						colas[transicionADisparar].resume(); //Sale un hilo de una cola de condicion para disparara esa transicion 
 						//Despierta un hilo que estaba bloqueado en la cola correspondiente
 					}
 					catch(IndexOutOfBoundsException e){e.printStackTrace();}
@@ -179,12 +182,12 @@ public class Monitor {
 						colas[transicion].delay(); //Se encola en una cola de condicion. 
 					}
 					else{ //No es transicion inmediata
-						if(!colas[transicion].isEmpty()){
+						if(!colas[transicion].isEmpty()){ //Cola no esta vacia
 							colas[transicion].delay();
 						}
-						else{
+						else{ //No es inmediata y no hay nadie en la cola.
 							long timeout=this.rdp.getLogicaTemporal().getTiempoFaltanteParaAlfa(transicion);
-							colas[transicion].delay((timeout)+2); //Por problemas de redondeo.
+							colas[transicion].delay((timeout)+2); //+2 Por problemas de redondeo.
 						}
 											
 						
@@ -205,6 +208,12 @@ public class Monitor {
 		}
 	}
 	
+	
+	
+	/**
+	 * Metodo getMarcado. 
+	 * @return int[][] Marcado actual de la RdP
+	 */
     public int[][] getMarcado(){
         try {
             mutex.acquire();
