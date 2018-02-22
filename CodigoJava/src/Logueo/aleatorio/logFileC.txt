@@ -1,2 +1,0 @@
-Cantidad de transiciones disparadas:
-4984
