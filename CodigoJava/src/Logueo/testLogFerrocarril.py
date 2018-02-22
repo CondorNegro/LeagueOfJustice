@@ -17,11 +17,7 @@ global flagVerificarPinv
 global flagVerificarTinv
 global arregloFlagsTInv
 global flagFinalizacionTInv
-
-
-'''
-#Flags de tests particulares
-'''
+global politica
 
 
 
@@ -69,6 +65,76 @@ def impresionConsolaGreen(cadenaImpresion):
 
 
 
+
+def testParticulares(lista, marcadoUltimo):
+	impresionConsolaBlue('\nTest particulares')
+	cantidadPersonasGeneradas=lista[0] + lista[1] + lista[2]+lista[3]
+	cantidadPersonasSubidas=lista[6] + lista[7] + lista[9]+lista[10] + lista[11] + lista[12] + lista[23]+lista[13]
+	cantidadPersonasBajadas=lista[25] + lista[26] + lista[27]+lista[28] + lista[29] + lista[31] + lista[32]+lista[33]
+	cantidadAutosGeneradosA=lista[15]
+	cantidadAutosGeneradosB=lista[20]
+	cantidadAutosPasanBarreraA=lista[17]
+	cantidadAutosPasanBarreraB=lista[22]
+	print 'Resultado de politica: '
+	print 'Cantidad de personas subidas: ',
+	print cantidadPersonasSubidas
+	print 'Cantidad de personas bajadas: ',
+	print cantidadPersonasBajadas
+	print 'Cantidad de personas generadas: ',
+	print cantidadPersonasGeneradas
+	print 'Resta: ',
+	resta=cantidadPersonasSubidas-cantidadPersonasBajadas
+	print resta
+	print
+
+	if(politica==1):
+		if(resta >= 25):
+			impresionConsolaGreen('Test. Politica primero suben. OK')
+		else:
+			impresionConsolaRed('Test. Politica primero suben. FAIL')
+
+	if(politica==2):
+		if(resta <= 25):
+			impresionConsolaGreen('Test. Politica primero bajan. OK')
+		else:
+			impresionConsolaRed('Test. Politica primero bajan. FAIL')
+
+
+	if((resta)!=(marcadoUltimo[4]+marcadoUltimo[5])):
+		impresionConsolaRed('Test. Cantidad final de personas en el tren. FAIL')
+		exit(1)
+
+	else:
+		impresionConsolaGreen('Test. Cantidad final de personas en el tren. OK')
+
+
+
+
+	if(cantidadPersonasBajadas>cantidadPersonasSubidas):
+		impresionConsolaRed('Test. Cantidad de personas subidas mayor o igual a cantidad de personas bajadas. FAIL')
+		exit(1)
+	else:
+		impresionConsolaGreen('Test. Cantidad de personas subidas mayor o igual a cantidad de personas bajadas. OK')
+	if(cantidadPersonasSubidas>cantidadPersonasGeneradas):
+		impresionConsolaRed('Test. Cantidad de personas generadas mayor o igual a cantidad de personas subidas. FAIL')
+		exit(1)
+	else:
+		impresionConsolaGreen('Test. Cantidad de personas generadas mayor o igual a cantidad de personas subidas. OK')
+	if(cantidadAutosGeneradosA<cantidadAutosPasanBarreraA):
+		impresionConsolaRed('Test. Cantidad de autos generados en barrera A mayor o igual a cantidad de autos que pasaron dicha barrera. FAIL')
+		exit(1)
+	else:
+		impresionConsolaGreen('Test. Cantidad de autos generados en barrera A mayor o igual a cantidad de autos que pasaron dicha barrera. OK')
+	if(cantidadAutosGeneradosB<cantidadAutosPasanBarreraB):
+		impresionConsolaRed('Test. Cantidad de autos generados en barrera B mayor o igual a cantidad de autos que pasaron dicha barrera. FAIL')
+		exit(1)
+	else:
+		impresionConsolaGreen('Test. Cantidad de autos generados en barrera B mayor o igual a cantidad de autos que pasaron dicha barrera. OK')
+	
+
+
+
+
 def verificarPinvariantes(matrizM, pInvariantes, constantesPinvariantes):
 	flagVerificarPinv=True
 	constantesPinvariantesActual=[]
@@ -105,6 +171,7 @@ def verificarTinvariantes(tInv, listaTranciones, I, M0, Multimo):
 	for transicion in listaTranciones:
 		listaContadores[transicion]=listaContadores[transicion]+1
 	listaContadores=np.array(listaContadores)
+	testParticulares(listaContadores, Multimo)
 	listaContadoresAnterior=listaContadores
 	arrayTinvariantes=np.array(tInv)
 	for fila in range(len(tInv)):
@@ -150,7 +217,96 @@ def testTrenEnUnaEstacion(marcado):
 
 
 
-print 'Inicio del programa'
+def verificarAutosNoCruzan(marcados):
+	flagPrimeraVez=True
+	valorMarcadoSumideroAutos=0
+	#Barrera B
+	for i in range(len(marcados)):
+		if(marcados[i][17]>0):
+			if(flagPrimeraVez):
+				flagPrimeraVez=False
+				valorMarcadoSumideroAutos=marcados[i][19]
+			else:
+				if(marcados[i][19]!=valorMarcadoSumideroAutos):
+					impresionConsolaRed("Test. Autos no cruzan barrera B cuando pasa el tren. FAIL")
+					exit(1)
+		else:
+			flagPrimeraVez=True
+	
+	flagPrimeraVez=True
+	valorMarcadoSumideroAutos=0
+	#Barrera A
+	for i in range(len(marcados)):
+		if(marcados[i][13]>0):
+			if(flagPrimeraVez):
+				flagPrimeraVez=False
+				valorMarcadoSumideroAutos=marcados[i][15]
+			else:
+				if(marcados[i][15]!=valorMarcadoSumideroAutos):
+					impresionConsolaRed("Test. Autos no cruzan barrera A cuando pasa el tren. FAIL")
+					exit(1)
+		else:
+			flagPrimeraVez=True
+
+	impresionConsolaGreen("Test. Autos no cruzan barrera A o B cuando pasa el tren. OK")
+
+
+
+def verificarCantidadPasajerosInalterableEnViaje(marcados):
+	flagPrimeraVez=True
+	valorMarcadoVagonLugaresVacios=0
+	valorMarcadoVagonLugaresOcupados=0
+	valorMarcadoMaquinaLugaresVacios=0
+	valorMarcadoMaquinaLugaresOcupados=0
+	
+	for i in range(len(marcados)):
+		if(marcados[i][0]>0 and marcados[i][1]>0 and marcados[i][2]>0 and marcados[i][3]>0):
+			if(flagPrimeraVez):
+				flagPrimeraVez=False
+				valorMarcadoVagonLugaresVacios=marcados[i][6]
+				valorMarcadoVagonLugaresOcupados=marcados[i][5]
+				valorMarcadoMaquinaLugaresVacios=marcados[i][7]
+				valorMarcadoMaquinaLugaresOcupados=marcados[i][4]
+			else:
+				if(marcados[i][6]!=valorMarcadoVagonLugaresVacios or marcados[i][7]!=valorMarcadoMaquinaLugaresVacios or marcados[i][5]!=valorMarcadoVagonLugaresOcupados or marcados[i][4]!=valorMarcadoMaquinaLugaresOcupados):
+					impresionConsolaRed("Test. Pasajeros no bajan ni suben al tren cuando el mismo esta en viaje. FAIL")
+					exit(1)
+		else:
+			flagPrimeraVez=True
+	
+
+	impresionConsolaGreen("Test. Pasajeros no bajan ni suben al tren cuando el mismo esta en viaje. OK")
+
+
+def verificarPersonasSubenNoBajanEnMismaEstacion(marcados):
+	flagPrimeraVez=True
+	valorMarcadoMinimoPersonasSubidas=0
+	
+
+	for i in range(len(marcados)):
+		if((marcados[i][0]+ marcados[i][1]+ marcados[i][2]+marcados[i][3])==3):
+			if(marcados[i][21]<1):
+				impresionConsolaRed("Test. Pasajeros no bajan del tren en la misma estacion en que se subieron. Token condicion. FAIL")
+				exit(1)
+			if(flagPrimeraVez):
+				flagPrimeraVez=False
+				valorMarcadoMinimoPersonasSubidas=marcados[i][22]
+	
+				
+			else:
+				if(marcados[i][22]<valorMarcadoMinimoPersonasSubidas):
+					impresionConsolaRed("Test. Pasajeros no bajan del tren en la misma estacion en que se subieron. FAIL")
+					exit(1)
+		else:
+			flagPrimeraVez=True
+	
+
+	impresionConsolaGreen("Test. Pasajeros no bajan del tren en la misma estacion en que se subieron. OK")
+
+
+#Codigo Principal
+
+print '\nInicio del programa'
 
 
 
@@ -164,7 +320,20 @@ except:
 
 
 
+flagInt=0
 
+while(not flagInt):
+	try:
+		flagInt=1
+		strPolitica= raw_input('\nIngrese el numero adecuado de acuerdo a la politica utilizada (0 - Aleatorio; 1 - Primero Sube; 2 - Primero Baja): ')
+		
+		politica=int(strPolitica)
+		if(politica<0 or politica>2):
+			flagInt=0
+			print 'Ingrese un valor correcto (0, 1 o 2).'
+	except ValueError:
+		print 'Error. Ingrese un valor correcto (0, 1 o 2).'
+		flagInt=0
 
 
 print '\nLectura de archivos'
@@ -209,6 +378,10 @@ archivoA.close()
 archivoB.close()
 archivoC.close()
 
+
+
+
+
 impresionConsolaBlue('\nTest cantidad de transiciones disparadas.')
 
 contadorDeTransicionesDisparadas=0
@@ -222,6 +395,10 @@ except:
 	exit(1)
 
 
+
+
+
+
 flagCantidadTransicionesOK=False
 
 if(contadorDeTransicionesDisparadas==len(listaB)):
@@ -232,7 +409,11 @@ if(contadorDeTransicionesDisparadas==len(listaB)):
 	#print 'Test cantidad de transiciones disparadas. OK'
 else:
 	impresionConsolaRed("\nTest cantidad de transiciones disparadas. FAIL")
-	
+
+
+
+
+
 
 if(flagCantidadTransicionesOK):
 
@@ -291,6 +472,10 @@ if(flagCantidadTransicionesOK):
 	if(len(tInvariantes[0])!=cantidadTransiciones):
 		impresionConsolaRed('tInvariantes erroneos')
 		exit(1)		
+
+
+
+
 	
 	print '\nCargado de valores de K, transiciones a disparar y marcados.'
 	flagComienzo=True
@@ -335,9 +520,11 @@ if(flagCantidadTransicionesOK):
 					impresionConsolaRed('Error en pasar a int la lista transiciones a disparar')
 					exit(1)
 
-	#for i in range(len(listaTransicionesADisparar)):
-		#print listaTransicionesADisparar[i]
-		#print listaK[i]
+	
+
+
+
+
 
 	if(len(listaK)!=len(listaTransicionesADisparar)):
 		impresionConsolaRed("Lista K de distinto tamanio que lista de transiciones a disparar")
@@ -363,6 +550,12 @@ if(flagCantidadTransicionesOK):
 
 	flagEvolucionMarcado=True
 	impresionConsolaBlue('\nTest evolucion Marcado')
+
+
+
+
+
+
 
 	#Testear evolucion marcado.
 	
@@ -419,6 +612,10 @@ if(flagCantidadTransicionesOK):
 		except:
 			impresionConsolaRed("\nError en pasar elementos de listaB a int")
 			exit(1)
+	
+
+
+
 	verificarTinvariantes(tInvariantes, listaB, matrizI, matrizM0, matrizMactual)
 	impresionConsolaBlue('\nInvariantes:')
 	impresionConsolaGreen('\nPInvariantes OK.')
@@ -428,6 +625,9 @@ if(flagCantidadTransicionesOK):
 	impresionConsolaBlue('\nTest particulares')
 	impresionConsolaGreen('\nTest Tren en una sola estacion. OK')
 
+	verificarAutosNoCruzan(matricesMarcado)
+	verificarCantidadPasajerosInalterableEnViaje(matricesMarcado)
+	verificarPersonasSubenNoBajanEnMismaEstacion(matricesMarcado)
 
 
 
