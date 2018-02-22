@@ -134,7 +134,8 @@ public class testLogDeEventos {
 			File file=new File(this.nameFile);
 			
 			FileReader fr = new FileReader(file);
-			BufferedReader br = new BufferedReader(fr);
+			BufferedReader br = new BufferedReader(fr); 
+			//Genero un lector para leer el contenido del archivo y verificar la correcta escritura del mismo
 			String texto = br.readLine();
 			//System.out.println(texto);
 			assertEquals(texto, "comoandas");

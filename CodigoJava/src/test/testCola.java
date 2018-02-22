@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package test;
 
 import static org.junit.Assert.*;
@@ -61,29 +59,29 @@ public class testCola {
 	@Test
 	public void testDelayAndTestResume() {
 		assert(cola.isEmpty());
-		threadDelay.start();
+		threadDelay.start(); //El hilo se duerme
 		try{
 			Thread.sleep(3);
 		}
 		catch(InterruptedException e){
-			fail("Se gener� error por interrupci�n de thread");
+			fail("Se genero error por interrupcion de thread");
 		}
-		assert(!cola.isEmpty());
+		assert(!cola.isEmpty()); //Cola debe tener un hilo dormido
 		assert(!hiloDelay.getFlag());
 		assert(!hiloResume.getFlag());
-		threadResume.start();
+		threadResume.start(); //Envio un hilo a despertarlo
 		
 		try{
 			threadResume.join();
 			threadDelay.join();
 		}
 		catch(InterruptedException e){
-			fail("Se gener� error por interrupci�n de thread");
+			fail("Se genero error por interrupci�n de thread");
 		}
 		
 		assert(hiloDelay.getFlag());
 		assert(hiloResume.getFlag());
-		assert(cola.isEmpty());
+		assert(cola.isEmpty()); //La cola debe quedar sin ningun hilo
 		threadDelay.interrupt();
 		threadResume.interrupt();
 	}
@@ -92,6 +90,7 @@ public class testCola {
 
 	/**
 	 * Test method for {@link monitor.Cola#isEmpty()}.
+	 * 
 	 */
 	@Test
 	public void testIsEmpty() {

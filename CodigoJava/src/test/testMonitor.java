@@ -136,10 +136,7 @@ public class testMonitor {
 		f.setAccessible(true);
 		RedDePetri testPrivateReflection = (RedDePetri)f.get(monitor1);
 		
-		
-		//Object[] parameters = new Object[1];
-		//parameters[0] = "A String parameter";
-		
+		//Verifico si cargo bien el numero de transiciones
 		assertEquals(testPrivateReflection.getCantTransiciones(), 4); //monitor1 y monitor2 en realidad
 	}
 
@@ -153,7 +150,10 @@ public class testMonitor {
 	 * @throws NoSuchFieldException 
 	 */
 	@Test
+	
+	
 	public void testSetPolitica() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
+		//Verifico que las politicas se seteen correctamente
 		this.monitor1.setPolitica(1);
 		
 		Field f = monitor1.getClass().getDeclaredField("politica");

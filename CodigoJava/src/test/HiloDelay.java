@@ -1,8 +1,9 @@
-/**
- * 
- */
+
 package test;
 import static org.junit.Assert.*;
+
+
+//Hilo que se duerme en Cola.
 public class HiloDelay implements Runnable {
 	private monitor.Cola cola;
 	private boolean flag;
@@ -20,10 +21,10 @@ public class HiloDelay implements Runnable {
 	public void run(){
 		try{
 			cola.delay();
-			System.out.println("Sal� del wait");
+			//System.out.println("Sali del wait");
 		}
 		catch(InterruptedException e){
-			fail("Se gener� error por interrupci�n de thread");
+			fail("Se genero error por interrupcion de thread");
 		}
 		flag=true;	
 	}

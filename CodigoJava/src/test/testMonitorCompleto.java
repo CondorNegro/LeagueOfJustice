@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import monitor.Monitor;
 import monitor.RedDePetri;
 
+//Este Test de integracion se basa en probar el monitor con la red Lector Escritor.
 
 public class testMonitorCompleto {
     Monitor monitor = Monitor.getInstance();
@@ -70,8 +71,8 @@ public class testMonitorCompleto {
         	e.printStackTrace();
         }
         finally{
-        	assert(flagEscritoresFull); //Se lleno plaza 9
-        	assert(flagLectorFull);
+        	assert(flagEscritoresFull); //Se lleno plaza sumidero de escritores
+        	assert(flagLectorFull); //Se lleno plaza sumidero de lectores
             
         }
         
@@ -100,7 +101,7 @@ public class testMonitorCompleto {
         	int contador=0;
         	//int[][] m= monitor.getMarcado();
       	  
-        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){
+        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){ //Se tienen que llenar las dos plazas sumidero
             	
             	contador++;
             	System.out.println("Escribiendo: " + contador);
@@ -132,7 +133,7 @@ public class testMonitorCompleto {
         public void run() {
         	int contador1=0;
           
-        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){
+        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){ //Se tienen que llenar las dos plazas sumidero
         	
                
             	contador1++;
