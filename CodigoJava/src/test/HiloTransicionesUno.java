@@ -1,7 +1,7 @@
 /**
  * 
  */
-package UnitTests;
+package test;
 
 import static org.junit.Assert.fail;
 
@@ -18,7 +18,7 @@ private Monitor.Monitor monitor;
 					Thread.sleep(3);
 				}
 				catch(InterruptedException e){
-					fail("Se generó error por interrupción de thread");
+					fail("Se generï¿½ error por interrupciï¿½n de thread");
 				}
 			
 			

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package UnitTests;
+package test;
 
 
 public class HiloTransicionesCero implements Runnable {

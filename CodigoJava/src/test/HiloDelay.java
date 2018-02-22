@@ -1,7 +1,7 @@
 /**
  * 
  */
-package UnitTests;
+package test;
 import static org.junit.Assert.*;
 public class HiloDelay implements Runnable {
 	private Monitor.Cola cola;
@@ -20,10 +20,10 @@ public class HiloDelay implements Runnable {
 	public void run(){
 		try{
 			cola.delay();
-			System.out.println("Salí del wait");
+			System.out.println("Salï¿½ del wait");
 		}
 		catch(InterruptedException e){
-			fail("Se generó error por interrupción de thread");
+			fail("Se generï¿½ error por interrupciï¿½n de thread");
 		}
 		flag=true;	
 	}

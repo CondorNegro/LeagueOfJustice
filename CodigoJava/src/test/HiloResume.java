@@ -1,7 +1,7 @@
 /**
  * 
  */
-package UnitTests;
+package test;
 
 public class HiloResume implements Runnable {
 	private Monitor.Cola cola;
@@ -19,7 +19,7 @@ public class HiloResume implements Runnable {
 	@Override
 	public void run(){
 		cola.resume();
-		System.out.println("Salí del notify");
+		System.out.println("Salï¿½ del notify");
 		flag=true;
 		
 		

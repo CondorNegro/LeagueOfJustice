@@ -1,4 +1,4 @@
-package UnitTests;
+package test;
 
 
 import Monitor.Monitor;
