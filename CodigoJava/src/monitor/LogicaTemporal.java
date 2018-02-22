@@ -125,7 +125,7 @@ public class LogicaTemporal {
 	/**
 	 * Metodo updateVectorZ
 	 * Actualiza el vector Z.
-	 * @param q Vector Q
+	 * @param q Vector resultante de hacer una operacion AND entre el vector E y el vector B
 	 */
 	public void updateVectorZ(int[] q){
 		
@@ -142,6 +142,8 @@ public class LogicaTemporal {
 	/**
 	 * Metodo getVectorZ_Actualizado
 	 * Permite obtener la ultima version del vector Z
+	 * @param  q Vector resultante de hacer una operacion AND entre el vector E y el vector B
+	 * @return int[] Ultima version del vector Z.
 	 */
 	public int[] getVectorZ_Actualizado(int[] q){
 		this.updateVectorZ(q);

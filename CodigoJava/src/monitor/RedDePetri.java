@@ -21,7 +21,7 @@ public class RedDePetri{
 	private int[] constante_pinvariante;
 	private int[][] H; //Matriz H.
 	private int[][] B; //Matriz B. B= H * Q
-	private int[][] Q;
+	private int[][] Q; //Vector Q
 	private LogicaTemporal logica_temporal;
 	private int[] transiciones_inmediatas; //Un uno indica que la transicion es inmediata.
 	private int[] prioridades_subida; 
@@ -30,7 +30,7 @@ public class RedDePetri{
 	
 	
 	//Verificacion T-Invariantes
-	//private List<Integer> transicionesDisparadas; //Vector con todos los disparos efectuados
+	
 	private int[][] M0; //Marcado inicial
 	private int[][] suma_disparos_transiciones;
 	private int contadorTransicionesDisparadas;
@@ -45,12 +45,12 @@ public class RedDePetri{
 		this.setMatricesFromExcel(path);
 		setCantTransiciones(I[1].length);
 		logica_temporal=new LogicaTemporal(this.getCantTransiciones());
-		this.logica_temporal.setVectorIntervalosFromExcel(this.path); 
+		this.logica_temporal.setVectorIntervalosFromExcel(this.path); //Seteo intervalos 
 		setTransicionesInmediatas();
-		this.B=getMatrizB_Actualizada();
+		this.B=getMatrizB_Actualizada(); //Calculo Matriz B
 		this.logica_temporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
 		//this.transicionesDisparadas=new ArrayList<Integer>();
-		this.M0=this.M.clone();
+		this.M0=this.M.clone(); //Marcado inicial
 		
 		
 		suma_disparos_transiciones=new int[this.getCantTransiciones()][1]; //Sumatoria de todos los disparos efectuados por transicion.
@@ -61,18 +61,19 @@ public class RedDePetri{
 		this.setLogEventos(log);
 	}
 	
-	
+	/**
+	 * Metodo getContadorTransicionesDisparadas.
+	 * @return int Cantidad de transiciones disparadas
+	 */
 	public int getContadorTransicionesDisparadas(){
 		return this.contadorTransicionesDisparadas;
 	}
+	
 	
 	public int[][] getSumaDisparosTransiciones(){
 		return this.suma_disparos_transiciones;
 	}
 	
-	/**public List<Integer> getTransicionesDisparadas(){
-		return this.transicionesDisparadas;
-	}**/
 	
 	public int[][] getMarcadoInicial(){
 		return this.M0;
@@ -116,6 +117,7 @@ public class RedDePetri{
 	public int[][] getPInv(){
 		return pinvariantes.clone();
 	}
+	
 	public int[][] getTInv(){
 		return tinvariantes;
 	}
@@ -138,7 +140,7 @@ public class RedDePetri{
 	}
 	
 	/**
-	 * Metodo getSensibilizadas(). Permite obtener el vector de transiciones sensibilizadas.
+	 * Metodo getSensibilizadas(). Permite obtener el vector de transiciones sensibilizadas. (Vector E)
 	 * @return ArrayList<Integer> lista con enteros 1 y 0 indicando transiciones sensibilizadas o no, respectivamente.
 	 */
 	public int[] getSensibilizadas() {
@@ -175,7 +177,7 @@ public class RedDePetri{
 	/**
 	 * Metodo disparar. Permite el disparo de una determina transicion.
 	 * @param transicion Transicion a disparar
-	 * @return boolean true si la transicion se disparo.
+	 * @return boolean true si la transicion se disparo. False en caso contrario.
 	 */
 	public boolean disparar(int transicion){ 
 		
@@ -183,15 +185,17 @@ public class RedDePetri{
 		//System.out.println(this.getSensibilizadasExtendido()[transicion]==1);
         if (this.getSensibilizadasExtendido()[transicion]==1) {
         		int[] transSensAntesDisparo=this.getConjuncionEAndB();
-                M = marcado_siguiente;
+                M = marcado_siguiente; //Asignacion del nuevo marcado
                 this.logica_temporal.updateTimeStamp(transSensAntesDisparo, this.getConjuncionEAndB(),  transicion);
                 try{
-                	this.verificarPInvariantes(); // En cada disparo verifico que se cumplan las ecuaciones del P-Invariante
+                	this.verificarPInvariantes(); // En cada disparo se verifica que se cumplan las ecuaciones del P-Invariante
                 	
                 	//this.transicionesDisparadas.add(transicion);
                 	suma_disparos_transiciones[transicion][0]++;
                 	this.contadorTransicionesDisparadas++;
+                	//Logueo el contador de transiciones disparadas
                 	this.log.createMessage("Cantidad de transiciones disparadas:\r\n"+String.valueOf(this.contadorTransicionesDisparadas), 2);
+                	//Logueo la transicion disparada
                 	this.log.addMessage(String.valueOf(transicion)+ new String("\r\n"), 1);
                 	
                 	/**if(contadorTransicionesDisparadas>4){
@@ -205,6 +209,8 @@ public class RedDePetri{
                 	System.out.println("Error en invariantes");
                 	System.exit(1);
                 }
+                
+                //Logueo valor de K y marcado resultante
                 this.log.addMessage(new String("Valor de K: true\r\n"), 0);
         		this.log.addMessage(new String("Marcado PostDisparo:\r\n"), 0);
         		for(int plaza=0;plaza<this.M.length;plaza++){
@@ -214,7 +220,8 @@ public class RedDePetri{
                 return true;
          
         }
-
+        
+        //Logueo valor de K y marcado resultante
         //System.out.println(transicion);
         this.log.addMessage("Valor de K: false\r\n", 0);
 		this.log.addMessage("Marcado PostDisparo: \r\n", 0);
@@ -230,10 +237,9 @@ public class RedDePetri{
 	
 	/**
 	 * Metodo verificarPInvariantes.
-	 * @throws IllegalStateException
-	 * 
-	 * El objetivo es verificar que la cantidad de marcas se mantiene constante en las plazas P-invariantes, para ello
+	 *  El objetivo es verificar que la cantidad de marcas se mantiene constante en las plazas P-invariantes, para ello
 	 * 	compara el valor que retorna gerMarcadoPinvariante() con el marcado inicial "constante_pinvariante" obtenida al momento de configurar la red de petri
+	 * @throws IllegalStateException
 	 */
 	
 	private void verificarPInvariantes() throws IllegalStateException{
@@ -247,7 +253,7 @@ public class RedDePetri{
 	
 	/**
 	 * Metodo gerMarcadoPinvariante.
-	 * @return int[]					Vector que contiene las soluciones a las ecuaciones de los P-invariantes
+	 * @return int[] Vector que contiene las soluciones a las ecuaciones de los P-invariantes
 	 */
     private int[] gerMarcadoPinvariante() {
         int[] resultado=new int[pinvariantes.length];			//Inicializacion del vector resultado
@@ -265,7 +271,6 @@ public class RedDePetri{
 	 * Metodo setMatricesFromExcel. Encargado de cargar las matrices que forman parte de los atributos a partir de un archivo de Excel. 
      * Matrices colocadas en paginas de Excel:
      *
-     * Primer archivo de Excel
      * Hoja 1:  I+
      * Hoja 2:  I-
      * Hoja 3:  I (matriz de incidencia)
@@ -274,8 +279,10 @@ public class RedDePetri{
      * Hoja 6:  T-invariantes
      * Hoja 7:  P-invariantes
      * Hoja 8:  Intervalos [alfa,beta]
+     * Hoja 9:  Prioridades subida
+     * Hoja 10: Prioridades bajada
      * 
-     * @param path Direccion absoluta donde se encuentra el archivo de Excel
+     * @param path Direccion donde se encuentra el archivo de Excel
      * 
      */
     private void setMatricesFromExcel(String path) {
@@ -383,18 +390,12 @@ public class RedDePetri{
     /**
      * Metodo getMatrizB_Actualizada. 
      * Matriz B= Matriz H * Vector Q.
-     * @return int[][] Matriz B. Utilizada en la ecuaci�n de estado.
+     * @return int[][] Matriz B. Utilizada en la ecuacion de estado.
      */
     private int[][] getMatrizB_Actualizada(){
     	this.Q=getVectorQ_Actualizado();
     	int Htranspuesta[][]=OperacionesMatricesListas.transpuesta(this.H);
     	int aux[][]=OperacionesMatricesListas.productoMatrices(Htranspuesta, this.Q);
-    	/*
-    	System.out.println("H: "+aux[0][0]);
-    	System.out.println("H: "+aux[1][0]);
-    	System.out.println("H: "+aux[2][0]);
-    	System.out.println("H: "+aux[3][0]);
-    	System.out.println("H: "+aux[4][0]);*/
     	for(int i=0; i<aux.length;i++){
     		if(aux[i][0]==0){
     			aux[i][0]=1;
@@ -410,8 +411,8 @@ public class RedDePetri{
     
     /**
      * Metodo getVectorQ_Actualizado. 
-     * El vector Q contiene un uno si la marca de la plaza es cero. 
-     * De lo contrario posee un cero en esa posicion. 
+     * El vector Q contiene un cero si la marca de la plaza es cero. 
+     * De lo contrario posee un uno en esa posicion. 
      * @return int[][] Vector Q. 
      */
     private int[][] getVectorQ_Actualizado(){
@@ -483,6 +484,12 @@ public class RedDePetri{
         return this.logica_temporal;
     }
     
+    
+    
+    /**
+     * Metodo getSensibilizadasExtendido.
+     * @return int[] Vector Ex= vector Z and vector B and vector E
+     */
     public int[] getSensibilizadasExtendido(){
     	int Ex[];
     	int E[]= this.getSensibilizadas();
@@ -502,6 +509,11 @@ public class RedDePetri{
     	return Ex;
     }
     
+    
+    /**
+     * Metodo getConjuncionEAndB
+     * @return int[] Vector resultante de:  vector E and vector B.
+     */
     public int[] getConjuncionEAndB(){
     	int E[]= this.getSensibilizadas();
         
@@ -519,7 +531,10 @@ public class RedDePetri{
     }
     
     
-    
+    /**
+     * Metodo setLogEventos. Permite loguear el marcado inicial de la red.
+     * @param log Logger
+     */
     public void setLogEventos(Logger log){
 		this.log=log;
 		this.log.createMessage("Evolucion del marcado: \r\n\r\nMarcado M0: \r\n", 0);
