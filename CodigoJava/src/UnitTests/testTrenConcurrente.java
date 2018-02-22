@@ -8,6 +8,9 @@ import Monitor.Monitor;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import Monitor.RedDePetri;
 
 
@@ -15,7 +18,7 @@ public class testTrenConcurrente {
     Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/TestTren/excelTren.xls"; //Path para Linux.
     private int Politica=2;
-    
+    ThreadPoolExecutor executor=(ThreadPoolExecutor)Executors.newFixedThreadPool(26);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
     private int[] transiciones_tren=new int[14];
     private int tren_en_A=0;
     private int tren_en_B=1;
@@ -36,7 +39,7 @@ public class testTrenConcurrente {
         monitor.configRdp(redExcel);
         monitor.setPolitica(this.Politica); //modo aleatorio
 
-       
+        
 		transiciones_tren[0]=36; //temporal
 		transiciones_tren[1]=35;
 		transiciones_tren[2]=34; //temporal
@@ -63,117 +66,57 @@ public class testTrenConcurrente {
 
     @org.junit.Test
     public void dispararTransicionTest() throws Exception {
-    	Thread tren_driver= new Thread(new TrenDriverModificado(this.transiciones_tren,this.monitor));
+    	executor.execute(new TrenDriverModificado(this.transiciones_tren,this.monitor));
   
 	    //Creacion de hilos generadores - 6 hilos
-		Thread generador_personasA = new Thread(new GeneradorModificado(0,monitor));
-		Thread generador_personasB = new Thread(new GeneradorModificado(1,monitor));
-		Thread generador_personasC = new Thread(new GeneradorModificado(2,monitor));
-		Thread generador_personasD = new Thread(new GeneradorModificado(3,monitor));
-		Thread generador_autos1 = new Thread(new GeneradorModificado(15,monitor));
-		Thread generador_autos2 = new Thread(new GeneradorModificado(20,monitor));
+    	executor.execute(new GeneradorModificado(0,monitor));
+    	executor.execute(new GeneradorModificado(1,monitor));
+    	executor.execute(new GeneradorModificado(2,monitor));
+    	executor.execute(new GeneradorModificado(3,monitor));
+    	executor.execute(new GeneradorModificado(15,monitor));
+    	executor.execute(new GeneradorModificado(20,monitor));
      
 		
 		//Creacion de hilo control de bajada - 1 hilos
-		Thread control_bajada = new Thread(new ControlBajadaModificado(24,monitor));
+    	executor.execute(new ControlBajadaModificado(24,monitor));
 		
 		//Creacion de hilos circulacion de autos por barrera - 2 hilos
-		Thread autos_driver1 = new Thread(new AutosDriverModificado(22,monitor));
-		Thread autos_driver2 = new Thread(new AutosDriverModificado(17,monitor));
+    	executor.execute(new AutosDriverModificado(22,monitor));
+    	executor.execute(new AutosDriverModificado(17,monitor));
 		
 		//Creacion de hilos pasajeros subiendo al tren/vagon - 8 hilos
-		Thread subiendo_maquina_estacionA = new Thread(new SubidaPasajerosEstacionModificado(10,monitor));
-		Thread subiendo_vagon_estacionA = new Thread(new SubidaPasajerosEstacionModificado(7,monitor));
-		Thread subiendo_maquina_estacionB = new Thread(new SubidaPasajerosEstacionModificado(9,monitor));
-		Thread subiendo_vagon_estacionB = new Thread(new SubidaPasajerosEstacionModificado(13,monitor));
-		Thread subiendo_maquina_estacionC = new Thread(new SubidaPasajerosEstacionModificado(23,monitor));
-		Thread subiendo_vagon_estacionC = new Thread(new SubidaPasajerosEstacionModificado(12,monitor));
-		Thread subiendo_maquina_estacionD = new Thread(new SubidaPasajerosEstacionModificado(6,monitor));
-		Thread subiendo_vagon_estacionD = new Thread(new SubidaPasajerosEstacionModificado(11,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(10,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(7,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(9,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(13,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(23,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(12,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(6,monitor));
+    	executor.execute(new SubidaPasajerosEstacionModificado(11,monitor));
 		
 		//Creacion de hilos pasajeros bajando al tren/vagon - 8 hilos
-		Thread bajando_maquina_estacionA = new Thread(new BajadasPasajerosEstacionModificado(29,monitor));
-		Thread bajando_vagon_estacionA = new Thread(new BajadasPasajerosEstacionModificado(31,monitor));
-		Thread bajando_maquina_estacionB = new Thread(new BajadasPasajerosEstacionModificado(32,monitor));
-		Thread bajando_vagon_estacionB = new Thread(new BajadasPasajerosEstacionModificado(33,monitor));
-		Thread bajando_maquina_estacionC = new Thread(new BajadasPasajerosEstacionModificado(25,monitor));
-		Thread bajando_vagon_estacionC = new Thread(new BajadasPasajerosEstacionModificado(26,monitor));
-		Thread bajando_maquina_estacionD = new Thread(new BajadasPasajerosEstacionModificado(27,monitor));
-		Thread bajando_vagon_estacionD = new Thread(new BajadasPasajerosEstacionModificado(28,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(29,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(31,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(32,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(33,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(25,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(26,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(27,monitor));
+    	executor.execute(new BajadasPasajerosEstacionModificado(28,monitor));
 		
 		
 		
        
-		tren_driver.start();
-		//Start hilos.
-		generador_personasA.start();
-		generador_personasB.start();
-		generador_personasC.start();
-		generador_personasD.start();
-		generador_autos1.start();
-		generador_autos2.start();
 		
-		control_bajada.start();
-		
-		autos_driver1.start();
-		autos_driver2.start();
-		
-		subiendo_maquina_estacionA.start();
-		subiendo_vagon_estacionA.start();
-		subiendo_maquina_estacionB.start();
-		subiendo_vagon_estacionB.start();
-		subiendo_maquina_estacionC.start();
-		subiendo_vagon_estacionC.start();
-		subiendo_maquina_estacionD.start();
-		subiendo_vagon_estacionD.start();
-		
-		
-		bajando_maquina_estacionA.start();
-		bajando_vagon_estacionA.start();
-		bajando_maquina_estacionB.start();
-		bajando_vagon_estacionB.start();
-		bajando_maquina_estacionC.start();
-		bajando_vagon_estacionC.start();
-		bajando_maquina_estacionD.start();
-		bajando_vagon_estacionD.start();
-        
-     
-        
-
-		generador_personasA.join();
-		generador_personasB.join();
-		generador_personasC.join();
-		generador_personasD.join();
-		generador_autos1.join();
-		generador_autos2.join();
-		autos_driver1.join();
-		autos_driver2.join();
-		
-		subiendo_maquina_estacionA.join();
-		subiendo_vagon_estacionA.join();
-		subiendo_maquina_estacionB.join();
-		subiendo_vagon_estacionB.join();
-		subiendo_maquina_estacionC.join();
-		subiendo_vagon_estacionC.join();
-		subiendo_maquina_estacionD.join();
-		subiendo_vagon_estacionD.join();
-		
-		bajando_maquina_estacionA.join();
-		bajando_vagon_estacionA.join();
-		bajando_maquina_estacionB.join();
-		bajando_vagon_estacionB.join();
-		bajando_maquina_estacionC.join();
-		bajando_vagon_estacionC.join();
-		bajando_maquina_estacionD.join();
-		bajando_vagon_estacionD.join();
-		
+    	while(executor.getCompletedTaskCount()!=(long)24) {
+    		
+    	}
 		
 		
         
         try{
         	Thread.sleep(1000);
-        	tren_driver.stop();
-        	control_bajada.stop();
+        	executor.shutdown();
            
         }
         catch(InterruptedException e){
@@ -191,7 +134,8 @@ public class testTrenConcurrente {
         	assert(tren_en_A>=1); 
         	assert(tren_en_B>=1); 
         	assert(tren_en_C>=1); 
-        	assert(tren_en_D>=1); 
+        	assert(tren_en_D>=1);
+        	Thread.sleep(1000);
         	
         }
     }
