@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Monitor.Cronometro;
+import monitor.Cronometro;
 
 
 public class testCronometro {
@@ -49,7 +49,7 @@ public class testCronometro {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Cronometro#Cronometro()}.
+	 * Test method for {@link monitor.Cronometro#Cronometro()}.
 	 */
 	@Test
 	public void testCronometro() {
@@ -57,7 +57,7 @@ public class testCronometro {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Cronometro#setNuevoTimeStamp()}.
+	 * Test method for {@link monitor.Cronometro#setNuevoTimeStamp()}.
 	 */
 	@Test
 	public void testSetNuevoTimeStamp() {
@@ -66,7 +66,7 @@ public class testCronometro {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Cronometro#resetearContador()}.
+	 * Test method for {@link monitor.Cronometro#resetearContador()}.
 	 */
 	@Test
 	public void testResetearContador() {
@@ -75,7 +75,7 @@ public class testCronometro {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Cronometro#getMillis()}.
+	 * Test method for {@link monitor.Cronometro#getMillis()}.
 	 * @throws InterruptedException 
 	 */
 	@Test
@@ -87,7 +87,7 @@ public class testCronometro {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Cronometro#getSeconds()}.
+	 * Test method for {@link monitor.Cronometro#getSeconds()}.
 	 * @throws InterruptedException 
 	 */
 	@Test
@@ -98,7 +98,7 @@ public class testCronometro {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Cronometro#getContador()}.
+	 * Test method for {@link monitor.Cronometro#getContador()}.
 	 */
 	@Test
 	public void testGetContador() {

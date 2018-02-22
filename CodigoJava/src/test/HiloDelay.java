@@ -4,10 +4,10 @@
 package test;
 import static org.junit.Assert.*;
 public class HiloDelay implements Runnable {
-	private Monitor.Cola cola;
+	private monitor.Cola cola;
 	private boolean flag;
 	
-	public HiloDelay(Monitor.Cola cola){
+	public HiloDelay(monitor.Cola cola){
 		this.cola=cola;
 		flag=false;
 	}

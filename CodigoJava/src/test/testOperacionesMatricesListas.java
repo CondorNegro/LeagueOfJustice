@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Monitor.OperacionesMatricesListas;
+import monitor.OperacionesMatricesListas;
 
 
 public class testOperacionesMatricesListas {
@@ -65,7 +65,7 @@ public class testOperacionesMatricesListas {
 	
 
 	/**
-	 * Test method for {@link Monitor.OperacionesMatricesListas#andVector(java.util.List, java.util.List)}.
+	 * Test method for {@link monitor.OperacionesMatricesListas#andVector(java.util.List, java.util.List)}.
 	 */
 	@Test
 	public void testAndVector() {
@@ -88,7 +88,7 @@ public class testOperacionesMatricesListas {
 	}
 
 	/**
-	 * Test method for {@link Monitor.OperacionesMatricesListas#isNotAllZeros(java.util.List)}.
+	 * Test method for {@link monitor.OperacionesMatricesListas#isNotAllZeros(java.util.List)}.
 	 */
 	@Test
 	public void testIsNotAllZeros() {
@@ -103,7 +103,7 @@ public class testOperacionesMatricesListas {
 	}
 
 	/**
-	 * Test method for {@link Monitor.OperacionesMatricesListas#sumaMatrices(int[][], int[][])}.
+	 * Test method for {@link monitor.OperacionesMatricesListas#sumaMatrices(int[][], int[][])}.
 	 */
 	@Test
 	public void testSumaMatrices() {
@@ -113,7 +113,7 @@ public class testOperacionesMatricesListas {
 	}
 	
 	/**
-	 * Test method for {@link Monitor.OperacionesMatricesListas#sumaMatrices(int[][], int[][])}.
+	 * Test method for {@link monitor.OperacionesMatricesListas#sumaMatrices(int[][], int[][])}.
 	 */
 	@Test
 	public void testRestaMatrices() {
@@ -124,7 +124,7 @@ public class testOperacionesMatricesListas {
 
 	
 	/**
-	 * Test method for {@link Monitor.OperacionesMatricesListas#productoMatrices(int[][], int[][])}.
+	 * Test method for {@link monitor.OperacionesMatricesListas#productoMatrices(int[][], int[][])}.
 	 */
 	@Test
 	public void testProductoMatrices() {
@@ -133,7 +133,7 @@ public class testOperacionesMatricesListas {
 	}
 	
 	/**
-	 * Test method for {@link Monitor.OperacionesMatricesListas#transpuesta(int[][])}.
+	 * Test method for {@link monitor.OperacionesMatricesListas#transpuesta(int[][])}.
 	 */
 	@Test
 	public void testTranspuesta() {

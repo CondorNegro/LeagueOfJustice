@@ -18,11 +18,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Logueo.Logger;
-import Monitor.LogicaTemporal;
-import Monitor.Monitor;
-import Monitor.OperacionesMatricesListas;
-import Monitor.RedDePetri;
+import logueo.Logger;
+import monitor.LogicaTemporal;
+import monitor.Monitor;
+import monitor.OperacionesMatricesListas;
+import monitor.RedDePetri;
 
 
 public class testRedDePetri {
@@ -91,7 +91,7 @@ public class testRedDePetri {
 	}
 
 	/**
-	 * Test method for {@link Monitor.RedDePetri#RedDePetri(java.lang.String)}.
+	 * Test method for {@link monitor.RedDePetri#RedDePetri(java.lang.String)}.
 	 */
 	@Test
 	public void testRedDePetri() {
@@ -100,7 +100,7 @@ public class testRedDePetri {
 	}
 
 	/**
-	 * Test method for {@link Monitor.RedDePetri#getCantTransiciones()}.
+	 * Test method for {@link monitor.RedDePetri#getCantTransiciones()}.
 	 */
 	@Test
 	public void testGetCantTransiciones() {
@@ -112,7 +112,7 @@ public class testRedDePetri {
 	}
 
 	/**
-	 * Test method for {@link Monitor.RedDePetri#getSensibilizadas()}.
+	 * Test method for {@link monitor.RedDePetri#getSensibilizadas()}.
 	 */
 	@Test
 	public void testGetSensibilizadas() {
@@ -124,7 +124,7 @@ public class testRedDePetri {
 	}
 
 	/**
-	 * Test method for {@link Monitor.RedDePetri#disparar(int)}.
+	 * Test method for {@link monitor.RedDePetri#disparar(int)}.
 	 */
 	@Test
 	public void testDisparar() {
@@ -145,7 +145,7 @@ public class testRedDePetri {
 	}
 
 	/**
-	 * Test method for {@link Monitor.RedDePetri#getMarcadoSiguiente(int)}.
+	 * Test method for {@link monitor.RedDePetri#getMarcadoSiguiente(int)}.
 	 */
 	@Test
 	public void testGetMarcadoSiguiente() {
@@ -165,7 +165,7 @@ public class testRedDePetri {
 	}
 
 	/**
-	 * Test method for {@link Monitor.RedDePetri#esDisparoValido(int[][])}.
+	 * Test method for {@link monitor.RedDePetri#esDisparoValido(int[][])}.
 	 */
 	@Test
 	public void testEsDisparoValido() {
@@ -185,7 +185,7 @@ public class testRedDePetri {
 
 	
 	/**
-	 * Test method for {@link Monitor.RedDePetri#verificarTInvariantes()}.
+	 * Test method for {@link monitor.RedDePetri#verificarTInvariantes()}.
 	 * @throws InterruptedException 
 	 * @throws InvocationTargetException 
 	 * @throws IllegalArgumentException 
@@ -223,7 +223,7 @@ public class testRedDePetri {
 	
 	
 	/**
-	 * Test method for {@link Monitor.RedDePetri#RedDePetri(java.lang.String)}.
+	 * Test method for {@link monitor.RedDePetri#RedDePetri(java.lang.String)}.
 	 */
 	@Test
 	public void testMatrizH() {
@@ -252,7 +252,7 @@ public class testRedDePetri {
 	
 	
 	/**
-	 * Test method for {@link Monitor.RedDePetri#setTransicionesInmediatas}.
+	 * Test method for {@link monitor.RedDePetri#setTransicionesInmediatas}.
 	 */
 	@Test
 	public void testSetTransicionesInmediatas() {
@@ -429,7 +429,7 @@ public class testRedDePetri {
 	
 	
 	/**
-	 * Test method for {@link Monitor.RedDePetri#getVectorQ()}.
+	 * Test method for {@link monitor.RedDePetri#getVectorQ()}.
 	 */
 	@Test
 	public void testGetVectorQ() {
@@ -454,7 +454,7 @@ public class testRedDePetri {
 	}
 	
 	/**
-	 * Test method for {@link Monitor.RedDePetri#getMatrizB()}.
+	 * Test method for {@link monitor.RedDePetri#getMatrizB()}.
 	 */
 	@Test
 	public void testGetMatrizB() {

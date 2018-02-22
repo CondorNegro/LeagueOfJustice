@@ -5,9 +5,9 @@ package test;
 
 
 public class HiloTransicionesCero implements Runnable {
-	private Monitor.Monitor monitor;
+	private monitor.Monitor monitor;
 	
-	public HiloTransicionesCero(Monitor.Monitor monitor){
+	public HiloTransicionesCero(monitor.Monitor monitor){
 		this.monitor=monitor;
 	}
 	public void run() {

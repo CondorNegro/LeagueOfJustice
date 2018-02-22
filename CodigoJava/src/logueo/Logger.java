@@ -1,5 +1,5 @@
 
-package Logueo;
+package logueo;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

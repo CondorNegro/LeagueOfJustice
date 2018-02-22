@@ -16,15 +16,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import monitor.Cola;
+import monitor.Monitor;
+import monitor.Politica;
+import monitor.RedDePetri;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-
-import Monitor.Cola;
-import Monitor.Monitor;
-import Monitor.Politica;
-import Monitor.RedDePetri;
 
 
 
@@ -93,7 +93,7 @@ public class testMonitor {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Monitor#getInstance()}.
+	 * Test method for {@link monitor.Monitor#getInstance()}.
 	 * @throws InvocationTargetException 
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 
@@ -119,7 +119,7 @@ public class testMonitor {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Monitor#configRdp(java.lang.String)}.
+	 * Test method for {@link monitor.Monitor#configRdp(java.lang.String)}.
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
 	 * @throws InvocationTargetException 
@@ -144,7 +144,7 @@ public class testMonitor {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Monitor#setPolitica(int)}.
+	 * Test method for {@link monitor.Monitor#setPolitica(int)}.
 	 * @throws InvocationTargetException 
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 

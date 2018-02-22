@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import Monitor.Cronometro;
-import Monitor.Monitor; //Clase Monitor.
+import monitor.Cronometro;
+import monitor.Monitor;
 
 
 public class Main {
@@ -122,7 +122,7 @@ public class Main {
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
          * 		Especifica el tiempo que espera executor antes de finalizar la ejecucion de los hilos que tenga a cargo.				
          */
-		executor.awaitTermination(600, TimeUnit.SECONDS);
+		executor.awaitTermination(35, TimeUnit.SECONDS);
         
         
         monitor.writeLogFiles();

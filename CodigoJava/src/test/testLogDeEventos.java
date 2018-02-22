@@ -16,7 +16,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import Logueo.Logger;
+
+import logueo.Logger;
 
 
 public class testLogDeEventos {
@@ -67,7 +68,7 @@ public class testLogDeEventos {
 
 
 	/**
-	 * Test method for {@link Logueo.Logger#createMessage(java.lang.String, int)}.
+	 * Test method for {@link logueo.Logger#createMessage(java.lang.String, int)}.
 	 */
 	@Test
 	public void testCreateMessage() {
@@ -78,7 +79,7 @@ public class testLogDeEventos {
 	}
 
 	/**
-	 * Test method for {@link Logueo.Logger#addMessage(java.lang.String, int)}.
+	 * Test method for {@link logueo.Logger#addMessage(java.lang.String, int)}.
 	 */
 	@Test
 	public void testAddMessage() {
@@ -95,7 +96,7 @@ public class testLogDeEventos {
 	
 
 	/**
-	 * Test method for {@link Logueo.Logger#flushBufferToFile(int)}.
+	 * Test method for {@link logueo.Logger#flushBufferToFile(int)}.
 	 */
 	@Test
 	public void testFlushBufferToFile() {
@@ -122,7 +123,7 @@ public class testLogDeEventos {
 	}
 	
 	/**
-	 * Test method for {@link Logueo.Logger#flushBufferToFile(int)}.
+	 * Test method for {@link logueo.Logger#flushBufferToFile(int)}.
 	 */
 	@Test
 	public void testFlushBufferToFileWithOverwrite() {

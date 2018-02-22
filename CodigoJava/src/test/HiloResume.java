@@ -4,10 +4,10 @@
 package test;
 
 public class HiloResume implements Runnable {
-	private Monitor.Cola cola;
+	private monitor.Cola cola;
 	private boolean flag;
 	
-	public HiloResume(Monitor.Cola cola){
+	public HiloResume(monitor.Cola cola){
 		this.cola=cola;
 		flag=false;
 	}

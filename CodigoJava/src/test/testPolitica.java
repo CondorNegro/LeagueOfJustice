@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class testPolitica {
 	private int[] listaTest;
-	private Monitor.Politica politica;
+	private monitor.Politica politica;
 	private int[] prioridadesBajada={1,2,3,4};
 	private int[] prioridadesSubida={1,2,3,4};
 	
@@ -41,7 +41,7 @@ public class testPolitica {
 	public void setUp() throws Exception {
 		listaTest=new int[5];
 		
-		politica=new Monitor.Politica(1);
+		politica=new monitor.Politica(1);
 		listaTest[0]=1;
 		listaTest[1]=0;
 		listaTest[2]=0;
@@ -59,7 +59,7 @@ public class testPolitica {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Politica#Politica(int)}.
+	 * Test method for {@link monitor.Politica#Politica(int)}.
 	 */
 	@Test
 	public void testPolitica() {
@@ -68,7 +68,7 @@ public class testPolitica {
 	}
 	
 	/**
-	 * Test method for {@link Monitor.Politica#cualDisparar(java.util.List)}.
+	 * Test method for {@link monitor.Politica#cualDisparar(java.util.List)}.
 	 */
 	@Test
 	public void testCualDispararCon1ElementoEnLista() {
@@ -97,7 +97,7 @@ public class testPolitica {
 	}
 
 	/**
-	 * Test method for {@link Monitor.Politica#cualDisparar(java.util.List)}.
+	 * Test method for {@link monitor.Politica#cualDisparar(java.util.List)}.
 	 */
 	@Test
 	public void testCualDispararModo0() {
@@ -128,7 +128,7 @@ public class testPolitica {
 	}
 	
 	/**
-	 * Test method for {@link Monitor.Politica#cualDisparar(java.util.List)}.
+	 * Test method for {@link monitor.Politica#cualDisparar(java.util.List)}.
 	 */
 	@Test
 	public void testCualDispararModo1() { //Primero suben.
@@ -153,7 +153,7 @@ public class testPolitica {
 	}
 	
 	/**
-	 * Test method for {@link Monitor.Politica#cualDisparar(java.util.List)}.
+	 * Test method for {@link monitor.Politica#cualDisparar(java.util.List)}.
 	 */
 	@Test
 	public void testCualDispararModo2() { //Primero bajan
@@ -180,7 +180,7 @@ public class testPolitica {
 	
 	
 	/**
-	 * Test method for {@link Monitor.Politica#cualDisparar(java.util.List)}.
+	 * Test method for {@link monitor.Politica#cualDisparar(java.util.List)}.
 	 */
 	@Test
 	public void testCualDispararModo1Aleatorio() { //Primero suben pero ejecuta aleatorio por no tener sensibilizadas transiciones prioritarias.

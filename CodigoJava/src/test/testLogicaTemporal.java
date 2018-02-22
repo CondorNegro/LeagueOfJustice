@@ -14,9 +14,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Monitor.LogicaTemporal;
-import Monitor.Monitor;
 import jxl.Workbook;
+import monitor.LogicaTemporal;
+import monitor.Monitor;
 
 public class testLogicaTemporal {
 	private LogicaTemporal time;
@@ -65,7 +65,7 @@ public class testLogicaTemporal {
 	}
 
 	/**
-	 * Test method for {@link Monitor.LogicaTemporal#LogicaTemporal(int)}.
+	 * Test method for {@link monitor.LogicaTemporal#LogicaTemporal(int)}.
 	 */
 	@Test
 	public void testLogicaTemporal() {
@@ -86,7 +86,7 @@ public class testLogicaTemporal {
 	}
 
 	/**
-	 * Test method for {@link Monitor.LogicaTemporal#setVectorIntervalosFromExcel(jxl.Workbook)}.
+	 * Test method for {@link monitor.LogicaTemporal#setVectorIntervalosFromExcel(jxl.Workbook)}.
 	 */
 	@Test
 	public void testSetVectorIntervalosFromExcel() {
@@ -101,7 +101,7 @@ public class testLogicaTemporal {
 	
 	
 	/**
-	 * Test method for {@link Monitor.LogicaTemporal#construirVectorTransicionesInmediatas}.
+	 * Test method for {@link monitor.LogicaTemporal#construirVectorTransicionesInmediatas}.
 	 */
 	@Test
 	public void testConstruirVectorTransicionesInmediatas() {

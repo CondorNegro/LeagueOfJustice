@@ -1,9 +1,9 @@
 package test;
 
 
-import Monitor.Monitor;
-
 import static org.junit.Assert.*;
+
+import monitor.Monitor;
 
 public class testMonitorCompleto2 {
     Monitor monitor = Monitor.getInstance();

@@ -13,7 +13,7 @@ import org.junit.Test;
 
 
 public class testCola {
-	private Monitor.Cola cola;
+	private monitor.Cola cola;
 	private HiloDelay hiloDelay;
 	private HiloResume hiloResume;
 	private Thread threadDelay;
@@ -37,7 +37,7 @@ public class testCola {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		cola=new Monitor.Cola();
+		cola=new monitor.Cola();
 		hiloDelay=new HiloDelay(cola);
 		hiloResume=new HiloResume(cola);
 		threadDelay=new Thread(hiloDelay);
@@ -56,7 +56,7 @@ public class testCola {
 
 	
 	/**
-	 * Test method for {@link Monitor.Cola#delay()} and for {@link Monitor.Cola#resume()}.
+	 * Test method for {@link monitor.Cola#delay()} and for {@link monitor.Cola#resume()}.
 	 */
 	@Test
 	public void testDelayAndTestResume() {
@@ -91,7 +91,7 @@ public class testCola {
 	
 
 	/**
-	 * Test method for {@link Monitor.Cola#isEmpty()}.
+	 * Test method for {@link monitor.Cola#isEmpty()}.
 	 */
 	@Test
 	public void testIsEmpty() {

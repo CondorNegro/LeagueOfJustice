@@ -1,17 +1,14 @@
 package test;
 
 
-import Monitor.Monitor;
-
-
-
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import Monitor.RedDePetri;
+import monitor.Monitor;
+import monitor.RedDePetri;
 
 
 public class testTrenConcurrente {

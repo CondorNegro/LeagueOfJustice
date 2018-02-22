@@ -1,15 +1,13 @@
 package test;
 
 
-import Monitor.Monitor;
-
-
-
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import Monitor.RedDePetri;
+
+import monitor.Monitor;
+import monitor.RedDePetri;
 
 
 public class testMonitorCompleto {

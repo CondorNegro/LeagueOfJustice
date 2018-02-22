@@ -1,9 +1,8 @@
-package Monitor;
+package monitor;
 
 import java.util.concurrent.Semaphore;
 
-import Logueo.Logger;
-//Se aplica SINGLETON. 
+import logueo.Logger;
 
 public class Monitor { 
 	//Elementos del monitor.

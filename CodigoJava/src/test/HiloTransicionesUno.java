@@ -6,9 +6,9 @@ package test;
 import static org.junit.Assert.fail;
 
 public class HiloTransicionesUno implements Runnable {
-private Monitor.Monitor monitor;
+private monitor.Monitor monitor;
 	
-	public HiloTransicionesUno(Monitor.Monitor monitor){
+	public HiloTransicionesUno(monitor.Monitor monitor){
 		this.monitor=monitor;
 	}
 	public void run() {
