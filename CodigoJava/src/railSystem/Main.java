@@ -21,15 +21,31 @@ public class Main {
 		Cronometro tiempo_transcurrido=new Cronometro();
 		tiempo_transcurrido.setNuevoTimeStamp();
 		String name_file="./RedesParaTest/TestTren/excelTren.xls";
+		boolean flag_prueba_prioridades=false;
 		
-		if((System.getProperty("os.name")).equals("Windows 10")){	
-			 if(System.getProperty("user.name").equals("kzAx")){
-				 name_file="..\\src\\RedesParaTest\\TestTren\\excelTren.xls";
-			 }
-			 else{
-				 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.
-			 }
+		if(!flag_prueba_prioridades){
+			if((System.getProperty("os.name")).equals("Windows 10")){	
+				 if(System.getProperty("user.name").equals("kzAx")){
+					 name_file="..\\src\\RedesParaTest\\TestTren\\excelTren.xls";
+				 }
+				 else{
+					 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.
+				 }
+			}
 		}
+		else{
+			name_file="./RedesParaTest/TestTren/excelTrenPrioridades.xls";
+			if((System.getProperty("os.name")).equals("Windows 10")){	
+				 if(System.getProperty("user.name").equals("kzAx")){
+					 name_file="..\\src\\RedesParaTest\\TestTren\\excelTrenPrioridades.xls";
+				 }
+				 else{
+					 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTrenPrioridades.xls"; //Path para Windows.
+				 }
+			}
+		}
+				
+		
 		
 		Monitor monitor=Monitor.getInstance(); //Patron Singleton
 		monitor.configRdp(name_file); //Configuro la red de petri para el monitor segun el path.
