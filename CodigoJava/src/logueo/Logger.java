@@ -9,10 +9,10 @@ public class Logger {
 	
 	
 
-	private String[] name_files;
-	private String[] messages;
+	private String[] name_files; //Nombres de archivos log.
+	private String[] messages; //Mensajes a escribir en los archivos
 	
-	public Logger(int number_of_logs){
+	public Logger(int number_of_logs){ //Limite de 15 archivos de log.
 		if(number_of_logs<1){
 			number_of_logs=1;
 		}
@@ -24,7 +24,7 @@ public class Logger {
 	
 		name_files=new String[number_of_logs];
 		messages=new String[number_of_logs];
-		for(int i=0; i<number_of_logs;i++){
+		for(int i=0; i<number_of_logs;i++){  //Inicializacion de atributos y manejo de paths
 				   messages[i]=new String("");
 				  		   
 			    	if((System.getProperty("os.name")).equals("Windows 10")){	
@@ -100,7 +100,11 @@ public class Logger {
 	}
 	
 	
-	
+	/**
+	 * Metodo que permite obtener una letra del abecedario.
+	 * @param indice Numero de orden de la letra del abecedario. Cero es 'A'.
+	 * @return char Letra del abecedario
+	 */
 	private synchronized char getLetraAbecedario(int indice) {
 		char letra;
 		return (char) ('A' + indice); 
