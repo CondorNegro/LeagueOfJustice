@@ -170,6 +170,7 @@ public class testMonitor {
 	/**
 	 * Test method for {@link Monitor.Monitor#quienesEstanEnColas()}.
 	 */
+	/*
 	@Test
 	public void testQuienesEstanEnColas() {
 		this.monitor1.configRdp(this.redExcel1);
@@ -238,11 +239,12 @@ public class testMonitor {
 		
 		
 	}
-
+*/
 	
 	/**
 	 * Test method for {@link Monitor.Monitor#dispararTransicion(int)}.
 	 */
+/*
 	@Test
 	public void testDispararTransicion() {
 		this.monitor1.setPolitica(0);
@@ -299,6 +301,6 @@ public class testMonitor {
 		
 	}
 	
-	
+	*/
 
 }

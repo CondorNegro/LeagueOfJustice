@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Transiciones disparadas: 
 0
 2
@@ -9943,3 +9944,6 @@ Transiciones disparadas:
 3
 20
 17
+=======
+comoandas
+>>>>>>> 4ee25aabedf8b7867c8cba86dbcf0a0145f29d93
