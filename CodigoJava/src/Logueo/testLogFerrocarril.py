@@ -1,42 +1,55 @@
 #Python para testear el logueo realizado en Java.
 
 #Autores: Casabella Martin, Kleiner Matias, Lopez Gaston
-from colorama import init, Fore, Back, Style
+
+from colorama import init, Fore, Back, Style #Colores en impresion por consola para resultados de tests.
 import xlrd #Para trabajar con libros Excel (Lectura)
 import os #Para determinar el sistema operativo
-import numpy as np
+import numpy as np #Para operaciones con matrices y vectores
 
-global cadenaImpresion
+
+'''
+Cadenas globales
+'''
+global cadenaImpresion #Para impresion por consola
+
 global cantidadPlazas
 global cantidadTransiciones
-global matrizM0
+
+global matrizM0 #Marcado inicial
 global matrizManterior
 global matrizMactual
-global constantesPinvariantes
+
+global constantesPinvariantes  #Constantes que otorgan las ecuaciones de los Pinvariantes
 global flagVerificarPinv
+
 global flagVerificarTinv
 global arregloFlagsTInv
 global flagFinalizacionTInv
-global politica
+
+global politica #Politica utilizada en el monitor.
 
 
 
 '''
-#Funciones
+Funciones
+
 '''
 
-
+#Impresion por consola en color rojo. Indica error o test fail.
 def impresionConsolaRed(cadenaImpresion):
-	if(os.name=='nt'):#Windows
+	if(os.name=='nt'):
 		init()
 		print(Fore.RED+cadenaImpresion)
 		print(Style.RESET_ALL)
+		#Windows
 	elif(os.name=='posix'): 
 		init()
 		print(Fore.RED+cadenaImpresion)
 		print(Style.RESET_ALL)
 		#Linux
 
+#Impresion por consola en color azul. Indica mensaje, titulo o informacion.
 def impresionConsolaBlue(cadenaImpresion):
 	if(os.name=='nt'):
 		#Windows
@@ -50,6 +63,7 @@ def impresionConsolaBlue(cadenaImpresion):
 		#Linux
 
 
+#Impresion por consola en color verde. Indica test OK.
 def impresionConsolaGreen(cadenaImpresion):
 	if(os.name=='nt'): 
 		#Windows
@@ -65,7 +79,7 @@ def impresionConsolaGreen(cadenaImpresion):
 
 
 
-
+#Test particulares efectuados sobre la lista de contadores de disparos de las transiciones y el marcado final de la simulacion.
 def testParticulares(lista, marcadoUltimo):
 	impresionConsolaBlue('\nTest particulares')
 	cantidadPersonasGeneradas=lista[0] + lista[1] + lista[2]+lista[3]
@@ -87,6 +101,7 @@ def testParticulares(lista, marcadoUltimo):
 	print resta
 	print
 
+	#Test de politica. Se efectua en base a un umbrales
 	if(politica==1):
 		if(resta >= 25):
 			impresionConsolaGreen('Test. Politica primero suben. OK')
@@ -99,7 +114,8 @@ def testParticulares(lista, marcadoUltimo):
 		else:
 			impresionConsolaRed('Test. Politica primero bajan. FAIL')
 
-
+	#Test para verificar que la cantidad de pasajeros que quedan al final en el tren es la diferencia entre la cantidad de 
+	#veces que se dispararon las transiciones de subida menos las veces que se dispararon las de bajada
 	if((resta)!=(marcadoUltimo[4]+marcadoUltimo[5])):
 		impresionConsolaRed('Test. Cantidad final de personas en el tren. FAIL')
 		exit(1)
@@ -109,22 +125,28 @@ def testParticulares(lista, marcadoUltimo):
 
 
 
-
+	#Test. La cantidad de personas bajadas no puede superar a la cantidad de personas subidas
 	if(cantidadPersonasBajadas>cantidadPersonasSubidas):
 		impresionConsolaRed('Test. Cantidad de personas subidas mayor o igual a cantidad de personas bajadas. FAIL')
 		exit(1)
 	else:
 		impresionConsolaGreen('Test. Cantidad de personas subidas mayor o igual a cantidad de personas bajadas. OK')
+	
+	#Test. La cantidad de personas subidas no puede superar a la cantidad de personas generadas
 	if(cantidadPersonasSubidas>cantidadPersonasGeneradas):
 		impresionConsolaRed('Test. Cantidad de personas generadas mayor o igual a cantidad de personas subidas. FAIL')
 		exit(1)
 	else:
 		impresionConsolaGreen('Test. Cantidad de personas generadas mayor o igual a cantidad de personas subidas. OK')
+	
+	#Test. La cantidad de autos que atraviesan la barrera A no puede superar a la cantidad de autos que se generan para cruzar dicha barrera 
 	if(cantidadAutosGeneradosA<cantidadAutosPasanBarreraA):
 		impresionConsolaRed('Test. Cantidad de autos generados en barrera A mayor o igual a cantidad de autos que pasaron dicha barrera. FAIL')
 		exit(1)
 	else:
 		impresionConsolaGreen('Test. Cantidad de autos generados en barrera A mayor o igual a cantidad de autos que pasaron dicha barrera. OK')
+	
+	#Test. La cantidad de autos que atraviesan la barrera B no puede superar a la cantidad de autos que se generan para cruzar dicha barrera 
 	if(cantidadAutosGeneradosB<cantidadAutosPasanBarreraB):
 		impresionConsolaRed('Test. Cantidad de autos generados en barrera B mayor o igual a cantidad de autos que pasaron dicha barrera. FAIL')
 		exit(1)
@@ -134,34 +156,39 @@ def testParticulares(lista, marcadoUltimo):
 
 
 
-
+#Funcion para verificar los PInvariantes.
 def verificarPinvariantes(matrizM, pInvariantes, constantesPinvariantes):
 	flagVerificarPinv=True
 	constantesPinvariantesActual=[]
 	for filaPinvariante in range(len(pInvariantes)):
 		constantesPinvariantesActual.append((matrizM*pInvariantes[filaPinvariante]).sum())
+		#Obtengo el resultado de la ecuacion de los Pinvariantes con el marcado actual
 	constantesPinvariantesActual=np.array(constantesPinvariantesActual).reshape(len(constantesPinvariantesActual),1)
 	constantesPinvariantesActual=np.asarray(constantesPinvariantesActual,dtype=int)
+	#Verifico si los resultados de las ecuaciones con el marcado actual versus el marcado inicial (M0) coinciden
 	vectorAuxEqual=constantesPinvariantesActual!= constantesPinvariantes
 	for i in range(len(vectorAuxEqual)):
 		if(vectorAuxEqual[i][0]):
+			#No se cumplen los Pinvariantes
 			flagVerificarPinv=False
 			impresionConsolaRed('Error en verificacion de PInvariantes')
 			exit(1)
 
-
+#Funcion auxiliar. Verifica si todos los flags correspondientes a las filas de Tinvariantes son False
 def verificarFlagFinalizacion(flags):
 	for i in range(len(flags)):
 		if(flags[i]==True):
 			return True;
 	return False;
 
+#Funcion auxiliar. Determina si algun elemento de la lista es negativo
 def isElementoNegativo(lista):
 	for i in range(len(lista)):
 		if(lista[i]<0):
 			return True
 	return False;
 
+#Funcion que permite verificar Tinvariantes
 def verificarTinvariantes(tInv, listaTranciones, I, M0, Multimo):
 	flagFinalizacionTInv=False
 	listaContadores=[]
@@ -170,16 +197,20 @@ def verificarTinvariantes(tInv, listaTranciones, I, M0, Multimo):
 		listaContadores.append(0)
 	for transicion in listaTranciones:
 		listaContadores[transicion]=listaContadores[transicion]+1
+		#Cuento la cantidad de veces que se disparo cada transicion
 	listaContadores=np.array(listaContadores)
-	testParticulares(listaContadores, Multimo)
+	testParticulares(listaContadores, Multimo) #Llamada a tests particulares con la listaContadores
 	listaContadoresAnterior=listaContadores
 	arrayTinvariantes=np.array(tInv)
 	for fila in range(len(tInv)):
 		arregloFlagsTInv.append(True)
+		#Puedo restar a listaContadores todas las filas de Tinvariantes debido al flag True
 	while(not flagFinalizacionTInv):
 		for fila in range(len(tInv)):
 			if(arregloFlagsTInv[fila]):
 				listaContadoresAnterior=listaContadores
+				#Resto a listaContadores la fila de Tinvariantes. Si la resta no arroja ningun elemento negativo, indica que se cumplio
+				#el Tinvariante
 				listaContadores=listaContadores -  arrayTinvariantes[fila]
 				flagListaNegativa=isElementoNegativo(listaContadores)
 				if(flagListaNegativa):
@@ -187,16 +218,21 @@ def verificarTinvariantes(tInv, listaTranciones, I, M0, Multimo):
 					arregloFlagsTInv[fila]=False
 			flagFinalizacionTInv=verificarFlagFinalizacion(arregloFlagsTInv)
 	listaContadores=np.asmatrix(listaContadores)
+	#Efectuo el producto de la matriz de incidencia con el excedente que queda de listaContadores, el cual representa una suma de vectores
+	#de disparo
 	producto=I*np.transpose(listaContadores)
+	#Resto al marcado final de la simulacion el producto anterior
 	resta=Multimo-producto
 	resta=np.asmatrix(resta,dtype=int)
+	#La resta debe dar igual al marcado inicial, si es que se verifican los Tinvariantes
 	comparacion=resta!=M0
 	for i in range(len(comparacion)):
 		if(comparacion[i]):
+			#No se verifican los Tinvariantes
 			impresionConsolaRed('\n Error en TInvariantes')
 			exit(1)
 
-
+#Test para verificar que el tren no puede estar en mas de una estacion
 def testTrenEnUnaEstacion(marcado):
 	if(marcado[0]==0):
 		if(marcado[1]==0 or marcado[2]==0 or marcado[3]==0):
@@ -216,18 +252,21 @@ def testTrenEnUnaEstacion(marcado):
 			exit(1)
 
 
-
+#Test para verificar que mientras el tren cruza la barrera, los autos no pueden atravesarla
 def verificarAutosNoCruzan(marcados):
 	flagPrimeraVez=True
 	valorMarcadoSumideroAutos=0
 	#Barrera B
 	for i in range(len(marcados)):
 		if(marcados[i][17]>0):
+			#Tren en barrera
 			if(flagPrimeraVez):
 				flagPrimeraVez=False
 				valorMarcadoSumideroAutos=marcados[i][19]
+				#Almaceno el valor de la plaza sumidero de autos que cruzan la barrera
 			else:
 				if(marcados[i][19]!=valorMarcadoSumideroAutos):
+					#Un auto atraveso la barrera
 					impresionConsolaRed("Test. Autos no cruzan barrera B cuando pasa el tren. FAIL")
 					exit(1)
 		else:
@@ -251,7 +290,7 @@ def verificarAutosNoCruzan(marcados):
 	impresionConsolaGreen("Test. Autos no cruzan barrera A o B cuando pasa el tren. OK")
 
 
-
+#Test para verificar que la cantidad de pasajeros es inalterable mientras el tren no se encuentre en una estacion
 def verificarCantidadPasajerosInalterableEnViaje(marcados):
 	flagPrimeraVez=True
 	valorMarcadoVagonLugaresVacios=0
@@ -261,6 +300,7 @@ def verificarCantidadPasajerosInalterableEnViaje(marcados):
 	
 	for i in range(len(marcados)):
 		if(marcados[i][0]>0 and marcados[i][1]>0 and marcados[i][2]>0 and marcados[i][3]>0):
+			#Tren viajando
 			if(flagPrimeraVez):
 				flagPrimeraVez=False
 				valorMarcadoVagonLugaresVacios=marcados[i][6]
@@ -269,6 +309,7 @@ def verificarCantidadPasajerosInalterableEnViaje(marcados):
 				valorMarcadoMaquinaLugaresOcupados=marcados[i][4]
 			else:
 				if(marcados[i][6]!=valorMarcadoVagonLugaresVacios or marcados[i][7]!=valorMarcadoMaquinaLugaresVacios or marcados[i][5]!=valorMarcadoVagonLugaresOcupados or marcados[i][4]!=valorMarcadoMaquinaLugaresOcupados):
+					#Se modifico el numero de pasajeros
 					impresionConsolaRed("Test. Pasajeros no bajan ni suben al tren cuando el mismo esta en viaje. FAIL")
 					exit(1)
 		else:
@@ -278,6 +319,8 @@ def verificarCantidadPasajerosInalterableEnViaje(marcados):
 	impresionConsolaGreen("Test. Pasajeros no bajan ni suben al tren cuando el mismo esta en viaje. OK")
 
 
+
+#Test para verificar que las personas que se suben al tren en una estacion no se bajen en la misma estacion
 def verificarPersonasSubenNoBajanEnMismaEstacion(marcados):
 	flagPrimeraVez=True
 	valorMarcadoMinimoPersonasSubidas=0
@@ -286,15 +329,17 @@ def verificarPersonasSubenNoBajanEnMismaEstacion(marcados):
 	for i in range(len(marcados)):
 		if((marcados[i][0]+ marcados[i][1]+ marcados[i][2]+marcados[i][3])==3):
 			if(marcados[i][21]<1):
+				#Error estructural. Debe existir un token en la plaza 21 para asegurar que no se bajen los pasajeros
+				#que se subieron a esa estacion
 				impresionConsolaRed("Test. Pasajeros no bajan del tren en la misma estacion en que se subieron. Token condicion. FAIL")
 				exit(1)
 			if(flagPrimeraVez):
 				flagPrimeraVez=False
-				valorMarcadoMinimoPersonasSubidas=marcados[i][22]
-	
-				
+				valorMarcadoMinimoPersonasSubidas=marcados[i][22] #Almaceno el valor inicial de pasajeros que se quieren subir en esa estacion
+				#Dicho valor no puede decrementarse				
 			else:
 				if(marcados[i][22]<valorMarcadoMinimoPersonasSubidas):
+					#El numero de pasajeros que se queria subir en esa estacion se decremento. Algunos se han bajado
 					impresionConsolaRed("Test. Pasajeros no bajan del tren en la misma estacion en que se subieron. FAIL")
 					exit(1)
 		else:
@@ -304,10 +349,26 @@ def verificarPersonasSubenNoBajanEnMismaEstacion(marcados):
 	impresionConsolaGreen("Test. Pasajeros no bajan del tren en la misma estacion en que se subieron. OK")
 
 
-#Codigo Principal
+
+
+
+
+
+
+
+
+
+'''
+Codigo Principal
+'''
+
 
 print '\nInicio del programa'
 
+#logFileA.txt contiene: transiciones a disparar, valores de k devueltos por la clase Red De Petri y el marcado de la red
+#luego de ese intento de disparo
+#logFileB.txt contiene: lista de transiciones disparadas (k= True)
+#logFileC.txt contiene: la longitud de la lista de logFileB.txt
 
 
 try:
@@ -380,7 +441,7 @@ archivoC.close()
 
 
 
-
+#Primer test. Relacionado a lectura de archivos de logueo.
 
 impresionConsolaBlue('\nTest cantidad de transiciones disparadas.')
 
@@ -397,7 +458,7 @@ except:
 
 
 
-
+#Segundo test. Relacionado a lectura de archivos de logueo.
 
 flagCantidadTransicionesOK=False
 
@@ -418,23 +479,26 @@ else:
 if(flagCantidadTransicionesOK):
 
 	print 'Cargado de matriz I'
-
+	#Lectura de libro de Excel
 	try:
  		book = xlrd.open_workbook("excelTren.xls")
 	except:
 		impresionConsolaRed('No se pudo abrir el archivo excel.')
 		exit(1)	
 
-	#print "The number of worksheets is", book.nsheets
-	#print "Worksheet name(s):", book.sheet_names()
+	#Busqueda de Hoja de Excel
 
 	sheet = book.sheet_by_index(2)
 
-
+	#Conformacion de matriz de incidencia
 	for fila in range(1,sheet.nrows):
 		matrizI.append([])
 		for columna in range(1,sheet.ncols):
 			matrizI[fila-1].append(sheet.cell_value(rowx=fila, colx=columna))
+
+	
+
+
 
 	cantidadTransiciones=len(matrizI[0])
 	cantidadPlazas=len(matrizI)
@@ -446,6 +510,10 @@ if(flagCantidadTransicionesOK):
 
 	matrizI=np.array(matrizI).reshape(cantidadPlazas,cantidadTransiciones)
 	matrizI=np.asmatrix(matrizI)
+
+	
+
+	#Conformacion de vectores de Pinvariantes
 
 	sheet = book.sheet_by_index(6)
 	
@@ -462,6 +530,9 @@ if(flagCantidadTransicionesOK):
 	constantesPinvariantes=np.zeros((len(pInvariantes),1),dtype=int)
 
 
+	
+	#Conformacion de vectores de Tinvariantes
+
 	sheet = book.sheet_by_index(5)
 	
 	for fila in range(1,sheet.nrows):
@@ -475,7 +546,7 @@ if(flagCantidadTransicionesOK):
 
 
 
-
+	#Cargado de la informacion de los archivos de logueo en listas
 	
 	print '\nCargado de valores de K, transiciones a disparar y marcados.'
 	flagComienzo=True
@@ -524,7 +595,7 @@ if(flagCantidadTransicionesOK):
 
 
 
-
+	#Verificacion de cargado correcto de informacion
 
 	if(len(listaK)!=len(listaTransicionesADisparar)):
 		impresionConsolaRed("Lista K de distinto tamanio que lista de transiciones a disparar")
@@ -549,6 +620,9 @@ if(flagCantidadTransicionesOK):
 
 
 	flagEvolucionMarcado=True
+	
+
+
 	impresionConsolaBlue('\nTest evolucion Marcado')
 
 
@@ -556,8 +630,7 @@ if(flagCantidadTransicionesOK):
 
 
 
-
-	#Testear evolucion marcado.
+	#Testear evolucion marcado. De acuerdo a los disparos (True or False) de las transiciones a disparar
 	
 	for marca in range(len(matricesMarcado)):
 		testTrenEnUnaEstacion(matricesMarcado[marca])
@@ -598,15 +671,14 @@ if(flagCantidadTransicionesOK):
 
 
 
-
+	#Impresion de resultados de test por consola
 	if(flagEvolucionMarcado):
 		impresionConsolaGreen("\nTest evolucion Marcado. OK")
-	    #print(chr(27)+"[4;32;47m"+"Test cantidad de transiciones disparadas. OK") 
-		#print 'Test cantidad de transiciones disparadas. OK'
 	else:
 		impresionConsolaRed("\nTest evolucion Marcado. FAIL")
 		
 	for i in range(len(listaB)):
+		#Lista B contiene la lista de transiciones disparadas
 		try:
 			listaB[i]=int(listaB[i])
 		except:
@@ -615,16 +687,19 @@ if(flagCantidadTransicionesOK):
 	
 
 
-
+	#Verifico Tinvariantes
 	verificarTinvariantes(tInvariantes, listaB, matrizI, matrizM0, matrizMactual)
+
+	#En este punto de la ejecucion del script los Pinvariantes y los Tinvariantes han pasado con exito las pruebas
 	impresionConsolaBlue('\nInvariantes:')
 	impresionConsolaGreen('\nPInvariantes OK.')
 	impresionConsolaGreen('\nTInvariantes OK.')
 
-
+	#En este punto de la ejecucion del script el test de tren en una sola estacion ha pasado con exito. 
 	impresionConsolaBlue('\nTest particulares')
 	impresionConsolaGreen('\nTest Tren en una sola estacion. OK')
 
+	#Llamada a tests
 	verificarAutosNoCruzan(matricesMarcado)
 	verificarCantidadPasajerosInalterableEnViaje(matricesMarcado)
 	verificarPersonasSubenNoBajanEnMismaEstacion(matricesMarcado)
