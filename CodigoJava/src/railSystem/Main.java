@@ -21,7 +21,7 @@ public class Main {
 		Cronometro tiempo_transcurrido=new Cronometro();
 		tiempo_transcurrido.setNuevoTimeStamp();
 		String name_file="./RedesParaTest/TestTren/excelTren.xls";
-		boolean flag_prueba_prioridades=false;
+		boolean flag_prueba_prioridades=true;
 		
 		if(!flag_prueba_prioridades){
 			if((System.getProperty("os.name")).equals("Windows 10")){	
@@ -56,7 +56,7 @@ public class Main {
 		 * Politica 1: primero los que suben.
 		 * Politica 2: primero los que bajan.
 		*/
-		monitor.setPolitica(0);
+		monitor.setPolitica(2);
 		
 		
 		ThreadPoolExecutor executor=(ThreadPoolExecutor)Executors.newFixedThreadPool(26);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
@@ -122,7 +122,7 @@ public class Main {
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
          * 		Especifica el tiempo que espera executor antes de finalizar la ejecucion de los hilos que tenga a cargo.				
          */
-		executor.awaitTermination(35, TimeUnit.SECONDS);
+		executor.awaitTermination(600, TimeUnit.SECONDS);
         
         
         monitor.writeLogFiles();
