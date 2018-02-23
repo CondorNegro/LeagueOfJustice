@@ -114,16 +114,17 @@ public class Main {
 		transiciones_tren[12]=16; //temporal
 		transiciones_tren[13]=5;
 		executor.execute(new FireMultipleTransition(transiciones_tren,monitor));
-            
+		
+        executor.shutdown();// no se van a aceptar mas tareas, pero espera finalizarse las que se encuentran en ejecucion    
 		
 
-       
+		
         /*
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
          * 		Especifica el tiempo que espera executor antes de finalizar la ejecucion de los hilos que tenga a cargo.				
          */
 		executor.awaitTermination(35, TimeUnit.SECONDS);
-        
+		//executor.shutdownNow();
         
         monitor.writeLogFiles();
         

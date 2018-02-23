@@ -29,14 +29,14 @@ public class Logger {
 				  		   
 			    	if((System.getProperty("os.name")).equals("Windows 10")){	
 			    		 if(System.getProperty("user.name").equals("kzAx")){
-			    			 this.name_files[i]="..\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
+			    			 this.name_files[i]="..\\src\\logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
 						 }
 						 else{
-							 this.name_files[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
+							 this.name_files[i]="..\\..\\LeagueOfJustice\\CodigoJava\\src\\logueo\\logFile"+ this.getLetraAbecedario(i) +".txt"; 
 						 }
 			    	}
 			    	else{
-			    		this.name_files[i]="./Logueo/logFile"+ this.getLetraAbecedario(i) +".txt"; //Path para Linux.
+			    		this.name_files[i]="./logueo/logFile"+ this.getLetraAbecedario(i) +".txt"; //Path para Linux.
 					    
 			    	}
 				 
