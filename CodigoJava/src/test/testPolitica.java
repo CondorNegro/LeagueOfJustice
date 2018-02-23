@@ -4,8 +4,7 @@
 package test;
 
 import static org.junit.Assert.*;
-import java.util.List;
-import java.util.ArrayList;
+
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -62,7 +61,7 @@ public class testPolitica {
 	 * Test method for {@link monitor.Politica#Politica(int)}.
 	 */
 	@Test
-	public void testPolitica() {
+	public void testgetModo() {
 		politica.setModo(1);
 		assertEquals(politica.getModo(), 1);
 	}
