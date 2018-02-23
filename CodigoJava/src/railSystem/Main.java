@@ -18,8 +18,16 @@ import monitor.Monitor;
 public class Main {
 	
 	public static void main(String[] args) throws InterruptedException {
+		
+		/*
+		 * tiempo_transcurrido variable Cronometro para imprimir tiempo transcurrido desde el inicio del programa.
+		 */
 		Cronometro tiempo_transcurrido=new Cronometro();
 		tiempo_transcurrido.setNuevoTimeStamp();
+		
+		/*
+		 * Se setea el path donde se encuentra el excel de la red en cuestion, segun el SO y alumno que se tratase.
+		 */
 		String name_file="./RedesParaTest/TestTren/excelTren.xls";
 		boolean flag_prueba_prioridades=true;
 		
@@ -52,9 +60,10 @@ public class Main {
 		
 		
 		/*
-		 * Politica 0: aleatoria.
-		 * Politica 1: primero los que suben.
-		 * Politica 2: primero los que bajan.
+		 * La politica puede ser:
+		 *	0: aleatoria.
+		 *	1: primero los que suben.
+		 *	2: primero los que bajan.
 		*/
 		monitor.setPolitica(2);
 		
@@ -62,7 +71,7 @@ public class Main {
 		ThreadPoolExecutor executor=(ThreadPoolExecutor)Executors.newFixedThreadPool(26);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
 		
 		
-		//Creacion de hilos generadores - 6 hilos
+		//Inicio generadores - 6 hilos
 		executor.execute(new FireSingleTransition(0,monitor));
 		executor.execute(new FireSingleTransition(1,monitor));
 		executor.execute(new FireSingleTransition(2,monitor));
@@ -70,14 +79,14 @@ public class Main {
 		executor.execute(new FireSingleTransition(15,monitor));
 		executor.execute(new FireSingleTransition(20,monitor));
 		
-		//Creacion de hilo control de bajada - 1 hilos
+		//Inicio control de bajada - 1 hilos
 		executor.execute(new FireSingleTransition(24,monitor));
 		
-		//Creacion de hilos circulacion de autos por barrera - 2 hilos
+		//Inicio circulacion de autos por barrera - 2 hilos
 		executor.execute(new FireSingleTransition(22,monitor));
 		executor.execute(new FireSingleTransition(17,monitor));
 		
-		//Creacion de hilos pasajeros subiendo al tren/vagon - 8 hilos
+		//Inicio pasajeros subiendo al tren/vagon - 8 hilos
 		executor.execute(new FireSingleTransition(10,monitor));  // "Estacion A","Maquina"
 		executor.execute(new FireSingleTransition(7,monitor));	 // "Estacion A","Vagon"
 		executor.execute(new FireSingleTransition(9,monitor));	 // "Estacion B","Maquina"
@@ -87,7 +96,7 @@ public class Main {
 		executor.execute(new FireSingleTransition(6,monitor));   // "Estacion D","Maquina"
 		executor.execute(new FireSingleTransition(11,monitor));  // "Estacion D","Vagon"
 		
-		//Creacion de hilos pasajeros bajando al tren/vagon - 8 hilos
+		//Inicio pasajeros bajando al tren/vagon - 8 hilos
 		executor.execute(new FireSingleTransition(29,monitor));	 // "Estacion A","Maquina"
 		executor.execute(new FireSingleTransition(31,monitor));  // "Estacion A","Vagon"
 		executor.execute(new FireSingleTransition(32,monitor));  // "Estacion B","Maquina"
@@ -97,7 +106,7 @@ public class Main {
 		executor.execute(new FireSingleTransition(27,monitor));  // "Estacion D","Maquina"
 		executor.execute(new FireSingleTransition(28,monitor));  // "Estacion D","Vagon"
 
-		//Creacion de hilo tren driver - 1 hilos
+		//Inicio tren driver - 1 hilos
 		int[] transiciones_tren=new int[14];
 		transiciones_tren[0]=36; //temporal
 		transiciones_tren[1]=35;
@@ -121,7 +130,7 @@ public class Main {
 		
         /*
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
-         * 		Especifica el tiempo que espera executor antes de finalizar la ejecucion de los hilos que tenga a cargo.				
+         * 		Especifica el tiempo que espera el hilo (main) antes de continuar con la siguiente instruccion.				
          */
 		executor.awaitTermination(35, TimeUnit.SECONDS);
 		//executor.shutdownNow();

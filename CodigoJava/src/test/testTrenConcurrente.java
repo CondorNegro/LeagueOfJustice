@@ -14,7 +14,7 @@ import monitor.RedDePetri;
 public class testTrenConcurrente {
     private Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/TestTren/excelTren.xls"; //Path para Linux.
-    private int Politica=2;
+    private int Politica=0;
     private ThreadPoolExecutor executor1=(ThreadPoolExecutor)Executors.newFixedThreadPool(26);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
     private int[] transiciones_tren=new int[14];
     private int tren_en_A=0;

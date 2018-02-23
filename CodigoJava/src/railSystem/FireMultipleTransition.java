@@ -10,7 +10,7 @@ public class FireMultipleTransition implements Runnable {
     
 /**
  * 
- * @param transiciones_viaje arreglo de enteros que representan las transiciones que disparara el hilo
+ * @param transiciones_viaje arreglo de enteros que representan las transiciones que disparara el hilo  (viajes en el tren)
  * @param monitor
  */
     public FireMultipleTransition(
