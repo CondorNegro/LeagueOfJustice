@@ -6,13 +6,12 @@ import static org.junit.Assert.*;
 import monitor.Monitor;
 
 public class testMonitorCompleto2 {
-    Monitor monitor = Monitor.getInstance();
+    private Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/RedPrioridades/lectorEscritor.xls"; //Path para Linux.
-    int flagPolitica=0;
-    int cuentas1=0;
-    int cuentas2=0;
- 
-    int[][] marca;
+    private int flagPolitica=0;
+    private int cuentas1=0;
+    private int cuentas2=0;
+    private int[][] marca;
     
     @org.junit.Before
     public void setUp() throws Exception {

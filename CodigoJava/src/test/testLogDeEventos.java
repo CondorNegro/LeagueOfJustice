@@ -43,14 +43,14 @@ public class testLogDeEventos {
 	@Before
 	public void setUp() throws Exception {
 		log=new Logger(3);
-		nameFile="./Logueo/logFileB.txt";
+		nameFile="./logueo/logFileB.txt";
 		
 		 if((System.getProperty("os.name")).equals("Windows 10")){
 			 if(System.getProperty("user.name").equals("kzAx")){
-				 nameFile="..\\src\\Logueo\\logFileB.txt";
+				 nameFile="..\\src\\logueo\\logFileB.txt";
 			 }
 			 else{
-				 nameFile="..\\..\\LeagueOfJustice\\CodigoJava\\src\\Logueo\\logFileB.txt";
+				 nameFile="..\\..\\LeagueOfJustice\\CodigoJava\\src\\logueo\\logFileB.txt";
 					
 			 }
 		}

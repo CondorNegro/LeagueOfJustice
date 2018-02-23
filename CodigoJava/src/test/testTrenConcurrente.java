@@ -12,10 +12,10 @@ import monitor.RedDePetri;
 
 
 public class testTrenConcurrente {
-    Monitor monitor = Monitor.getInstance();
+    private Monitor monitor = Monitor.getInstance();
     private String redExcel="./RedesParaTest/TestTren/excelTren.xls"; //Path para Linux.
     private int Politica=2;
-    ThreadPoolExecutor executor=(ThreadPoolExecutor)Executors.newFixedThreadPool(26);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
+    private ThreadPoolExecutor executor1=(ThreadPoolExecutor)Executors.newFixedThreadPool(26);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
     private int[] transiciones_tren=new int[14];
     private int tren_en_A=0;
     private int tren_en_B=1;
@@ -55,86 +55,73 @@ public class testTrenConcurrente {
 
     @org.junit.After
     public void tearDown() throws Exception {
-        int[][] m= monitor.getMarcado();
-        System.out.println("");
-        //assert (m[0][0]==1||m[1][0]==1||m[2][0]==1);  //control del marcado final
-
+    	int[][] marca_final = monitor.getMarcado();
+    	assertEquals(marca_final[4][0],(int)0); //Nadie viajando en maquina
+    	assertEquals(marca_final[5][0],(int)0); //Nadie viajando en vagon
+    	
+    	assertEquals(marca_final[15][0],(int)30); //Cruzaron 30 autos en la barrera de arriba
+    	assertEquals(marca_final[19][0],(int)30); //Cruzaron 30 autos en la barrera de abajo
+    	
+    	assert(vueltas_tren>=1); 
+    	assert(tren_en_A>=1); 
+    	assert(tren_en_B>=1); 
+    	assert(tren_en_C>=1); 
+    	assert(tren_en_D>=1);
     }
 
     @org.junit.Test
-    public void dispararTransicionTest() throws Exception {
-    	executor.execute(new TrenDriverModificado(this.transiciones_tren,this.monitor));
+    public void testTrenConcurrente() throws Throwable {
+    	
+    	 //Creacion de hilo tren - 1 hilos
+    	executor1.execute(new TrenDriverModificado(this.transiciones_tren,this.monitor));
   
 	    //Creacion de hilos generadores - 6 hilos
-    	executor.execute(new GeneradorModificado(0,monitor));
-    	executor.execute(new GeneradorModificado(1,monitor));
-    	executor.execute(new GeneradorModificado(2,monitor));
-    	executor.execute(new GeneradorModificado(3,monitor));
-    	executor.execute(new GeneradorModificado(15,monitor));
-    	executor.execute(new GeneradorModificado(20,monitor));
+    	executor1.execute(new GeneradorModificado(0,monitor));
+    	executor1.execute(new GeneradorModificado(1,monitor));
+    	executor1.execute(new GeneradorModificado(2,monitor));
+    	executor1.execute(new GeneradorModificado(3,monitor));
+    	executor1.execute(new GeneradorModificado(15,monitor));
+    	executor1.execute(new GeneradorModificado(20,monitor));
      
 		
 		//Creacion de hilo control de bajada - 1 hilos
-    	executor.execute(new ControlBajadaModificado(24,monitor));
+    	ControlBajadaModificado control = new ControlBajadaModificado(24,monitor);
+    	executor1.execute(control);
 		
 		//Creacion de hilos circulacion de autos por barrera - 2 hilos
-    	executor.execute(new AutosDriverModificado(22,monitor));
-    	executor.execute(new AutosDriverModificado(17,monitor));
+    	executor1.execute(new AutosDriverModificado(22,monitor));
+    	executor1.execute(new AutosDriverModificado(17,monitor));
 		
 		//Creacion de hilos pasajeros subiendo al tren/vagon - 8 hilos
-    	executor.execute(new SubidaPasajerosEstacionModificado(10,monitor));
-    	executor.execute(new SubidaPasajerosEstacionModificado(7,monitor));
-    	executor.execute(new SubidaPasajerosEstacionModificado(9,monitor));
-    	executor.execute(new SubidaPasajerosEstacionModificado(13,monitor));
-    	executor.execute(new SubidaPasajerosEstacionModificado(23,monitor));
-    	executor.execute(new SubidaPasajerosEstacionModificado(12,monitor));
-    	executor.execute(new SubidaPasajerosEstacionModificado(6,monitor));
-    	executor.execute(new SubidaPasajerosEstacionModificado(11,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(10,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(7,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(9,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(13,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(23,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(12,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(6,monitor));
+    	executor1.execute(new SubidaPasajerosEstacionModificado(11,monitor));
 		
 		//Creacion de hilos pasajeros bajando al tren/vagon - 8 hilos
-    	executor.execute(new BajadasPasajerosEstacionModificado(29,monitor));
-    	executor.execute(new BajadasPasajerosEstacionModificado(31,monitor));
-    	executor.execute(new BajadasPasajerosEstacionModificado(32,monitor));
-    	executor.execute(new BajadasPasajerosEstacionModificado(33,monitor));
-    	executor.execute(new BajadasPasajerosEstacionModificado(25,monitor));
-    	executor.execute(new BajadasPasajerosEstacionModificado(26,monitor));
-    	executor.execute(new BajadasPasajerosEstacionModificado(27,monitor));
-    	executor.execute(new BajadasPasajerosEstacionModificado(28,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(29,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(31,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(32,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(33,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(25,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(26,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(27,monitor));
+    	executor1.execute(new BajadasPasajerosEstacionModificado(28,monitor));
 		
 		
 		
        
-		
-    	while(executor.getCompletedTaskCount()!=(long)24) {
+    	executor1.shutdown();
+    	
+    	while(executor1.getCompletedTaskCount()!=(long)26) {
     		
     	}
-		
-		
-        
-        try{
-        	Thread.sleep(1000);
-        	executor.shutdown();
-           
-        }
-        catch(InterruptedException e){
-        	//e.printStackTrace();
-        }
-        finally{
-        	int[][] marca_final = monitor.getMarcado();
-        	assertEquals(marca_final[4][0],(int)0); //Nadie viajando en maquina
-        	assertEquals(marca_final[5][0],(int)0); //Nadie viajando en vagon
-        	
-        	assertEquals(marca_final[15][0],(int)30); //Cruzaron 30 autos en la barrera de arriba
-        	assertEquals(marca_final[19][0],(int)30); //Cruzaron 30 autos en la barrera de abajo
-        	
-        	assert(vueltas_tren>=1); 
-        	assert(tren_en_A>=1); 
-        	assert(tren_en_B>=1); 
-        	assert(tren_en_C>=1); 
-        	assert(tren_en_D>=1);
-        	Thread.sleep(1000);
-        	
-        }
+    	
+    	executor1.shutdownNow();
     }
     
 
@@ -151,7 +138,7 @@ public class testTrenConcurrente {
 		@Override
         public void run() {
             
-        	while(true) {
+			for(int j=0; j<8; j++) {
         		for(int i=0; i<this.transiciones_viaje.length; i++) {
         			monitor.dispararTransicion(this.transiciones_viaje[i]);
         			if(transiciones_viaje[i]==5) {
@@ -242,7 +229,7 @@ public class testTrenConcurrente {
 
 		@Override
         public void run() {
-    		while(true) {
+			for(int i=0; i<30*4; i++) {
     			monitor.dispararTransicion(this.transicion_control);
         	}
         }

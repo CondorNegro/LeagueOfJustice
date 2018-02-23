@@ -17,13 +17,13 @@ import monitor.OperacionesMatricesListas;
 
 
 public class testOperacionesMatricesListas {
-	int[] list1Test=new int[4];
-	int[] list2Test=new int[4];
-	int[][] a = { { 1, 2, -3 }, { 4, 0, -2 } };
-    int[][] b = { { 2, 2, 3 }, { 1, -1, -6 } };
+	private int[] list1Test=new int[4];
+	private int[] list2Test=new int[4];
+	private int[][] a = { { 1, 2, -3 }, { 4, 0, -2 } };
+	private int[][] b = { { 2, 2, 3 }, { 1, -1, -6 } };
     
-    int[][] x = { { 1, 2, -3 }, { 4, 0, -2 } };
-    int[][] z = { { 3, 1 }, { 2, 4 }, { -1, 5 } };
+	private int[][] x = { { 1, 2, -3 }, { 4, 0, -2 } };
+	private int[][] z = { { 3, 1 }, { 2, 4 }, { -1, 5 } };
 	/**
 	 * @throws java.lang.Exception
 	 */

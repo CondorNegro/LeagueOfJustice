@@ -31,8 +31,8 @@ import java.lang.reflect.Type;
 public class testMonitor {
 	private Monitor monitor1=Monitor.getInstance();
 	private Monitor monitor2=Monitor.getInstance();
-	int[] list1Test;
-	int[] list2Test;
+	private int[] list1Test;
+	private int[] list2Test;
 	
 	private HiloDelay hiloDelay;
 	private HiloResume hiloResume;
@@ -170,7 +170,6 @@ public class testMonitor {
 	/**
 	 * Test method for {@link Monitor.Monitor#quienesEstanEnColas()}.
 	 */
-	/*
 	@Test
 	public void testQuienesEstanEnColas() {
 		this.monitor1.configRdp(this.redExcel1);
@@ -239,12 +238,12 @@ public class testMonitor {
 		
 		
 	}
-*/
+
 	
 	/**
 	 * Test method for {@link Monitor.Monitor#dispararTransicion(int)}.
 	 */
-/*
+
 	@Test
 	public void testDispararTransicion() {
 		this.monitor1.setPolitica(0);
@@ -301,6 +300,6 @@ public class testMonitor {
 		
 	}
 	
-	*/
+	
 
 }
