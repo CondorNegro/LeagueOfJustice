@@ -33,7 +33,6 @@ global politica #Politica utilizada en el monitor.
 
 '''
 Funciones
-
 '''
 
 #Impresion por consola en color rojo. Indica error o test fail.

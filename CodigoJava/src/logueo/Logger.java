@@ -11,6 +11,7 @@ public class Logger {
 
 	private String[] name_files; //Nombres de archivos log.
 	private String[] messages; //Mensajes a escribir en los archivos
+	private volatile boolean flag_log;
 	
 	public Logger(int number_of_logs){ //Limite de 15 archivos de log.
 		if(number_of_logs<1){
@@ -21,7 +22,8 @@ public class Logger {
 		}
 		
 	
-	
+		this.flag_log=true;
+		
 		name_files=new String[number_of_logs];
 		messages=new String[number_of_logs];
 		for(int i=0; i<number_of_logs;i++){  //Inicializacion de atributos y manejo de paths
@@ -49,8 +51,7 @@ public class Logger {
 	 * @param indice ID del PrintStream
 	 */
 	public synchronized void createMessage(String message, int indice){
-		this.messages[indice]=message;
-		
+		if(this.flag_log) {this.messages[indice]=message;}
 	}
 	
 	/**
@@ -59,7 +60,7 @@ public class Logger {
 	 * @param indice ID del PrintStream
 	 */
 	public synchronized void addMessage(String message, int indice){
-		this.messages[indice]=this.messages[indice]+message;
+		if(this.flag_log) {this.messages[indice]=this.messages[indice]+message;}
 	}
 	
 	
@@ -106,7 +107,15 @@ public class Logger {
 	 * @return char Letra del abecedario
 	 */
 	private synchronized char getLetraAbecedario(int indice) {
-		char letra;
 		return (char) ('A' + indice); 
+	}
+	
+	/**
+	 * Metodo que permite obtener una letra del abecedario.
+	 * @param indice Numero de orden de la letra del abecedario. Cero es 'A'.
+	 * @return char Letra del abecedario
+	 */
+	public synchronized void setFlagLog(boolean flag) {
+		this.flag_log=flag;
 	}
 }

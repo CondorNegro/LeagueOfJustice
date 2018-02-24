@@ -133,7 +133,14 @@ public class Main {
          * 		Especifica el tiempo que espera el hilo (main) antes de continuar con la siguiente instruccion.				
          */
 		executor.awaitTermination(35, TimeUnit.SECONDS);
-		//executor.shutdownNow();
+		
+		monitor.setCondicion(false);
+		
+		while(!executor.isTerminated()) {
+			
+		}
+		
+		executor.shutdownNow();
         
         monitor.writeLogFiles();
         

@@ -25,7 +25,7 @@ public class FireMultipleTransition implements Runnable {
     @Override
     public void run() {
         int vueltas=0;
-    	while(true) {
+    	while(monitor.getCondicion()) {
     		for(int i=0; i<this.transitions_to_fire.length; i++) {
     			monitor.dispararTransicion(this.transitions_to_fire[i]);
     	        if(transitions_to_fire[i]==36) {

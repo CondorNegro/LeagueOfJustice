@@ -28,6 +28,7 @@ public class RedDePetri{
 	private int[] prioridades_bajada;
 	private Logger log;
 	
+	private String salto_linea;
 	
 	//Verificacion T-Invariantes
 	
@@ -51,8 +52,8 @@ public class RedDePetri{
 		this.logica_temporal.updateTimeStamp(this.getConjuncionEAndB(), this.getConjuncionEAndB(),  -1);
 		//this.transicionesDisparadas=new ArrayList<Integer>();
 		this.M0=this.M.clone(); //Marcado inicial
-		
-		
+		salto_linea="\n";
+		if((System.getProperty("os.name")).equals("Windows 10")) {salto_linea="\r\n";}
 		suma_disparos_transiciones=new int[this.getCantTransiciones()][1]; //Sumatoria de todos los disparos efectuados por transicion.
 		for(int i=0; i<suma_disparos_transiciones.length;i++){ //Reseteo vector.
 			  suma_disparos_transiciones[i][0]=0;
@@ -194,14 +195,9 @@ public class RedDePetri{
                 	suma_disparos_transiciones[transicion][0]++;
                 	this.contadorTransicionesDisparadas++;
                 	//Logueo el contador de transiciones disparadas
-                	this.log.createMessage("Cantidad de transiciones disparadas:\r\n"+String.valueOf(this.contadorTransicionesDisparadas), 2);
+                	this.log.createMessage("Cantidad de transiciones disparadas:"+salto_linea+String.valueOf(this.contadorTransicionesDisparadas), 2);
                 	//Logueo la transicion disparada
-                	this.log.addMessage(String.valueOf(transicion)+ new String("\r\n"), 1);
-                	
-                	/**if(contadorTransicionesDisparadas>4){
-                		this.contadorTransicionesDisparadas=0;
-                		//this.verificarTInvariantes(this.getMatrizM());
-                	}**/
+                	this.log.addMessage(String.valueOf(transicion)+ new String(salto_linea), 1);
                 	
                 }
                 catch(Exception e){
@@ -210,25 +206,28 @@ public class RedDePetri{
                 	System.exit(1);
                 }
                 
+                this.log.addMessage(salto_linea+"Transicion a disparar: " + transicion+ salto_linea, 0); //Log de transicion a disparar
+                
                 //Logueo valor de K y marcado resultante
-                this.log.addMessage(new String("Valor de K: true\r\n"), 0);
-        		this.log.addMessage(new String("Marcado PostDisparo:\r\n"), 0);
+                this.log.addMessage(new String("Valor de K: true"+salto_linea), 0);
+        		this.log.addMessage(new String("Marcado PostDisparo:"+salto_linea), 0);
         		for(int plaza=0;plaza<this.M.length;plaza++){
         			this.log.addMessage(String.valueOf(this.M[plaza][0])+"-", 0);
         		}
-        		this.log.addMessage("\r\n", 0);
+        		this.log.addMessage(salto_linea, 0);
                 return true;
          
         }
         
+        this.log.addMessage(salto_linea+"Transicion a disparar: " + transicion+ salto_linea, 0); //Log de transicion a disparar
         //Logueo valor de K y marcado resultante
         //System.out.println(transicion);
-        this.log.addMessage("Valor de K: false\r\n", 0);
-		this.log.addMessage("Marcado PostDisparo: \r\n", 0);
+        this.log.addMessage("Valor de K: false"+salto_linea, 0);
+		this.log.addMessage("Marcado PostDisparo: "+salto_linea, 0);
 		for(int plaza=0;plaza<this.M.length;plaza++){
 			this.log.addMessage(String.valueOf(this.M[plaza][0])+"-", 0);
 		}
-		this.log.addMessage("\r\n", 0);
+		this.log.addMessage(salto_linea, 0);
 	    return false;
 	    
 
@@ -537,11 +536,11 @@ public class RedDePetri{
      */
     public void setLogEventos(Logger log){
 		this.log=log;
-		this.log.createMessage("Evolucion del marcado: \r\n\r\nMarcado M0: \r\n", 0);
+		this.log.createMessage("Evolucion del marcado: "+salto_linea+salto_linea+"Marcado M0: "+salto_linea, 0);
 		for(int plaza=0;plaza<M0.length;plaza++){
 			this.log.addMessage(String.valueOf(this.M0[plaza][0])+"-", 0);
 		}
-		this.log.addMessage("\r\n", 0);
+		this.log.addMessage(salto_linea, 0);
 	}
     
 	

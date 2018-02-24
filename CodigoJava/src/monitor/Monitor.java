@@ -12,7 +12,7 @@ public class Monitor {
     private RedDePetri rdp;
     private Semaphore mutex;
     private Logger log;
-    
+    private static volatile boolean condicion;
    
     
     
@@ -25,7 +25,7 @@ public class Monitor {
 	       //La red de petri y las transiciones se configuran posteriormente.
 	       this.log=new Logger(3);
 	       this.log.createMessage("Transiciones disparadas: \r\n", 1);
-		   
+		   condicion=true;
 		 
 		   //LogFileA: Evolucion del marcado
 		   //LogFileB: Vector con contadores de transiciones disparadas
@@ -128,7 +128,7 @@ public class Monitor {
 	
 	public void dispararTransicion(int transicion) {
 		int[] m;
-		while(true){
+		while(condicion){
 			try{
 				mutex.acquire(); //Adquiero acceso al monitor.
 			}
@@ -138,8 +138,8 @@ public class Monitor {
 			}
 			boolean k=true; //Variable booleana de control.  
 		
-			this.log.addMessage("\r\nTransicion a disparar: " + transicion+ "\r\n", 0); //Log de transicion a disparar
-		
+			
+			log.setFlagLog(getCondicion());
 			k=rdp.disparar(transicion); //Disparo red de petri. //Si se logra disparar, k se pone en true.
 			
 			
@@ -206,6 +206,17 @@ public class Monitor {
 			//mutex.release(); //Libero al monitor.
 			//return;
 		}
+		if(!condicion) {
+			for(int i=0;i<this.cantidad_de_transiciones;i++){
+	        	if (colas[i].isEmpty()==true) {
+	        		
+	        	}
+	        	else {
+	        		while(!colas[i].isEmpty()) {colas[i].resume();}
+	        	}
+	        	}
+			mutex.release();
+		}
 	}
 	
 	
@@ -222,5 +233,13 @@ public class Monitor {
         mutex.release();
         return m;
     }
+    
+	public synchronized boolean getCondicion() {
+		return condicion;
+	}
+	
+	public synchronized void setCondicion(boolean condicion_) {
+		condicion=condicion_;
+	}
 	
 }

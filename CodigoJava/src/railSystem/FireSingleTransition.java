@@ -20,7 +20,7 @@ public class FireSingleTransition implements Runnable {
     
     @Override
     public void run() {
-    	while(true){
+    	while(monitor.getCondicion()){
     		monitor.dispararTransicion(transition_to_fire);
     	}
     }
