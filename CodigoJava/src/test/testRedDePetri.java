@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -19,6 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import logueo.Logger;
+import monitor.Cola;
 import monitor.LogicaTemporal;
 import monitor.Monitor;
 import monitor.OperacionesMatricesListas;
@@ -286,10 +288,16 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5, log);
-			Method getCantidadDeTransiciones  = LogicaTemporal.class.getDeclaredMethod("getCantidadDeTransiciones", null);
-			getCantidadDeTransiciones.setAccessible(true);
-			int cantidadT=(int)getCantidadDeTransiciones.invoke(redTest.getLogicaTemporal());
-			assertEquals(cantidadT,6);
+			
+			Field f = redTest.getClass().getDeclaredField("logica_temporal");
+			f.setAccessible(true);
+			LogicaTemporal testPrivateReflection = (LogicaTemporal)f.get(redTest);
+			
+			Field f2 = testPrivateReflection.getClass().getDeclaredField("cantidad_de_transiciones");
+			f2.setAccessible(true);
+			int testPrivateReflection2 = (int)f2.get(testPrivateReflection);
+			
+			assertEquals(testPrivateReflection2,6);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -347,19 +355,19 @@ public class testRedDePetri {
 		
 		try{
 			redTest= new RedDePetri(this.redExcel5, log);
-			int[] tsensandtime=redTest.getLogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
+			int[] tsensandtime=redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],1);
 			assertEquals(tsensandtime[1],0);
 			assertEquals(tsensandtime[2],0);
 			assertEquals(tsensandtime[3],0);
 			redTest.disparar(0);
-			tsensandtime=redTest.getLogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
+			tsensandtime=redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],0);
 			assertEquals(tsensandtime[1],0);
 			assertEquals(tsensandtime[2],0);
 			assertEquals(tsensandtime[3],0);
 			TimeUnit.MILLISECONDS.sleep(300);
-			tsensandtime=redTest.getLogicaTemporal().getVectorEstados(redTest.getSensibilizadas());
+			tsensandtime=redTest.getLogicaTemporal().getVectorZ_Actualizado(redTest.getSensibilizadas());
 			assertEquals(tsensandtime[0],0);
 			assertEquals(tsensandtime[1],1);
 			assertEquals(tsensandtime[2],0);
