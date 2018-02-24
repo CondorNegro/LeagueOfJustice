@@ -23,6 +23,9 @@ public class testTrenConcurrente {
     private int tren_en_D=0;
     private int vueltas_tren=0;
     
+    /**
+     * Se configura la red (correspondiente a red tren concurrente 2017) segun el path de cada alumno.
+     */
     @org.junit.Before
     public void setUp() throws Exception {
     	if((System.getProperty("os.name")).equals("Windows 10")){	
@@ -33,10 +36,16 @@ public class testTrenConcurrente {
 				 redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.
 			 }
 		}
+    	
+    	/*
+    	 * Configuramos el monitor segun el excel correspondiente y la politica deseada
+    	 */
         monitor.configRdp(redExcel);
         monitor.setPolitica(this.Politica); //modo aleatorio
 
-        
+        /*
+         * Se configuran las transiciones que hacen mover al tren
+         */
 		transiciones_tren[0]=36; //temporal
 		transiciones_tren[1]=35;
 		transiciones_tren[2]=34; //temporal
@@ -56,26 +65,26 @@ public class testTrenConcurrente {
     @org.junit.After
     public void tearDown() throws Exception {
     	int[][] marca_final = monitor.getMarcado();
-    	assertEquals(marca_final[4][0],(int)0); //Nadie viajando en maquina
-    	assertEquals(marca_final[5][0],(int)0); //Nadie viajando en vagon
+    	assertEquals(marca_final[4][0],(int)0); //Se prueba que no va nadie viajando en maquina (segun la plaza correspondiente a maquina)
+    	assertEquals(marca_final[5][0],(int)0); //Se prueba que no va nadie viajando en vagon (segun la plaza correspondiente a vagon)
     	
-    	assertEquals(marca_final[15][0],(int)30); //Cruzaron 30 autos en la barrera de arriba
-    	assertEquals(marca_final[19][0],(int)30); //Cruzaron 30 autos en la barrera de abajo
+    	assertEquals(marca_final[15][0],(int)30); //Se prueba que cruzaron 30 autos en la barrera A-B
+    	assertEquals(marca_final[19][0],(int)30); //Se prueba que cruzaron 30 autos en la barrera C-D
     	
-    	assert(vueltas_tren>=1); 
-    	assert(tren_en_A>=1); 
-    	assert(tren_en_B>=1); 
-    	assert(tren_en_C>=1); 
-    	assert(tren_en_D>=1);
+    	assert(vueltas_tren>=4); //Se prueba que el tren realmente haya circulado por las estaciones
+    	assert(tren_en_A>=3); 	
+    	assert(tren_en_B>=3); 
+    	assert(tren_en_C>=3); 
+    	assert(tren_en_D>=3);
     }
 
     @org.junit.Test
     public void testTrenConcurrente() throws Throwable {
     	
-    	 //Creacion de hilo tren - 1 hilos
+    	 //Ejecucion de hilo tren - 1 hilos
     	executor1.execute(new TrenDriverModificado(this.transiciones_tren,this.monitor));
   
-	    //Creacion de hilos generadores - 6 hilos
+	    //Ejecucion de hilos generadores - 6 hilos
     	executor1.execute(new GeneradorModificado(0,monitor));
     	executor1.execute(new GeneradorModificado(1,monitor));
     	executor1.execute(new GeneradorModificado(2,monitor));
@@ -84,15 +93,15 @@ public class testTrenConcurrente {
     	executor1.execute(new GeneradorModificado(20,monitor));
      
 		
-		//Creacion de hilo control de bajada - 1 hilos
+		//Ejecucion de hilo control de bajada - 1 hilos
     	ControlBajadaModificado control = new ControlBajadaModificado(24,monitor);
     	executor1.execute(control);
 		
-		//Creacion de hilos circulacion de autos por barrera - 2 hilos
+		//Ejecucion de hilos circulacion de autos por barrera - 2 hilos
     	executor1.execute(new AutosDriverModificado(22,monitor));
     	executor1.execute(new AutosDriverModificado(17,monitor));
 		
-		//Creacion de hilos pasajeros subiendo al tren/vagon - 8 hilos
+		//Ejecucion de hilos pasajeros subiendo al tren/vagon - 8 hilos
     	executor1.execute(new SubidaPasajerosEstacionModificado(10,monitor));
     	executor1.execute(new SubidaPasajerosEstacionModificado(7,monitor));
     	executor1.execute(new SubidaPasajerosEstacionModificado(9,monitor));
@@ -102,7 +111,7 @@ public class testTrenConcurrente {
     	executor1.execute(new SubidaPasajerosEstacionModificado(6,monitor));
     	executor1.execute(new SubidaPasajerosEstacionModificado(11,monitor));
 		
-		//Creacion de hilos pasajeros bajando al tren/vagon - 8 hilos
+		//Ejecucion de hilos pasajeros bajando al tren/vagon - 8 hilos
     	executor1.execute(new BajadasPasajerosEstacionModificado(29,monitor));
     	executor1.execute(new BajadasPasajerosEstacionModificado(31,monitor));
     	executor1.execute(new BajadasPasajerosEstacionModificado(32,monitor));
@@ -115,17 +124,17 @@ public class testTrenConcurrente {
 		
 		
        
-    	executor1.shutdown();
+    	executor1.shutdown(); //Ordeno al executor terminar las tareas encomendadas, sin aceptar nuevas.
     	
-    	while(executor1.getCompletedTaskCount()!=(long)26) {
+    	while(executor1.getCompletedTaskCount()!=(long)26) { //mientras no se terminen las 26 tareas, no hacer nada.
     		
     	}
     	
-    	executor1.shutdownNow();
+    	executor1.shutdownNow(); //Una vez terminada las tareas, finalizo el executor.
     }
     
 
-   
+   //El hilo que maneja al tren, dara 8 vueltas (o sea, pasara 8 veces por cada estacion)
     class TrenDriverModificado implements Runnable{
    	 
     	private int[] transiciones_viaje;
@@ -166,6 +175,8 @@ public class testTrenConcurrente {
         }
     }
     
+    
+    //Los hilos subida de pasajeros disparan 15 veces su transicion asociada, por lo que terminan subiendo los 30 pasajeros generados en cada estacion
     class SubidaPasajerosEstacionModificado implements Runnable{
       	 
     	private int transicion_subida;
@@ -184,6 +195,7 @@ public class testTrenConcurrente {
         }
     }
     
+  //Los hilos bajada de pasajeros disparan 15 veces su transicion asociada, por lo que terminan bajando los 30 pasajeros que se subieron en cada estacion
     class BajadasPasajerosEstacionModificado implements Runnable{
      	 
     	private int transicion_bajada;
@@ -201,6 +213,7 @@ public class testTrenConcurrente {
         }
     }
     
+    //Se generan 30 personas (en cada estacion) y 30 autos (en las dos barreras)
     class GeneradorModificado implements Runnable{
     	 
     	private int transicion_generadora;
@@ -218,6 +231,7 @@ public class testTrenConcurrente {
         }
     }
     
+    //Aseguro que el control de bajada dispare 120 veces (para que todos los pasajeros de las 4 estaciones puedan bajarse)
     class ControlBajadaModificado implements Runnable{
    	 
     	private int transicion_control;
@@ -235,6 +249,7 @@ public class testTrenConcurrente {
         }
     }
     
+    //Disparo 30 veces la transicion asociada que hace cruzar al auto la barrera, por lo que los 30 autos generados deberian cruzar en algun momento.
     class AutosDriverModificado implements Runnable{
    	 
     	private int transicion_autos_cruzando;
