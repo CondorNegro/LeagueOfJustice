@@ -132,7 +132,7 @@ public class Main {
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
          * 		Especifica el tiempo que espera el hilo (main) antes de continuar con la siguiente instruccion.				
          */
-		executor.awaitTermination(35, TimeUnit.SECONDS);
+		executor.awaitTermination(600, TimeUnit.SECONDS);
 		
 		monitor.setCondicion(false);
 		

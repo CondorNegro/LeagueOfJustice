@@ -11,7 +11,7 @@ public class Logger {
 
 	private String[] name_files; //Nombres de archivos log.
 	private String[] messages; //Mensajes a escribir en los archivos
-	private volatile boolean flag_log;
+	private volatile boolean flag_log; //Indica si se puede loguear o no.
 	
 	public Logger(int number_of_logs){ //Limite de 15 archivos de log.
 		if(number_of_logs<1){

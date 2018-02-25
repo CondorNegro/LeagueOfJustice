@@ -12,7 +12,8 @@ public class Monitor {
     private RedDePetri rdp;
     private Semaphore mutex;
     private Logger log;
-    private static volatile boolean condicion;
+    private static volatile boolean condicion; 
+    //La variable condicion es por problemas de finalizacion de hilos y liberacion de recursos cuando finaliza un programa.
    
     
     

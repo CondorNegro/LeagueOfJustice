@@ -62,16 +62,18 @@ public class testMonitorCompleto2 {
         
          // Al finalizar la tarea del hilo generador, se detienen la ejecucion de los demas hilos
         try{
-        	hilo2.stop();
-        	hilo3.stop();
-        	hilo4.stop();
-        	hilo5.stop();
-        	hilo6.stop();
+        	//monitor.setCondicion(false);
+        	Thread.sleep(1000);
+        	
+        	hilo2.interrupt();
+        	hilo3.interrupt();
+        	hilo4.interrupt();
+        	hilo5.interrupt();
+        	hilo6.interrupt();
         	Thread.sleep(100);
+        	
         }
         catch(InterruptedException e){
-        	System.out.println("Error en testMonitorCompleto2, testCompleto2");
-        	e.printStackTrace();
         }
         
         finally{
@@ -103,7 +105,6 @@ public class testMonitorCompleto2 {
         	if(flagPolitica==0) {
         		assert(cuentas2!=0&&cuentas1!=0); //Se generaron todos los recursos
         	}
-        	
         	
         }
         
@@ -168,7 +169,7 @@ public class testMonitorCompleto2 {
         		 * aqui se compara que, como hay brazos inhibidores y ademas una plaza que representan los "recursos"
         		 * para realizar la tarea, sea imposible que mientras se este ejecutando el proceso1 se ejecute el proceso2 simultaneamente
         		 */
-        		if(marca_hilo[1][0]!=0||marca_hilo[3][0]!=0) {
+        		if(marca_hilo[1][0]!=0 | marca_hilo[3][0]!=0) {
         			fail("Hay tokens en el proceso 2 mientras se ejecutaba proceso 1");
         		}
         		monitor.dispararTransicion(5);

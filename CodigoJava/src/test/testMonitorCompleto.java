@@ -12,7 +12,7 @@ import monitor.RedDePetri;
 //Este Test de integracion se basa en probar el monitor con la red Lector Escritor.
 
 public class testMonitorCompleto {
-	private Monitor monitor = Monitor.getInstance();
+	private Monitor monitor1 = Monitor.getInstance();
     private String redExcel="./RedesParaTest/lectorEscritor/lectorEscritor.xls"; //Path para Linux.
     private static boolean flagEscritoresFull; //Indica que los 50 escritores leyeron.
     private static boolean flagLectorFull;
@@ -30,16 +30,17 @@ public class testMonitorCompleto {
 				 this.redExcel="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls"; 
 			 }
     	}
-        monitor.configRdp(redExcel);
-        monitor.setPolitica(0); //modo aleatorio
+        monitor1.configRdp(redExcel);
+        monitor1.setPolitica(0); //modo aleatorio
         flagEscritoresFull=false;
         this.flagLectorFull=false;
+        monitor1.setCondicion(true);
         
     }
 
     @org.junit.After
     public void tearDown() throws Exception {
-        int[][] m= monitor.getMarcado();
+        int[][] m= monitor1.getMarcado();
         System.out.println("");
         //assert (m[0][0]==1||m[1][0]==1||m[2][0]==1);  //control del marcado final
 
@@ -49,8 +50,8 @@ public class testMonitorCompleto {
     public void dispararTransicionTest() throws Exception {
         Thread hilo1= new Thread(new HiloEscritor());
         Thread hilo2 = new Thread(new HiloLector());
-     
-       
+        
+      
         hilo1.start();
        
         hilo2.start();
@@ -63,9 +64,7 @@ public class testMonitorCompleto {
         
         try{
         	Thread.sleep(1000);
-        	hilo2.stop();
-          
-           
+        	hilo2.stop();         
         }
         catch(InterruptedException e){
         	e.printStackTrace();
@@ -101,17 +100,17 @@ public class testMonitorCompleto {
         	int contador=0;
         	//int[][] m= monitor.getMarcado();
       	  
-        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){ //Se tienen que llenar las dos plazas sumidero
+        	while(monitor1.getMarcado()[6][0]<25 | monitor1.getMarcado()[7][0]<25){ //Se tienen que llenar las dos plazas sumidero
             	
             	contador++;
             	System.out.println("Escribiendo: " + contador);
             	
-            	monitor.dispararTransicion(4);
-            	if(monitor.getMarcado()[2][0]!=0){
+            	monitor1.dispararTransicion(4);
+            	if(monitor1.getMarcado()[2][0]!=0){
             		try{
-            			Field f = monitor.getClass().getDeclaredField("rdp");
+            			Field f = monitor1.getClass().getDeclaredField("rdp");
             			f.setAccessible(true);
-            			RedDePetri testPrivateReflection = (RedDePetri)f.get(monitor);
+            			RedDePetri testPrivateReflection = (RedDePetri)f.get(monitor1);
             			assert(testPrivateReflection.getSensibilizadasExtendido()[0]==0);
             		}
             		catch(Exception e){
@@ -119,8 +118,8 @@ public class testMonitorCompleto {
             		}
             		
             	}
-            	monitor.dispararTransicion(1);
-            	monitor.dispararTransicion(2);
+            	monitor1.dispararTransicion(1);
+            	monitor1.dispararTransicion(2);
             	System.out.println("Dejo de escribir: "+ contador);
 
             }
@@ -133,15 +132,15 @@ public class testMonitorCompleto {
         public void run() {
         	int contador1=0;
           
-        	while(monitor.getMarcado()[6][0]<25 | monitor.getMarcado()[7][0]<25){ //Se tienen que llenar las dos plazas sumidero
+        	while(monitor1.getMarcado()[6][0]<25 | monitor1.getMarcado()[7][0]<25){ //Se tienen que llenar las dos plazas sumidero
         	
                
             	contador1++;
             	
             	System.out.print("Lector:");
           	    System.out.println(contador1);
-            	monitor.dispararTransicion(0);
-            	monitor.dispararTransicion(3);
+            	monitor1.dispararTransicion(0);
+            	monitor1.dispararTransicion(3);
             	
             	
             	
