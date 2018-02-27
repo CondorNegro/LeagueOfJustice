@@ -81,7 +81,7 @@ public class testMonitorCompleto2 {
         	 * Se prueba que realmente el hilo generador haya podido llegar al estado local P7=0, lo que implica
         	 * que se disparo correctamente la transicion asignada al hilo generador.
         	 */
-        	assert(this.marca[7][0]==0); 
+        	assert(this.marca[7][0]==2); 
         	
         	/*
         	 * Se prueba que, la plaza trampa P6 tenga al menos 10 tareas finalizadas
@@ -95,10 +95,10 @@ public class testMonitorCompleto2 {
         	 * 	Si es 2: Unicamente se deberian haber realizadas las tareas 2
         	 */
         	if(flagPolitica==1) {
-        		assert(cuentas1>=24); //Se generaron todos los recursos
+        		assert(cuentas1>=22); //Se generaron todos los recursos
         	}
         	if(flagPolitica==2) {
-        		assert(cuentas2>=24); //Se generaron todos los recursos
+        		assert(cuentas2>=22); //Se generaron todos los recursos
         	}
         	if(flagPolitica==0) {
         		assert(cuentas2!=0&&cuentas1!=0); //Se generaron todos los recursos
@@ -118,7 +118,7 @@ public class testMonitorCompleto2 {
     class HiloGenerador implements Runnable{
         @Override
         public void run() {
-        	for(int i=0; i<50; i++){monitor.dispararTransicion(0);}
+        	for(int i=0; i<48; i++){monitor.dispararTransicion(0);}
         }
     }
 

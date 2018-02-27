@@ -12,7 +12,8 @@ public class Monitor {
     private RedDePetri rdp;
     private Semaphore mutex;
     private Logger log;
-    private static volatile boolean condicion;
+    private static volatile boolean condicion; 
+    //La variable condicion es por problemas de finalizacion de hilos y liberacion de recursos cuando finaliza un programa.
    
     
     
@@ -81,6 +82,23 @@ public class Monitor {
 	}
 	
 	
+	
+	/**
+	 * Metodo getCantTransiciones.
+	 * @return int Cantidad de transiciones de la Red de Petri
+	 */
+	
+	public int getCantTransiciones(){
+		try{
+			mutex.acquire(); //Adquiero acceso al monitor.
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+			return 0;
+		}
+		mutex.release();
+		return this.rdp.getCantTransiciones();
+	}
 	
 	/**
 	 * Metodo setPolitica. Permite setear la politica del monitor.
