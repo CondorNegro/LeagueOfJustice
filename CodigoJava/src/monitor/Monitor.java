@@ -84,6 +84,23 @@ public class Monitor {
 	
 	
 	/**
+	 * Metodo getCantTransiciones.
+	 * @return int Cantidad de transiciones de la Red de Petri
+	 */
+	
+	public int getCantTransiciones(){
+		try{
+			mutex.acquire(); //Adquiero acceso al monitor.
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+			return 0;
+		}
+		mutex.release();
+		return this.rdp.getCantTransiciones();
+	}
+	
+	/**
 	 * Metodo setPolitica. Permite setear la politica del monitor.
 	 * @param Modo modo de la politica
 	 */

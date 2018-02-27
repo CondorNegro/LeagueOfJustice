@@ -1,11 +1,13 @@
 package railSystem;
 
+import acciones.Accion;
 import monitor.Monitor;
 
 
 public class FireMultipleTransition implements Runnable {
     private int[] transitions_to_fire;
     private Monitor monitor;
+    private Accion[] acciones;
 
     
 /**
@@ -15,10 +17,12 @@ public class FireMultipleTransition implements Runnable {
  */
     public FireMultipleTransition(
     		int[] transiciones_viaje, 
-    		Monitor monitor
+    		Monitor monitor,
+    		Accion[] acciones
     		) {
         this.transitions_to_fire = transiciones_viaje;
         this.monitor = monitor;
+        this.acciones=acciones;
         
     }
 
@@ -28,7 +32,9 @@ public class FireMultipleTransition implements Runnable {
     	while(monitor.getCondicion()) {
     		for(int i=0; i<this.transitions_to_fire.length; i++) {
     			monitor.dispararTransicion(this.transitions_to_fire[i]);
-    	        if(transitions_to_fire[i]==36) {
+    			acciones[i].ejecutarAcccion();
+    			
+    	        /**if(transitions_to_fire[i]==36) {
     	        	System.out.println("El tren partio de la estacion B (disparo la transicion: "+this.transitions_to_fire[i]+") - Vuelta: "+vueltas);
     	        }
     	        else if(transitions_to_fire[i]==35) {
@@ -58,7 +64,7 @@ public class FireMultipleTransition implements Runnable {
     	        else if(transitions_to_fire[i]==5) {
     	        	vueltas=vueltas+1;
     	        	System.out.println("Tren en estacion B (disparo la transicion: "+this.transitions_to_fire[i]+") - Vuelta: "+vueltas);
-    	        }
+    	        }**/
 
     		}
     	}
