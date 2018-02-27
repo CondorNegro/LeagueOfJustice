@@ -25,7 +25,7 @@ public class FireSingleTransition implements Runnable {
     public void run() {
     	while(monitor.getCondicion()){
     		monitor.dispararTransicion(transition_to_fire);
-    		accion.ejecutarAcccion();
+    		accion.ejecutarAccion();
     	}
     }
 }

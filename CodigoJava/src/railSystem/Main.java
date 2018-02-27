@@ -1,5 +1,8 @@
 package railSystem;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.HashMap;
 
 /*
@@ -23,6 +26,27 @@ public class Main {
 	
 	public static void main(String[] args) throws InterruptedException {
 		final int cantidad_de_hilos=26;
+		
+		String name_file_console="./logueo/logFileD.txt";
+		
+    	if((System.getProperty("os.name")).equals("Windows 10")){	
+   		 if(System.getProperty("user.name").equals("kzAx")){
+   			 name_file_console="..\\src\\logueo\\logFileD.txt"; 
+			 }
+			 else{
+				 name_file_console="..\\..\\LeagueOfJustice\\CodigoJava\\src\\logueo\\logFileD.txt"; 
+			 }
+   	}
+
+		
+		PrintStream fileStream = null;
+		try {
+			fileStream=new PrintStream(new File(name_file_console));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
 		
 		/*
 		 * tiempo_transcurrido variable Cronometro para imprimir tiempo transcurrido desde el inicio del programa.
@@ -80,18 +104,16 @@ public class Main {
 		int cant_transiciones=monitor.getCantTransiciones();
 		
 		//Diccionario.
-		HashMap<Integer,String> diccionary=new HashMap<Integer,String>();
+		HashMap<Integer,String> dictionary=new HashMap<Integer,String>();
 		
 		//Escritura del diccionario
-		//diccionary.put(0,"");
+		writeDictionary(dictionary);
 		
 		
 		//Acciones.
-		
 		HashMap<Integer,Accion> acciones=new HashMap<Integer,Accion>();
 		for(int transicion=0; transicion<cant_transiciones;transicion++){
-			diccionary.put(transicion,"h");
-			acciones.put(transicion, new ConsolePrinter(diccionary.get(transicion)));
+			acciones.put(transicion, new ConsolePrinter(dictionary.get(transicion),fileStream));
 		} 
 		
 		
@@ -166,7 +188,7 @@ public class Main {
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
          * 		Especifica el tiempo que espera el hilo (main) antes de continuar con la siguiente instruccion.				
          */
-		executor.awaitTermination(600, TimeUnit.SECONDS);
+		executor.awaitTermination(35, TimeUnit.SECONDS);
 		
 		monitor.setCondicion(false);
 		
@@ -178,8 +200,54 @@ public class Main {
         
         monitor.writeLogFiles();
         
+        
+        
+
+        fileStream.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
         System.out.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
         System.exit(0);
 	}
+	
+	public static void writeDictionary(HashMap<Integer,String> diccionario) {
+		diccionario.put(0,"Nueva persona en estacion A");
+		diccionario.put(1,"Nueva persona en estacion B");
+		diccionario.put(2,"Nueva persona en estacion C");
+		diccionario.put(3,"Nueva persona en estacion D");
+		diccionario.put(4,"El tren partio de la estacion A");
+		diccionario.put(5,"El tren llego a la estacion B");
+		diccionario.put(6,"Pasajero subio a la maquina en estacion D");
+		diccionario.put(7,"Pasajero subio al vagon en estacion A");
+		diccionario.put(8,"El tren llego a la estacion A");
+		diccionario.put(9,"Pasajero subio a la maquina en estacion B");
+		diccionario.put(10,"Pasajero subio a la maquina en estacion A");
+		diccionario.put(11,"Pasajero subio al vagon en estacion D");
+		diccionario.put(12,"Pasajero subio al vagon en estacion C");
+		diccionario.put(13,"Pasajero subio al vagon en estacion B");
+		diccionario.put(14,"--TREN A 30 METROS DE LA BARRERA A-B--");
+		diccionario.put(15,"Nuevo auto queriendo cruzar la barrera en A-B");
+		diccionario.put(16,"--EL TREN SE ALEJO 20 METROS DE LA BARRERA A-B--");
+		diccionario.put(17,"Cruza un auto en barrera A-B");
+		diccionario.put(18,"--TREN A 30 METROS DE LA BARRERA C-D--");
+		diccionario.put(19,"El tren partio de la estacion D");
+		diccionario.put(20,"Nuevo auto queriendo cruzar la barrera en C-D");
+		diccionario.put(21,"--EL TREN SE ALEJO 20 METROS DE LA BARRERA C-D--");
+		diccionario.put(22,"Cruza un auto en barrera C-D");
+		diccionario.put(23,"Pasajero subio a la maquina en estacion C");
+		diccionario.put(24,"Autorizacion de bajada de pasajero");
+		diccionario.put(25,"Pasajero se baja de la maquina en estacion C");
+		diccionario.put(26,"Pasajero se baja del vagon en estacion C");
+		diccionario.put(27,"Pasajero se baja de la maquina en estacion D");
+		diccionario.put(28,"Pasajero se baja del vagon en estacion D");
+		diccionario.put(29,"Pasajero se baja de la maquina en estacion A");
+		diccionario.put(30,"El tren llego a la estacion D");
+		diccionario.put(31,"Pasajero se baja del vagon en estacion A");
+		diccionario.put(32,"Pasajero se baja de la maquina en estacion B");
+		diccionario.put(33,"Pasajero se baja del vagon en estacion B");
+		diccionario.put(34,"El tren partio de la estacion C");
+		diccionario.put(35,"El tren llego a la estacion C");
+		diccionario.put(36,"El tren partio de la estacion B");
+	}
+	
+
 
 }

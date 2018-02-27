@@ -32,7 +32,7 @@ public class FireMultipleTransition implements Runnable {
     	while(monitor.getCondicion()) {
     		for(int i=0; i<this.transitions_to_fire.length; i++) {
     			monitor.dispararTransicion(this.transitions_to_fire[i]);
-    			acciones[i].ejecutarAcccion();
+    			acciones[i].ejecutarAccion();
     			
     	        /**if(transitions_to_fire[i]==36) {
     	        	System.out.println("El tren partio de la estacion B (disparo la transicion: "+this.transitions_to_fire[i]+") - Vuelta: "+vueltas);

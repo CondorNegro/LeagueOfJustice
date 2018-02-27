@@ -3,5 +3,5 @@ package acciones;
 
 
 public interface Accion {
-	public void ejecutarAcccion();
+	public void ejecutarAccion();
 }
