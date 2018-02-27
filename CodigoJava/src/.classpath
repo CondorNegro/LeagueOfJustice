@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path=""/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="/home/ragnar/Documentos/Concurrente/LeagueOfJustice/CodigoJava/src/jxl.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/Concurrent repository/LeagueOfJustice/CodigoJava/src/jxl.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

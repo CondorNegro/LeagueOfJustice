@@ -25,21 +25,21 @@ import monitor.Monitor;
 public class Main {
 	private static String name_file_console="";
 	private static String name_file="";
-	private static final int cantidad_de_hilos=26;
-	private static final int tiempo=35;
-	private static final TimeUnit unidad=TimeUnit.SECONDS;
-	private static final boolean flag_prueba_prioridades=true;
+	private static final int NUMBER_OF_THREADS=26;
+	private static final int EXECUTION_TIME=35;
+	private static final TimeUnit TIME_UNIT=TimeUnit.SECONDS;
+	private static final boolean FLAG_TEST_PRIORITIES=false;
 	/*
 	 * La politica puede ser:
 	 *	0: aleatoria.
 	 *	1: primero los que suben.
 	 *	2: primero los que bajan.
 	*/
-	private static final int politica=1;
+	private static final int POLITIC=1;
 	
 	public static void main(String[] args) throws InterruptedException {
 		
-		setPath(name_file,name_file_console,flag_prueba_prioridades); //seteo los paths de los diferentes archivos a utilizar
+		setPath(name_file,name_file_console,FLAG_TEST_PRIORITIES); //seteo los paths de los diferentes archivos a utilizar
 		
 		/*
 		 * Seteo el log de acciones al directorio donde indique name_file_console
@@ -65,7 +65,7 @@ public class Main {
 		
 		
 		
-		monitor.setPolitica(politica);
+		monitor.setPolitica(POLITIC);
 		
 		
 		int cant_transiciones=monitor.getCantTransiciones();
@@ -89,7 +89,7 @@ public class Main {
 		
 		
 		//Inicializo ThreadPoolExecutor, maximo de cantidad_de_hilos.
-		ThreadPoolExecutor executor=(ThreadPoolExecutor)Executors.newFixedThreadPool(cantidad_de_hilos);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
+		ThreadPoolExecutor executor=(ThreadPoolExecutor)Executors.newFixedThreadPool(NUMBER_OF_THREADS);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
 		
 		//Inicio generadores - 6 hilos
 		executor.execute(new FireSingleTransition(0,monitor, acciones.get(0)));
@@ -158,7 +158,7 @@ public class Main {
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
          * 		Especifica el tiempo que espera el hilo (main) antes de continuar con la siguiente instruccion.				
          */
-		executor.awaitTermination(tiempo, unidad);
+		executor.awaitTermination(EXECUTION_TIME, TIME_UNIT);
 		
 		monitor.setCondicion(false);
 		
