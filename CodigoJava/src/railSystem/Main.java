@@ -145,6 +145,7 @@ public class Main {
         monitor.writeLogFiles();
         
         System.out.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
+        System.out.format("\nQuedaron pendiente %d tareas por finalizar.",executor.getActiveCount());
         System.exit(0);
 	}
 
