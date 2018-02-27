@@ -23,22 +23,27 @@ import monitor.Monitor;
 
 
 public class Main {
+	private static String name_file_console="";
+	private static String name_file="";
+	private static final int cantidad_de_hilos=26;
+	private static final int tiempo=35;
+	private static final TimeUnit unidad=TimeUnit.SECONDS;
+	private static final boolean flag_prueba_prioridades=true;
+	/*
+	 * La politica puede ser:
+	 *	0: aleatoria.
+	 *	1: primero los que suben.
+	 *	2: primero los que bajan.
+	*/
+	private static final int politica=1;
 	
 	public static void main(String[] args) throws InterruptedException {
-		final int cantidad_de_hilos=26;
 		
-		String name_file_console="./logueo/logFileD.txt";
+		setPath(name_file,name_file_console,flag_prueba_prioridades); //seteo los paths de los diferentes archivos a utilizar
 		
-    	if((System.getProperty("os.name")).equals("Windows 10")){	
-   		 if(System.getProperty("user.name").equals("kzAx")){
-   			 name_file_console="..\\src\\logueo\\logFileD.txt"; 
-			 }
-			 else{
-				 name_file_console="..\\..\\LeagueOfJustice\\CodigoJava\\src\\logueo\\logFileD.txt"; 
-			 }
-   	}
-
-		
+		/*
+		 * Seteo el log de acciones al directorio donde indique name_file_console
+		 */
 		PrintStream fileStream = null;
 		try {
 			fileStream=new PrintStream(new File(name_file_console));
@@ -54,61 +59,27 @@ public class Main {
 		Cronometro tiempo_transcurrido=new Cronometro();
 		tiempo_transcurrido.setNuevoTimeStamp();
 		
-		/*
-		 * Se setea el path donde se encuentra el excel de la red en cuestion, segun el SO y alumno que se tratase.
-		 */
-		String name_file="./RedesParaTest/TestTren/excelTren.xls";
-		boolean flag_prueba_prioridades=true;
-		
-		if(!flag_prueba_prioridades){
-			if((System.getProperty("os.name")).equals("Windows 10")){	
-				 if(System.getProperty("user.name").equals("kzAx")){
-					 name_file="..\\src\\RedesParaTest\\TestTren\\excelTren.xls";
-				 }
-				 else{
-					 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.
-				 }
-			}
-		}
-		else{
-			name_file="./RedesParaTest/TestTren/excelTrenPrioridades.xls";
-			if((System.getProperty("os.name")).equals("Windows 10")){	
-				 if(System.getProperty("user.name").equals("kzAx")){
-					 name_file="..\\src\\RedesParaTest\\TestTren\\excelTrenPrioridades.xls";
-				 }
-				 else{
-					 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTrenPrioridades.xls"; //Path para Windows.
-				 }
-			}
-		}
-				
-		
 		
 		Monitor monitor=Monitor.getInstance(); //Patron Singleton
 		monitor.configRdp(name_file); //Configuro la red de petri para el monitor segun el path.
 		
 		
-		/*
-		 * La politica puede ser:
-		 *	0: aleatoria.
-		 *	1: primero los que suben.
-		 *	2: primero los que bajan.
-		*/
-		monitor.setPolitica(1);
 		
-		if(monitor.getCantTransiciones()==0){
+		monitor.setPolitica(politica);
+		
+		
+		int cant_transiciones=monitor.getCantTransiciones();
+		if(cant_transiciones==0){
 			System.out.println("Error en getTransiciones del monitor");
 			System.exit(1);
 		}
 		
-		int cant_transiciones=monitor.getCantTransiciones();
 		
 		//Diccionario.
 		HashMap<Integer,String> dictionary=new HashMap<Integer,String>();
 		
-		//Escritura del diccionario
+		//Se escribe la referencia de transicion/accion en el diccionario
 		writeDictionary(dictionary);
-		
 		
 		//Acciones.
 		HashMap<Integer,Accion> acciones=new HashMap<Integer,Accion>();
@@ -117,9 +88,8 @@ public class Main {
 		} 
 		
 		
-		//ThreadPoolExecutor.
+		//Inicializo ThreadPoolExecutor, maximo de cantidad_de_hilos.
 		ThreadPoolExecutor executor=(ThreadPoolExecutor)Executors.newFixedThreadPool(cantidad_de_hilos);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
-		
 		
 		//Inicio generadores - 6 hilos
 		executor.execute(new FireSingleTransition(0,monitor, acciones.get(0)));
@@ -188,25 +158,46 @@ public class Main {
          * 		TimeUnit.MINUTES     -		TimeUnit.SECONDS
          * 		Especifica el tiempo que espera el hilo (main) antes de continuar con la siguiente instruccion.				
          */
-		executor.awaitTermination(35, TimeUnit.SECONDS);
+		executor.awaitTermination(tiempo, unidad);
 		
 		monitor.setCondicion(false);
 		
+		/*
+		 * Mientras no terminen todas las tareas, no sale del while. Evita que algun hilo se quede con el semaforo.
+		 */
 		while(!executor.isTerminated()) {
 			
 		}
 		
+		/*
+		 * Finalizo completamente el executor
+		 */
 		executor.shutdownNow();
         
+		/*
+		 * Escribo todos los logs del sistema.
+		 */
         monitor.writeLogFiles();
         
         
         
-
+        /*
+         * Fin del programa
+         */
         fileStream.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
         System.out.format("Finalizo la ejecucion del simulador Tren Concurrente 2017 en: %f minutos.",(double)tiempo_transcurrido.getSeconds()/(double)60);
+        
+        fileStream.format("\nQuedaron %d tareas por finalizar.",executor.getActiveCount());
+        System.out.format("\nQuedaron %d tareas por finalizar.",executor.getActiveCount());
         System.exit(0);
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public static void writeDictionary(HashMap<Integer,String> diccionario) {
 		diccionario.put(0,"Nueva persona en estacion A");
@@ -248,6 +239,39 @@ public class Main {
 		diccionario.put(36,"El tren partio de la estacion B");
 	}
 	
-
+	public static void setPath(String name_fil,String name_file_consol,boolean flag_prioridad) {
+		if(!flag_prioridad){
+			if((System.getProperty("os.name")).equals("Windows 10")){	
+				 if(System.getProperty("user.name").equals("kzAx")){
+					 name_file="..\\src\\RedesParaTest\\TestTren\\excelTren.xls";
+					 name_file_console="..\\src\\logueo\\logFileD.txt";
+				 }
+				 else{
+					 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTren.xls"; //Path para Windows.
+					 name_file_console="..\\..\\LeagueOfJustice\\CodigoJava\\src\\logueo\\logFileD.txt"; 
+				 }
+			}
+			else {
+				name_file="./RedesParaTest/TestTren/excelTren.xls";
+				name_file_console="./logueo/logFileD.txt";
+			}
+		}
+		else{
+			if((System.getProperty("os.name")).equals("Windows 10")){	
+				 if(System.getProperty("user.name").equals("kzAx")){
+					 name_file="..\\src\\RedesParaTest\\TestTren\\excelTrenPrioridades.xls";
+					 name_file_console="..\\src\\logueo\\logFileD.txt";
+				 }
+				 else{
+					 name_file="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\TestTren\\excelTrenPrioridades.xls"; //Path para Windows.
+					 name_file_console="..\\..\\LeagueOfJustice\\CodigoJava\\src\\logueo\\logFileD.txt"; 
+				 }
+			}
+			else {
+				name_file="./RedesParaTest/TestTren/excelTrenPrioridades.xls";
+				name_file_console="./logueo/logFileD.txt";
+			}
+		}
+	}
 
 }
