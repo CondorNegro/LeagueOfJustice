@@ -89,6 +89,7 @@ public class Monitor {
 	 */
 	
 	public int getCantTransiciones(){
+		int cantidad_transiciones;
 		try{
 			mutex.acquire(); //Adquiero acceso al monitor.
 		}
@@ -96,8 +97,9 @@ public class Monitor {
 			e.printStackTrace();
 			return 0;
 		}
+		cantidad_transiciones = rdp.getCantTransiciones();
 		mutex.release();
-		return this.rdp.getCantTransiciones();
+		return cantidad_transiciones;
 	}
 	
 	/**
