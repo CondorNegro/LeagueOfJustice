@@ -4,12 +4,7 @@
 package test;
 
 import static org.junit.Assert.*;
-
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,13 +19,12 @@ import monitor.RedDePetri;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 
 
 
 public class testMonitor {
-	private Monitor monitor1=Monitor.getInstance();
-	private Monitor monitor2=Monitor.getInstance();
+	private Monitor monitor1;
+	private Monitor monitor2;
 	private int[] list1Test;
 	private int[] list2Test;
 	
@@ -40,7 +34,7 @@ public class testMonitor {
 	private Thread threadResume;
 	
 	private String redExcel1="./RedesParaTest/RedTest1/testExcel.xls"; //Path para Linux.
-	private String redExcel2="./RedesParaTest/RedTest2/testExcel5.xls"; //Path para Linux.
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -61,7 +55,8 @@ public class testMonitor {
 	@Before
 	public void setUp() throws Exception {
 		
-		
+		monitor1=Monitor.getInstance();
+		monitor2=Monitor.getInstance();
 		this.list1Test=new int[4];
 		this.list2Test=new int[4];
 		this.list1Test[0]=1;
@@ -75,11 +70,9 @@ public class testMonitor {
 		if((System.getProperty("os.name")).equals("Windows 10")){
 			if(System.getProperty("user.name").equals("kzAx")){
 				this.redExcel1="..\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
-				this.redExcel2="..\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
 			}
 			 else{
 				 this.redExcel1="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest1\\testExcel.xls";
-				 this.redExcel2="..\\..\\LeagueOfJustice\\CodigoJava\\src\\RedesParaTest\\RedTest2\\testExcel5.xls";
 			 }
 		}
 
