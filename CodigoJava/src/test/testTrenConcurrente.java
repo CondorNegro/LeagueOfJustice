@@ -12,7 +12,7 @@ import monitor.Monitor;
 
 
 public class testTrenConcurrente {
-    private Monitor monitor = Monitor.getInstance();
+    private Monitor monitor;
     private String redExcel="./RedesParaTest/TestTren/excelTren.xls"; //Path para Linux.
     private int Politica=0;
     private ThreadPoolExecutor executor1=(ThreadPoolExecutor)Executors.newFixedThreadPool(26);  //creo un ThreadPoolExecutor de tamaño maximo 26 hilos
@@ -28,6 +28,7 @@ public class testTrenConcurrente {
      */
     @org.junit.Before
     public void setUp() throws Exception {
+    	monitor = Monitor.getInstance();
     	if((System.getProperty("os.name")).equals("Windows 10")){	
 			 if(System.getProperty("user.name").equals("kzAx")){
 				 redExcel="..\\src\\RedesParaTest\\TestTren\\excelTren.xls";

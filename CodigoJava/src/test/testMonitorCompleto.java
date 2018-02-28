@@ -12,7 +12,7 @@ import monitor.RedDePetri;
 //Este Test de integracion se basa en probar el monitor con la red Lector Escritor.
 
 public class testMonitorCompleto {
-	private Monitor monitor = Monitor.getInstance();
+	private Monitor monitor;
     private String redExcel="./RedesParaTest/lectorEscritor/lectorEscritor.xls"; //Path para Linux.
     private static boolean flagEscritoresFull; //Indica que los 50 escritores leyeron.
     private static boolean flagLectorFull;
@@ -21,6 +21,7 @@ public class testMonitorCompleto {
     
     @org.junit.Before
     public void setUp() throws Exception {
+    	monitor = Monitor.getInstance();
     	if((System.getProperty("os.name")).equals("Windows 10")){	
     		if(System.getProperty("user.name").equals("kzAx")){
 				this.redExcel="..\\src\\RedesParaTest\\lectorEscritor\\lectorEscritor.xls";
