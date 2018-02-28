@@ -47,6 +47,7 @@ public class testMonitor {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		
 	}
 
 	/**
@@ -83,6 +84,8 @@ public class testMonitor {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		monitor1=null;
+		monitor2=null;
 	}
 
 	/**

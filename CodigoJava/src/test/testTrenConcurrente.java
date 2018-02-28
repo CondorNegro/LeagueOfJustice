@@ -77,6 +77,7 @@ public class testTrenConcurrente {
     	assert(tren_en_B>=3); 
     	assert(tren_en_C>=3); 
     	assert(tren_en_D>=3);
+    	monitor=null;
     }
 
     @org.junit.Test

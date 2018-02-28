@@ -41,6 +41,7 @@ public class testMonitorCompleto {
     @org.junit.After
     public void tearDown() throws Exception {
         int[][] m= monitor.getMarcado();
+        monitor=null;
         System.out.println("");
         //assert (m[0][0]==1||m[1][0]==1||m[2][0]==1);  //control del marcado final
 

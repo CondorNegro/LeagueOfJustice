@@ -3,6 +3,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+
 import monitor.Monitor;
 
 public class testMonitorCompleto2 {
@@ -33,6 +35,14 @@ public class testMonitorCompleto2 {
 							     			// 1-prioridad al proceso 1
         									// 2-prioridad al proceso 2
 
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+		monitor=null;
+	}
+	
     @org.junit.Test
     public void testCompleto2() throws Exception {
         
