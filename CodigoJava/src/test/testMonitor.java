@@ -235,66 +235,7 @@ public class testMonitor {
 		
 	}
 
-	
-	/**
-	 * Test method for {@link Monitor.Monitor#dispararTransicion(int)}.
-	 */
 
-	@Test
-	public void testDispararTransicion() {
-		this.monitor1.setPolitica(0);
-		this.monitor1.configRdp(this.redExcel1);
-		
-		HiloTransicionesCero hiloCero=new HiloTransicionesCero(this.monitor1);
-		HiloTransicionesUno hiloUno=new HiloTransicionesUno(this.monitor1);
-		Thread threadTCero=new Thread(hiloCero);
-		Thread threadTUno=new Thread(hiloUno);
-		
-		try {
-			
-			Field f = monitor1.getClass().getDeclaredField("rdp");
-			f.setAccessible(true);
-			RedDePetri testPrivateReflection = (RedDePetri)f.get(monitor1);		
-		
-			int[][] m0={{2},{0},{0},{0}};
-			int[][] m1={{0},{2},{0},{0}};
-			int[][] m2={{0},{0},{2},{0}};
-			
-			threadTUno.start();
-			try{
-				Thread.sleep(3);
-			}
-			catch(InterruptedException e){
-				fail("Se genero error por interrupcion de thread");
-			}
-			
-			
-			
-			assertEquals(testPrivateReflection.getMatrizM(),m0);
-			
-			threadTCero.start();
-			threadTCero.join();
-			assertEquals(testPrivateReflection.getMatrizM(),m1);
-			threadTUno.join();
-			
-			try{
-				Thread.sleep(3);
-			}
-			catch(InterruptedException e){
-				fail("Se genero error por interrupcion de thread");
-			}
-			
-			assertEquals(testPrivateReflection.getMatrizM(),m2);
-			
-		} 
-		catch (Exception e){
-			
-				e.printStackTrace();
-				System.out.println("Error en testDispararTransicion");
-				fail("Error en testDispararTransicion");
-		}
-		
-	}
 	
 	
 
